@@ -1,0 +1,115 @@
+
+
+\pref{def:PH} introduces the Process Hitting~(PH)~\cite{pauleve2011modelisation}
+which allows to model
+%A Process Hitting (PH) (\pref{def:PH}) gathers 
+a finite number of local levels,
+called \emph{processes},
+grouped into a finite set of components, called \emph{sorts}.
+A process is noted $a_i$, where $a$ is the sort's name,
+and $i$ is the process identifier within sort $a$.
+At any time, exactly one process of each sort is \emph{active},
+and the set of active processes is called a \emph{state}.
+
+The concurrent interactions between processes are defined by a set of \emph{actions}.
+Actions describe the replacement of a process by another of the same sort
+conditioned by the presence of at most one other process in the current state.
+An action is denoted by $\PHfrappe{a_i}{b_j}{b_k}$, which is read as
+``$a_i$ \emph{hits} $b_j$ to make it bounce to $b_k$'',
+where $a_i,b_j,b_k$ are processes of sorts $a$ and $b$,
+called respectively \emph{hitter}, \emph{target} and
+\emph{bounce} of the action.
+We also call a \emph{self-hit} any action whose hitter and target sorts are the same,
+that is, of the form: $\PHfrappe{a_i}{a_i}{a_k}$.
+
+\begin{definition}[Process Hitting]\label{def:PH}
+  A \emph{Process Hitting} is a triple $(\PHs,\PHl,\PHa)$:
+  \begin{itemize}
+    \item[--]  $\PHs = \{a,b,\dots\}$ is the finite set of \emph{sorts};
+    \item[--]  $\PHl = \prod_{a\in\PHs} \PHl_a$ is the set of states with
+      $\PHl_a = \{a_0,\dots,a_{l_a}\}$
+      the finite set of \emph{processes} of sort $a\in\Sigma$
+      and $l_a$ a positive integer, with $a\neq b\Rightarrow \PHl_a \cap \PHl_b = \emptyset$;
+    \item[--]  $\PHa = \{ \PHfrappe{a_i}{b_j}{b_k} \in \PHl_a \times \PHl_b^2 \mid
+      (a,b) \in \PHs^2 \wedge b_j\neq b_k \wedge a=b\Rightarrow a_i=b_j\}$
+      is the finite set of \emph{actions}.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[Action]
+\label{def:PhAction}
+An action is noted $\PHfrappe{a_i}{b_j}{b_k}$ where $a_i$ is a process
+of sort $a$ and $b_j$, $b_k$ two processes of sort $b$. When $a_i = b_j$ , such an action is refered as a self-action and $a_i$
+is called a self-hitting process.
+\end{definition}
+
+\begin{example*}
+\pref{fig:ph} represents a PH $(\PHs,\PHl,\PHa)$ with three sorts
+($\PHs = \{a, b, c\}$) and:
+$\PHl_a = \{a_0, a_1\}$,
+$\PHl_b = \{b_0, b_1, b_2\}$,
+$\PHl_c = \{c_0, c_1\}$.
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}%[font=\scriptsize]
+%\path[use as bounding box] (0,-1) rectangle (4,4);
+
+\TSort{(0,0)}{z}{3}{l}
+\TSort{(2,4)}{b}{2}{t}
+\TSort{(4,1)}{a}{2}{r}
+\THit{b_0}{}{z_1}{.east}{z_2}
+\THit{b_1}{}{z_0}{.north east}{z_2}
+\THit{a_0}{}{b_1}{.south}{b_0}
+\THit{a_1}{out=60,in=0,selfhit}{a_1}{.east}{a_0}
+
+\path[bounce,bend right]
+\TBounce{z_1}{}{z_2}{.south}
+\TBounce{z_0}{bend right=50}{z_2}{.south east}
+;
+\path[bounce,bend left]
+\TBounce{a_1}{}{a_0}{.north}
+\TBounce{b_1}{}{b_0}{.south}
+;
+
+ \THit{z_0}{}{a_0}{.west}{a_1} 
+
+\path[bounce,bend left]
+\TBounce{a_0}{}{a_1}{.south}
+;
+\TState{a_0,b_0,z_1}
+\end{tikzpicture}
+\caption{\label{fig:ph} 
+A PH model example with three sorts: $a$, $b$ and $z$($a$ is either at level 0 or 1, $b$ at either level 0 or 1 and $z$ at either level 0, 1 or 2).
+Circles represent the processes, boxes represent the sorts, and the actions are drawn by pairs of arrows in solid and dotted lines.The grayed processes stand for a possible initial state.
+}
+\end{figure}
+
+\end{example*}
+
+\begin{definition}[Next state]
+\label{def:NextState}
+Let $(\PHs,\PHl,\PHa)$ be a Process Hitting and $s \in \PHl$ be
+one of its states. The set of the next possible states for $s$ are computed as follows:
+\begin{center}
+$next(s) = {s[b_k /b_j ]| \exists (a i , b j ) \in s^2 , \exists b_k \in \PHl_b , \PHfrappe{a_i}{b_j}{b_k} \in \PHa}$
+\end{center}
+
+\end{definition}
+
+\begin{definition}[Stable state or fixed point]
+\label{def:FixPoint}
+Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
+$s \in \PHl$ be a state, $s$ is a stable state for $PH$ if and only if $next(s) = \emptyset $.
+\end{definition}
+
+\begin{definition}[Reachability]
+\label{def:Reachability}
+Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
+$s \in \PHl$ be a state OF $PH$, $s$ is a stable state for $PH$ if and only if $next(s) = \emptyset $. (i.r there is no playable action at the state $s$).
+\end{definition}
+
+\begin{definition} [Playable action]
+\label{def:playableAction}
+Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and $s \in \PHl$ a state of $PH$. We say that the action $h = \PHfrappe{a_i}{b_j}{b_k} \in \PHa$ is playable at the state $s$ if and only if $hitter(h)=a_i ~ \in s$ and $target(h)=b_j \in s$ (i.e $s[a]=a_i$ et $s[b]=b_j$ ) \\
+The resulting state after playing the action $h$ at $s$ is denoted by $(s \play h)$ or $(s \play h)[b]=b_k$ and $\forall c \in \PHs, ~ c \neq b, (s \play h)[c]=s[c].$
+\end{definition}

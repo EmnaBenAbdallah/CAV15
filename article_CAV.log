@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.2)  10 DEC 2014 16:02
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.12.2)  10 DEC 2014 20:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1102,54 +1102,50 @@ OML/ztmcm/m/it/10.95 L[]; :::; L[]\OMS/ztmcm/m/n/10.95 g ^^R \OML/ztmcm/m/it/10
 :::; L[]\OMS/ztmcm/m/n/10.95 g \U/msb/m/n/10.95 *
  []
 
-) [4] (./article_CAV.bbl)
+) (./PH.tex [4] [5]) (./article_CAV.bbl
+Underfull \vbox (badness 5175) has occurred while \output is active []
+
+ [6])
 \pages=\write6
 \openout6 = `article_CAV.pag'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 382.
- [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 382.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 386.
+
+[7]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 386.
  (./article_CAV.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 382.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 382.
-
-
-Package rerunfilecheck Warning: File `article_CAV.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `article_CAV.out':
-(rerunfilecheck)             Before: 794EEEFF58A5500729AD6D672ADAC174;1310
-(rerunfilecheck)             After:  6BD30921E75C080D39DC6D407B0F6709;1237.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 382.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 386.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 386.
+Package rerunfilecheck Info: File `article_CAV.out' has not changed.
+(rerunfilecheck)             Checksum: 6BD30921E75C080D39DC6D407B0F6709;1237.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 386.
  ) 
 Here is how much of TeX's memory you used:
- 18434 strings out of 494958
- 346978 string characters out of 6179213
- 447889 words of memory out of 5000000
- 21172 multiletter control sequences out of 15000+600000
- 77807 words of font info for 127 fonts, out of 8000000 for 9000
+ 18649 strings out of 494958
+ 351456 string characters out of 6179213
+ 452925 words of memory out of 5000000
+ 21373 multiletter control sequences out of 15000+600000
+ 80749 words of font info for 131 fonts, out of 8000000 for 9000
  38 hyphenation exceptions out of 8191
- 56i,13n,73p,877b,527s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsection.2.3} has been referenced but does not 
-exist, replaced by a fixed one
-
- </home/emna/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk>{/usr/share/
-texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} </home/emna/.texmf-var/fonts/pk
-/ljfour/jknappen/ec/ectt0900.600pk></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-msy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
-bm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times
-/utmri8a.pfb>
-Output written on article_CAV.pdf (5 pages, 122366 bytes).
+ 56i,13n,73p,877b,905s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/emna/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk>{/usr/shar
+e/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} </home/emna/.texmf-var/fonts/
+pk/ljfour/jknappen/ec/ectt0900.600pk></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/
+msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
+sbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive/texmf-dist/font
+s/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
+es/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on article_CAV.pdf (7 pages, 146129 bytes).
 PDF statistics:
- 255 PDF objects out of 1000 (max. 8388607)
- 183 compressed objects within 2 object streams
- 42 named destinations out of 1000 (max. 500000)
- 261 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 286 PDF objects out of 1000 (max. 8388607)
+ 208 compressed objects within 3 object streams
+ 50 named destinations out of 1000 (max. 500000)
+ 253 words of extra memory for PDF output out of 10000 (max. 10000000)
 
