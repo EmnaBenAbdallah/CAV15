@@ -16,6 +16,9 @@
 \usepackage{array}   % Tableaux évolués
 \usepackage{comment}
 
+\newtheorem{exemple}{Exemple}
+\theoremstyle{remark} 
+
 \usepackage{prettyref}
 \newrefformat{def}{Definition~\ref{#1}}
 \newrefformat{fig}{Figure~\ref{#1}}
@@ -315,7 +318,7 @@ font=\footnotesize,inner sep=1pt]
 \hyphenation{pa-ra-me-tri-za-tion}
 \hyphenation{pa-ra-me-tri-za-tions}
 
-\title{Exhaustive reachability analysis and stable states identification of biological regulatory networks modeled in Process Hitting using Answer Set Programming}
+\title{Exhaustive dynamic analysis of reachability and stable states of biological regulatory networks modeled in Process Hitting using Answer Set Programming}
 
 \author{%
 Emna Ben Abdallah
@@ -349,8 +352,7 @@ starting from a given initial state, it is possible to reach a given local state
 \input{intro}
 
 \section{Preliminary definitions}
-
-\subsection{Answer Set Programming }
+\input{ASP}
 \subsection{Process Hitting }
 
 \section{Fixed point implementation}
