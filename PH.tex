@@ -97,15 +97,28 @@ $next(s) = {s[b_k /b_j ]| \exists (a i , b j ) \in s^2 , \exists b_k \in \PHl_b 
 \end{definition}
 
 \begin{definition}[Stable state or fixed point]
-\label{def:FixPoint}
+\label{def:FixPoint1}
 Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
 $s \in \PHl$ be a state, $s$ is a stable state for $PH$ if and only if $next(s) = \emptyset $.
 \end{definition}
-
-\begin{definition}[Reachability]
-\label{def:Reachability}
+\begin{definition}[Lemme: Stable state or fixed point]
+\label{def:FixPoint2}
 Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
-$s \in \PHl$ be a state OF $PH$, $s$ is a stable state for $PH$ if and only if $next(s) = \emptyset $. (i.r there is no playable action at the state $s$).
+$s \in \PHl$ be a state, $s$ is a stable state for $PH$ there is no playable action at the state $s$: 
+\begin{center}
+$\forall h \in \PHa$, $frappeur(h) ~ \notin s ~ \vee ~ cible(h) \notin s$)
+\end{center}
+\end{definition}
+
+\begin{definition}[Reachability question]
+\label{def:reachability}
+
+ If $\ctx \in \PHl$ is a state and $A \in \Proc$ a set of processes, we note $\mathcal{P}(\ctx, A)$ pour \emph{la question d'accessibilité}:
+ \begin{center}
+  $\exists? \delta \in \Sce(\ctx), A \subseteq \PHget(\ctx \play \delta) $ (i.e $\forall a_i \in A, \PHget{(\ctx \play \delta)}{a}=a_i$).
+ \end{center}
+With $\Sce(\ctx)$ 
+is the set of successively playable actions from the state $\ctx$. 
 \end{definition}
 
 \begin{definition} [Playable action]

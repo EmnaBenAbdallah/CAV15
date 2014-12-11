@@ -19,6 +19,24 @@
 \newtheorem{exemple}{Exemple}
 \theoremstyle{remark} 
 
+\usepackage{listings}
+% Définition du langage ASP
+\lstdefinelanguage{ASP}{%
+literate={:-}{$\leftarrow$}1,
+morekeywords={not},
+numbers=left,
+escapeinside={\%}{\^^M}
+}
+% Définition des styles de tous les listings du document
+\lstset{language=ASP,
+basicstyle=\small,
+columns=flexible,
+keywordstyle=\bfseries,
+firstnumber=last
+}
+\renewcommand{\thelstnumber}{\the\value{lstnumber}}
+%% fin définition
+
 \usepackage{prettyref}
 \newrefformat{def}{Definition~\ref{#1}}
 \newrefformat{fig}{Figure~\ref{#1}}
@@ -357,11 +375,8 @@ starting from a given initial state, it is possible to reach a given local state
 \input{PH}
 
 \section{Fixed point implementation}
-\subsection{Process Hitting network presentation }
-Parler de la présentation du rèseau PH en ASP et donner le code correspondant (Peut etre à enlever cette partie)
-\subsection{Search of fixed points }
-Parler du point fixe et ses interrêts. \\
-Decrire la nouvelle méthode qui permettent de determiner les états stables d'un réseau 
+\input{fixPoint}
+
 \section{Dynamic network evolution }
 \subsection{Future states identification }
 Parler de la méthode qui permet d'identifier les différents états possibles après un certain nombre de changement dans le rèseau

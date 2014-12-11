@@ -1,0 +1,46 @@
+%Section of Fix point implementation
+The study of fixed points (or basins of attraction) provides an important understanding of the different behaviors of a BRN (Biological Regulatory Network)\cite{wuensche1998genomic}.  
+The fixed point is a stable state of the BRN in wich it is not possible any more to have new changes.
+Let $(\Sigma, L, H)$ be a Process Hitting .
+ It has been shown that a state $s \in L$ is a fixed point of the Process Hitting if and only if $s$ is has no next state \cite{pauleve2011modelisation} i.e. there is no playable action at this state. In fact a steady state od a Process Hitting network is a set of processes with exactly one process of each sort as well as every process has no hit with the other selected ones (process with self-hit cannot be apart of a stable state).
+
+\subsection{Process Hitting network traduction }
+In order to handle a PH biological network, it was necessary first to present it with ASP. To do this we chose the predicates: $sort$, $process$ and $action$. Below is an example of PH network shown in ASP.
+
+\begin{exemple} [Example PH network with ASP]
+If we try to present the network of Figure \ref{fig:expPH} we will have:
+\begin{lstlisting}
+sort("a"). sort("b"). sort("z"). %\label{ASPsort}
+process("a", 0..1). process("b", 0..1). process("z", 0..2). %\label{ASPprocess}
+action("a",0,"b",1,0). action("a",1,"a",1,0). action("b",1,"z",0,2). %\label{actions1}
+action("b",0,"z",1,2). action("z",0,"a",0,1). %\label{actions2}
+\end{lstlisting}
+Line \ref{ASPsort} shows every sort of network with the predicate comes out and in parentheses the name of the sort. In line \ref{ASPprocess} there is a list of processes corresponding to each $sort$ for example the sort "$z$" has 3 process numbered from 0 to 2, this numbering is provided by the $2^{nd}$ parameter of the predicate $process("z", 0..2)$. Finally we find all network actions that are defined in lines \ref{actions1} and \ref{actions2}, for example the first action $action("a",0,"b",1,0)$ is an action from $a_0$ to $b_1$ to bound so $b$ from $b_1$ into $b_0$.
+\end{exemple}
+
+\subsection{Search of fixed points }
+Parler du point fixe et ses interrêts. \\
+Decrire la nouvelle méthode qui permettent de determiner les états stables d'un réseau 
+
+In fact we have to translate the definition of a stable state in a method developped in ASP. So first we eliminate all processes with self-hit and we save them in the predicate "$shownProcess$":
+\begin{lstlisting}
+hiddenProcess(A,I) :-  action(A,I,B,J,K), A=B ,process(A,I), process(B,J), process(B,K). %\label{hiddenProcess}
+shownProcess(A,I) :-  not hiddenProcess(A,I), process(A,I). %\label{shownProcess}
+\end{lstlisting}
+Then we have to browse this graph and extract all possible combinations of shown processes by choosing a process from each sort.
+\begin{lstlisting}
+1 { selectProcess(A,I) : showProcess(A,I) } 1 :- sort(A).
+\end{lstlisting}
+It now remains to check each combination of processes whether it is a fix point. For this we use a special type of ASP rules: a \textbf{constraint}. The idea of constraints is based on the fact that a solution would be eliminated if it does not satisfy the constraint. For our problem a combination is eliminated if there is an action between two of the selected process:
+\begin{lstlisting}
+:- hit(A,I,B,J), selectProcess(A, I), selectProcess(B, J), A!= B. %\label{contraintFix}
+\end{lstlisting}
+
+\begin{example*}
+Considering the last graphical presentation of a precess hitting \pref{fig:ph}, there are 3 sorts $a$, $b$ have 2 levels and $z$ has 3 so we can find $2*2*3 = 12$ states (whatever they can be reached or not). If we verify wether there exist fixed points we deduce that we have only one: $<b\_0, z\_2, a\_0>$. It is clear in \pref{fig:ph} that there is no action between each two processes. Besides our new ASP method proof this and returns also the same answer:
+\begin{tabbing}
+ \texttt{
+ Answer 1 : fixProcess(a, 0), fixProcess(b, 0), fixProcess(z, 2)
+ }
+\end{tabbing}
+\end{example*}
