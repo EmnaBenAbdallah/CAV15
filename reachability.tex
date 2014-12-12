@@ -1,0 +1,38 @@
+%Section: Dynamic network evolution
+
+In this section, we will present firstly how to determine using ASP the possible evolution of a biological network after a finite number of steps. Then we answer to the reachability question; which evolutions that allow the achievement of goals (future active processes) from a known initial state?
+
+\subsection{Future states identification }
+From an initial known state, a PH network can evolve into several new states after a few steps. The predicate $"time (0 .. n)"$ sets the number of steps we want to play. For example if the biologist wants to know which states are reachable after 10 stages, it has only to replace $n$ by 10, and he will have $"time (0 .. 10)"$. To compute the future states it is necessary to define an initial state of the network. So for initializing the active processes we add in the ASP script representing the PH network the following rule for each sort. We note that this rules are generated automatically at the time of translating PH network to ASP and by default the level of all active processes is $0$.\\
+\begin{lstlisting}
+init(activeProcess("a",0)).
+\end{lstlisting}
+with $a$ is the name of the sort and $0$ the index of the active process.\\
+The dynamic of a network is realised thanks to its actions. So to identify the future states we should start by identifying the playable actions for each state. We recall that an action is playable when both precesses: hitter and taget are active (Definition \ref{def:playableAction}). In ASP the predicate $"playableAction(A,I,B,J,K,T)"$ it is true when the processes $(A,I)$ and $(B,J)$ are active at the step $T$.
+Our approch is to study the asynchronous dynamic so only one action is playable at the same step ($T$). That's why between two successive states there will be one change of one sort. We present this by the predicate $"activeFromTo(B,J,K,T)"$. It means that in the sort $B$ the active process change from index $J$ to $K$ at time step $T$.
+At the same step we can find many possible changes , that's why the rule (line \ref{e2}) offers a set of all these possible changes thanks to braces.
+In fact the rule is encoded with a count atom at its head, which makes it a choice rule. Rule in line \ref{e3} filters any answer with more than 1 change at the same time $T$ to ensure the asynchronous evolution.
+\begin{lstlisting}
+{activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T), instate(activeProcess(A,I),T),
+instate(activeProcess(B,J),T), J!=K, time(T). %\label{e2}
+:- 2{ activeFromTo(B,J,K,T)}, time(T). %\label{e3}
+\end{lstlisting}
+
+In order to determinate the next active processes at $T+1$ we use the following rules :
+\begin{lstlisting}
+instate(activeProcess(B,K),T+1) :-  activeFromTo(B,J,K,T), time(T). %\label{e4}
+instate(activeProcess(A,I),T+1) :-  instate(activeProcess(A,I),T), activeFromTo(B,J,K,T),
+A!=B, time(T). %\label{e5}
+\end{lstlisting}
+
+At the next step $T+1$ we find the new active process resulted from the predicate $activeFromTo$ (line \ref{e4}) as well as all the unchanged processes that correspond to the other sorts (line \ref{e5}).\\
+As a result it will be displayed all possible evolutions of the netwoks.
+\subsection{Reachability verification}
+\begin{itemize}
+
+
+\item \textbf{known steps number } 
+Parler de la méthode qui vérifie l'atteignabilité après un nombre fini de changements
+\item \textbf{unknown steps number: incremental approch (iclingo)}
+Parler de la méthode qui vérifie l'atteignabilité après un nombre indéfini de changements et qui retourne le chemin le plus court s'il existe pour atteindre ces objectifs
+\end{itemize}
