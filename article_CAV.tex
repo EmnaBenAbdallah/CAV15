@@ -1,5 +1,18 @@
-\documentclass{CAV}
 
+%%%%%%%%%%%%%%%%%%%%%%% file articleCAV.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Article à déposer pour CAV 2015
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[runningheads,a4paper]{llncs}
+
+\usepackage{amssymb}
+\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+
+%%%%%%%%%%%%%%%%%%%%% Packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{hyperref}
 
 \usepackage[english]{babel}
@@ -16,8 +29,8 @@
 \usepackage{array}   % Tableaux évolués
 \usepackage{comment}
 
-\newtheorem{exemple}{Exemple}
-\theoremstyle{remark} 
+%\newtheorem{exemple}{Exemple}
+%\theoremstyle{remark} 
 
 \usepackage{listings}
 % Définition du langage ASP
@@ -28,14 +41,17 @@ numbers=left,
 escapeinside={\%}{\^^M}
 }
 % Définition des styles de tous les listings du document
-\lstset{language=ASP,
-basicstyle=\small,
-columns=flexible,
+\lstset{
+language=ASP,
+basicstyle=\small\ttfamily,
+columns=fullflexible,
 keywordstyle=\bfseries,
-firstnumber=last
+firstnumber=last,
+keepspaces=true
 }
 \renewcommand{\thelstnumber}{\the\value{lstnumber}}
 %% fin définition
+
 
 \usepackage{prettyref}
 \newrefformat{def}{Definition~\ref{#1}}
@@ -50,8 +66,8 @@ firstnumber=last
 \newrefformat{eq}{Eq.~\eqref{#1}}
 \def\pref{\prettyref}
 
-%\spnewtheorem*{example*}{Example}{\itshape}{}
-\newtheorem*{example*}{Example}{\itshape}{}
+\spnewtheorem*{example*}{Example}{}{}
+%\newtheorem*{example*}{Example}{\itshape}{}
 
 \usepackage{tikz}
 \newdimen\pgfex
@@ -332,39 +348,71 @@ font=\footnotesize,inner sep=1pt]
 \newcommand{\ie}{i.e.\ }
 \newcommand{\resp}{resp.\ }
 
-% Césures
-\hyphenation{pa-ra-me-tri-za-tion}
-\hyphenation{pa-ra-me-tri-za-tions}
-
-\title{Exhaustive dynamic analysis of reachability and stable states of biological regulatory networks modeled in Process Hitting using Answer Set Programming}
-
-\author{%
-Emna Ben Abdallah
-\institute{ LUNAM Université, \'Ecole Centrale de Nantes,
- IRCCyN UMR CNRS 6597\\ (Institut de Recherche en Communications et Cybern\'etique de Nantes),\\
-  1 rue de la Noë, 44321 Nantes, France.}
-\email{emna.ben-abdallah@irccyn.ec-nantes.fr}
-\and
-Joint work with: 
-Olivier Roux,
-Morgan Magnin,
-Maxime Folschette
-}
-
-\def\titlerunning{Exhaustive search of dynamical properties in PH using Answer Set Programming}
-\def\authorrunning{E. Ben Abdallah, O. Roux, M. Magnin, M. Folschette,}
+%%%%%%%%%%%%%%%%%%%%% ARTICLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{url}
+\urldef{\mailsa}\path|{emna.ben-abdallah, olivier.roux, morgan.magnin,|
+\urldef{\mailsb}\path|maxime.folschette}@irccyn.ec-nantes.fr|    
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
 
 \begin{document}
 
+\mainmatter  % start of an individual contribution
+
+% The title
+\title{Exhaustive dynamic analysis \\ of reachability and stable states
+of biological regulatory networks modeled in Process Hitting \\
+using Answer Set Programming}
+
+% a short form should be given in case it is too long for the running head
+\titlerunning{Exhaustive analysis of biological regulatory networks using ASP}
+
+% the name(s) of the author(s) follow(s) next
+%
+% NB: Chinese authors should write their first names(s) in front of
+% their surnames. This ensures that the names appear correctly in
+% the running heads and the author index.
+%
+\author{Emna Ben Abdallah
+\and Olivier Roux \and Morgan Mangnin \and Maxime Folschette }
+%
+\authorrunning{Exhaustive analysis of biological networks using ASP}
+% (feature abused for this document to repeat the title also on left hand pages)
+
+% the affiliations are given next; don't give your e-mail address
+% unless you accept that it will be published
+\institute{LUNAM Université, \'Ecole Centrale de Nantes,
+ IRCCyN UMR CNRS 6597\\ (Institut de Recherche en Communications et Cybern\'etique de Nantes),\\
+  1 rue de la Noë, 44321 Nantes, France.\\
+\mailsa\\
+\mailsb\\
+\url{http://www.irccyn.ec-nantes.fr}}
+
+%
+% NB: a more complex sample for affiliations and the mapping to the
+% corresponding authors can be found in the file "llncs.dem"
+% (search for the string "\mainmatter" where a contribution starts).
+% "llncs.dem" accompanies the document class "llncs.cls".
+%
+
+\toctitle{Exhaustive analysis of PH using ASP}
+\tocauthor{Authors' Instructions}
 \maketitle
+
 
 \begin{abstract}
 The Process Hitting is a recently introduced framework to model concurrent processes.
 It is notably suitable to model biological regulatory networks with partial knowledge of co-
 operations by defining the most permissive dynamics.
 In this paper, we explain the methods we developped with ASP to find the fixed points or states states in which it is not possible any more to have evolutions of the model. We also aim at solving the problem of reachability that consists of deciding if,
-starting from a given initial state, it is possible to reach a given local state. Finally, we illustrate the merits of our methods by applying them to various biological examples ans comparing the results with eexisted aproches. We show that our approach succeeds in processing large models.% (encompassing more than 50 components).
+starting from a given initial state, it is possible to reach a given local state. Finally, we illustrate the merits of our methods by applying them to various biological examples ans comparing the results with eexisted aproches. We show that our approach succeeds in processing large models.
+
+%The abstract should summarize the contents of the paper and should
+%contain at least 70 and at most 150 words. It should be written using the
+%\emph{abstract} environment.
+\keywords{Process Hitting, stable states, fix points, reachability, Answer Set Programming}
 \end{abstract}
+
 
 \section{Introduction}
 \input{intro}
@@ -386,7 +434,35 @@ starting from a given initial state, it is possible to reach a given local state
 \subsection{Limitation}
 
 \section{Conclusion and future directions}
-\bibliographystyle{plain}
-  \bibliography{biblio}
+
+\bibliographystyle{slncp} 
+\bibliography{biblio}
+
+%\begin{thebibliography}{4}
+%
+%\bibitem{jour} Smith, T.F., Waterman, M.S.: Identification of Common Molecular
+%Subsequences. J. Mol. Biol. 147, 195--197 (1981)
+%
+%\bibitem{lncschap} May, P., Ehrlich, H.C., Steinke, T.: ZIB Structure Prediction Pipeline:
+%Composing a Complex Biological Workflow through Web Services. In: Nagel,
+%W.E., Walter, W.V., Lehner, W. (eds.) Euro-Par 2006. LNCS, vol. 4128,
+%pp. 1148--1158. Springer, Heidelberg (2006)
+%
+%\bibitem{book} Foster, I., Kesselman, C.: The Grid: Blueprint for a New Computing
+%Infrastructure. Morgan Kaufmann, San Francisco (1999)
+%
+%\bibitem{proceeding1} Czajkowski, K., Fitzgerald, S., Foster, I., Kesselman, C.: Grid
+%Information Services for Distributed Resource Sharing. In: 10th IEEE
+%International Symposium on High Performance Distributed Computing, pp.
+%181--184. IEEE Press, New York (2001)
+%
+%\bibitem{proceeding2} Foster, I., Kesselman, C., Nick, J., Tuecke, S.: The Physiology of the
+%Grid: an Open Grid Services Architecture for Distributed Systems
+%Integration. Technical report, Global Grid Forum (2002)
+%
+%\bibitem{url} National Center for Biotechnology Information, \url{http://www.ncbi.nlm.nih.gov}
+%
+%\end{thebibliography}
+
 
 \end{document}
