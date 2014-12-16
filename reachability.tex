@@ -13,16 +13,17 @@ Our approch is to study the asynchronous dynamic so only one action is playable 
 At the same step we can find many possible changes , that's why the rule (line \ref{e2}) offers a set of all these possible changes thanks to braces.
 In fact the rule is encoded with a count atom at its head, which makes it a choice rule. Rule in line \ref{e3} filters any answer with more than 1 change at the same time $T$ to ensure the asynchronous evolution.
 \begin{lstlisting}
-{activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T), instate(activeProcess(A,I),T),
-instate(activeProcess(B,J),T), J!=K, time(T). %\label{e2}
+{activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T),
+          instate(activeProcess(A,I),T), instate(activeProcess(B,J),T),
+          J!=K, time(T). %\label{e2}
 :- 2{ activeFromTo(B,J,K,T)}, time(T). %\label{e3}
 \end{lstlisting}
 
 In order to determinate the next active processes at $T+1$ we use the following rules :
 \begin{lstlisting}
 instate(activeProcess(B,K),T+1) :-  activeFromTo(B,J,K,T), time(T). %\label{e4}
-instate(activeProcess(A,I),T+1) :-  instate(activeProcess(A,I),T), activeFromTo(B,J,K,T),
-A!=B, time(T). %\label{e5}
+instate(activeProcess(A,I),T+1) :-  instate(activeProcess(A,I),T),
+          activeFromTo(B,J,K,T), A!=B, time(T). %\label{e5}
 \end{lstlisting}
 
 At the next step $T+1$ we find the new active process resulted from the predicate $activeFromTo$ (line \ref{e4}) as well as all the unchanged processes that correspond to the other sorts (line \ref{e5}).\\
