@@ -12,8 +12,7 @@
 \BOOKMARK [1][-]{section.1.4}{Dynamic network evolution }{chapter.1}% 12
 \BOOKMARK [2][-]{subsection.1.4.1}{Future states identification }{section.1.4}% 13
 \BOOKMARK [2][-]{subsection.1.4.2}{Reachability verification}{section.1.4}% 14
-\BOOKMARK [1][-]{section.1.5}{Experiments analysis}{chapter.1}% 15
-\BOOKMARK [2][-]{subsection.1.5.1}{Benchmarks }{section.1.5}% 16
-\BOOKMARK [2][-]{subsection.1.5.2}{Evaluation}{section.1.5}% 17
-\BOOKMARK [2][-]{subsection.1.5.3}{Limitation}{section.1.5}% 18
-\BOOKMARK [1][-]{section.1.6}{Conclusion and future directions}{chapter.1}% 19
+\BOOKMARK [1][-]{section.1.5}{Comparative performance analysis}{chapter.1}% 15
+\BOOKMARK [2][-]{subsection.1.5.1}{Evaluation}{section.1.5}% 16
+\BOOKMARK [2][-]{subsection.1.5.2}{Limitation}{section.1.5}% 17
+\BOOKMARK [1][-]{section.1.6}{Conclusion and future directions}{chapter.1}% 18

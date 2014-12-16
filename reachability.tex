@@ -13,26 +13,36 @@ Our approch is to study the asynchronous dynamic so only one action is playable 
 At the same step we can find many possible changes , that's why the rule (line \ref{e2}) offers a set of all these possible changes thanks to braces.
 In fact the rule is encoded with a count atom at its head, which makes it a choice rule. Rule in line \ref{e3} filters any answer with more than 1 change at the same time $T$ to ensure the asynchronous evolution.
 \begin{lstlisting}
-{activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T), instate(activeProcess(A,I),T),
-instate(activeProcess(B,J),T), J!=K, time(T). %\label{e2}
+{activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T),
+          instate(activeProcess(A,I),T), instate(activeProcess(B,J),T),
+          J!=K, time(T). %\label{e2}
 :- 2{ activeFromTo(B,J,K,T)}, time(T). %\label{e3}
 \end{lstlisting}
 
 In order to determinate the next active processes at $T+1$ we use the following rules :
 \begin{lstlisting}
 instate(activeProcess(B,K),T+1) :-  activeFromTo(B,J,K,T), time(T). %\label{e4}
-instate(activeProcess(A,I),T+1) :-  instate(activeProcess(A,I),T), activeFromTo(B,J,K,T),
-A!=B, time(T). %\label{e5}
+instate(activeProcess(A,I),T+1) :-  instate(activeProcess(A,I),T),
+          activeFromTo(B,J,K,T), A!=B, time(T). %\label{e5}
 \end{lstlisting}
 
 At the next step $T+1$ we find the new active process resulted from the predicate $activeFromTo$ (line \ref{e4}) as well as all the unchanged processes that correspond to the other sorts (line \ref{e5}).\\
 As a result it will be displayed all possible evolutions of the netwoks.
 \subsection{Reachability verification}
-\begin{itemize}
+In this section, we focus on the reachability of a process which corresponds to the question \cite{def:reachability} :\\
+“Is it possible, starting from a given initial state, to play a number of actions so that a given processes are active in the resulting state?”
 
-
-\item \textbf{known steps number } 
-Parler de la méthode qui vérifie l'atteignabilité après un nombre fini de changements
-\item \textbf{unknown steps number: incremental approch (iclingo)}
-Parler de la méthode qui vérifie l'atteignabilité après un nombre indéfini de changements et qui retourne le chemin le plus court s'il existe pour atteindre ces objectifs
-\end{itemize}
+\noindent Now we try to adapt the code of network evolution to resolve the reachability problem. First we define a predicate for the objective processes we call it $"goal"$, we add a rule with this predicate to the script defining the PH :
+\begin{lstlisting}
+goal(activeProcess("a",1)). %\label{c1}
+\end{lstlisting}
+The rule line \ref{c1} verifies if after the network evolution, its state satisfies the goals at step $T$. Else the answer will be eliminated.
+\begin{lstlisting}
+satisfiable(F,T) :-  goal(F), instate(F,T). %\label{c2}
+\end{lstlisting}
+The limitation of this method is that the user has to choose the number of steps of the evolution. It is an disadvantage because a search in N steps will find no solution if the shortest path to solve the rechability requires N+1 steps. The solution is to use the incremental computation mode ( \textsc{iclingo} \cite{gebser2008user}).
+So we have almost the same program expect for incremental step numbers. In each step t, the program computes the playable actions $playableAction(A,I,B,J,K,t)$,the possible change $activeFromTo(B,J,K,t-1)$ and the new active processes for the next step $instate(activeProcess(A,I),t+1)$. Regarding the part of local steps we use a special constraint (rule \textbf{c4}) that means that the program should continue to the next step if it's not satisfiable so that we eliminate responses that do not meet the goals.
+\begin{lstlisting}
+notSatisfiable(t) :-  goal(F), not instate(F,t). %\label{c3}
+:- notSatisfiable(t). %\label{c4}
+\end{lstlisting}

@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{Glimpse}
 Christian Anger, Kathrin Konczak, Thomas Linke, and Torsten Schaub.
@@ -11,22 +11,86 @@ Chitta Baral.
   solving}.
 \newblock Cambridge university press, 2003.
 
+\bibitem{colange2013towards}
+Maximilien Colange, Souheib Baarir, Fabrice Kordon, and Yann Thierry-Mieg.
+\newblock Towards distributed software model-checking using decision diagrams.
+\newblock In {\em Computer Aided Verification}, pages 830--845. Springer, 2013.
+
+\bibitem{gebser2008user}
+Martin Gebser, Roland Kaminski, Benjamin Kaufmann, Max Ostrowski, Torsten
+  Schaub, and Sven Thiele.
+\newblock A user’s guide to gringo, clasp, clingo, and iclingo, 2008.
+
+\bibitem{gonzalez2006ginsim}
+A~Gonzalez Gonzalez, Aur{\'e}lien Naldi, Lucas Sanchez, Denis Thieffry, and
+  Claudine Chaouiya.
+\newblock Ginsim: a software suite for the qualitative modelling, simulation
+  and analysis of regulatory networks.
+\newblock {\em Biosystems}, 84(2):91--100, 2006.
+
 \bibitem{AnsPrologAPE}
 Robert Ibbotson.
 \newblock Extending and continuing the development of an integrated development
   environment for answer set programming.
 \newblock Master's thesis, University of Bath, 2010.
 
+\bibitem{khalis2009smbionet}
+Zohra Khalis, Jean-Paul Comet, Adrien Richard, and Gilles Bernot.
+\newblock The smbionet method for discovering models of gene regulatory
+  networks.
+\newblock {\em Genes, Genomes and Genomics}, 3(1):15--22, 2009.
+
+\bibitem{Klamt06}
+Steffen Klamt, Julio Saez-Rodriguez, Jonathan Lindquist, Luca Simeoni, and
+  Ernst Gilles.
+\newblock A methodology for the structural and functional analysis of signaling
+  and regulatory networks.
+\newblock {\em BMC Bioinformatics}, 7(1):56, 2006.
+
 \bibitem{Vladimir}
 Vladimir Lifschitz.
 \newblock Answer set programming and plan generation.
 \newblock {\em Artificial Intelligence}, 138(1):39--54, 2002.
+
+\bibitem{naldi2009logical}
+Aur{\'e}lien Naldi, Duncan Berenguier, Adrien Faur{\'e}, Fabrice Lopez, Denis
+  Thieffry, and Claudine Chaouiya.
+\newblock Logical modelling of regulatory networks with ginsim 2.3.
+\newblock {\em Biosystems}, 97(2):134--139, 2009.
+
+\bibitem{naldi2007decision}
+Aur{\'e}lien Naldi, Denis Thieffry, and Claudine Chaouiya.
+\newblock Decision diagrams for the representation and analysis of logical
+  models of genetic networks.
+\newblock In {\em Computational Methods in Systems Biology}, pages 233--247.
+  Springer, 2007.
 
 \bibitem{pauleve2011modelisation}
 Lo{\"\i}c Paulev{\'e}.
 \newblock {\em Mod{\'e}lisation, Simulation et V{\'e}rification des Grands
   R{\'e}seaux de R{\'e}gulation Biologique}.
 \newblock PhD thesis, École centrale de nantes, 2011.
+
+\bibitem{roccaasp}
+Alexandre Rocca, Nicolas Mobilia, {\'E}ric Fanchon, Tony Ribeiro, Laurent
+  Trilling, and Katsumi Inoue.
+\newblock Asp for construction and validation of regulatory biological
+  networks.
+\newblock In Luis~Fariñas del Cerro and Katsumi Inoue, editors, {\em Logical
+  Modeling of Biological Systems}, pages 167--206. Wiley-ISTE, 2014.
+
+\bibitem{Samaga2009}
+Regina Samaga, Julio Saez-Rodriguez, Leonidas~G Alexopoulos, Peter~K. Sorger,
+  and Steffen Klamt.
+\newblock The logic of egfr/erbb signaling: Theoretical properties and analysis
+  of high-throughput data.
+\newblock {\em PLoS Computational Biology}, 5(8):e1000438, 2009.
+
+\bibitem{thierry2009hierarchical}
+Yann Thierry-Mieg, Denis Poitrenaud, Alexandre Hamez, and Fabrice Kordon.
+\newblock Hierarchical set decision diagrams and regular models.
+\newblock In {\em Tools and Algorithms for the Construction and Analysis of
+  Systems}, pages 1--15. Springer, 2009.
 
 \bibitem{wuensche1998genomic}
 Andrew Wuensche.
