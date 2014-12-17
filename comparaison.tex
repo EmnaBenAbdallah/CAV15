@@ -2,14 +2,12 @@ In this section, we show the effectiveness of our approach on some examples. All
 computations were performed on a Pentium V, 3.2 GHz with 4 GB RAM.
 
 \subsection{Evaluation}
-It should be noted that the only reachability analysis developed so far on the Process Hitting networks was implemented in the software Pint, and consists in an approximation: it is possible that it terminates but remains inconclusive (although this is rare). Moreover, it currently does not give us the path to activate the goal. But we also note that there are other methods or softwares for dynamical analysis applied to other biological network models.
+To know the effectiveness of our new approach, we had to position ourselves against existing methods dealing with different biological network models. We have chosen the more known methods: GINsim (Gene Interaction Network
+Simulation)\cite{gonzalez2006ginsim}, \cite{naldi2009logical} and \cite{naldi2007decision}, LIBDDD (Library of Data Decision
+Diagrams) \cite{thierry2009hierarchical} and \cite{colange2013towards}, Rocca's et al. method \cite{roccaasp} and PINT \cite{pauleve2011modelisation}.
+Each method use a specific model, we find logical regulatory network for GINsim , Instantiable Transition Systems for LIBDDD  and state transition network for Rocca's et al. method \cite{roccaasp}.\\
+For our comparative study we chose organic network of different sizes. As mentioned each method is applied on a specific model and translation into these models from the PH network or viceversa is done thanks to PINT.
 
-We define the models used for each methos, logical regulatory network for GINsim (Gène Interaction Network
-Simulation) \cite{gonzalez2006ginsim}, \cite{naldi2009logical} and \cite{naldi2007decision}, Instantiable Transition Systems for libddd (Library of Data Decision
-Diagrams) \cite{thierry2009hierarchical} and \cite{colange2013towards} and state transition network for Rocca's et al. method \cite{roccaasp}.
-
-For our comparative study we chose organic network of different sizes. As mentioned each method is applied on a specific model and translation into these models from the PH network or viceversa is done thanks to PINT \cite{pauleve2011modelisation}.
-The following table prensents the comparisons run for 4 reachability analysis methods  applied to large examples:
 \begin{center}
 
 \begin{figure}
@@ -19,11 +17,13 @@ The following table prensents the comparisons run for 4 reachability analysis me
   \hline
    Model& \#procs & \#states & target & Rocca & libddd & GINsim & ASP \\
   \hline
+%   & \multicolumn{7}{l|}{Reachability}\\
+%  \hline
   tetard \cite{khalis2009smbionet} & 42 & $2^{19}$ & process & 7m17.01s & XX & XX & 0m01.90s \\
   \hline
   ERBB\_G1-S \cite{Samaga2009}  & 152 & $2^{70}$ & state & - &1m55.38s & 2m01.64s & 0m11.84s \\
   \hline
-  ERBB\_G1-S & 52 & $2^{70}$ & process & - &1m54.96s & - & 0m05.02s \\
+  ERBB\_G1-S & 152 & $2^{70}$ & process & - &1m54.96s & - & 0m05.02s \\
   \hline
   TCRsig40 \cite{Klamt06} & 156 & $2^{73}$ & process & - & out & out & 0m05.02s \\
   \hline
@@ -32,17 +32,27 @@ The following table prensents the comparisons run for 4 reachability analysis me
 }
 \end{figure}
 \end{center}
+This table prensents the comparisons run for 4 dynamic analysis methods applied to examples of biological regulatory networks. The models of these networks where chosen as being representative of different scales, large networks and small networks.
+This table shows the effectiveness of our method compared to existing. In fact we develop in the sequel that our method provides more compared to other
 
-This table shows the effectiveness of our method compared to existing. In fact if we start by talking about Rocca's method, actually it offers the possibility to verify all model checking properties (LTL et CTL) for transition state networks. But we note that it is very difficult to write a transition state network in ASP, for example the network of tetard \cite{khalis2009smbionet} only 42 processes, take 3 minutes to be translated from PH. 
+\begin{itemize}
 
-Second the \textsc{libddd} 
+\item[--] \textbf{Rocca's method :} It offers the possibility to verify model-checking CTL properties of transition state networks. But we note that it is very difficult to write a transition state network in ASP, for example the network of tetard \cite{khalis2009smbionet} with only 42 processes, take 3 minutes to be translated from PH network.
 
-Third the \textsc{GINsim} is an analysis software and simulation of genetic interaction networks. It computes the stable states instantly as welle as our ASP method do it instantly.The difference that \textsc{GINsim} does not return all stable states but only reachable ones. Regarding the reachability problem, its approach is to calculate all the transition state graph and then check if there is a path between two given states. Thus it is necessary to have the entire network transition states and both initial and final states to determine the path. It was indicated in the third line of the table \ref{tab:reachability} that GINsim could not solve the problem because it is not possible to check the reachability of just one or a few components of the network indeed must be given a final state.
+\item[--] \textbf{\textsc{GINsim} :} It is an analysis software and simulation of genetic interaction networks. It computes the stable states instantly as welle as our ASP method do it instantly.The difference that \textsc{GINsim} does not return all stable states but only reachable ones. Regarding the reachability problem, its approach is to calculate all the transition state graph and then check if there is a path between two given states. But the large network transition state cannot be displayed. In order to determine the path it is necessary to have the entire network transition states and both initial and final states. It was indicated in the third line of the table \ref{tab:reachability} that GINsim could not solve the problem because it is not possible to check the reachability of just one or a few components of the network indeed must be given a final state. 
 
-%We propose to evaluate the over-approximation
-%due to our way of handling hybrid dynamics. For that purpose, we consider
-%the 5-dimensional linear differential
+\item[--] \textbf{\textsc{libddd} :}
+This is a library for model-checking (CTL, LTL and reachability). It returns the answer "True" or "False" after verfying the reachability. However our approach is used to return the activation path of the affected components. In addition it is clear that \textsc{libddd} put much time to respond (23 times slower to example line 3 of the table). That's why for the big examples ($2^{73}$ states) we don't have a response even after 12 minutes but we get it in less than 2 minutes by using the ASP method. Also the \textsc{libddd} do not compute the stable states of a network.
 
-%\subsection{Benchmarks }
+\item[--] \textbf{PINT : }It should be noted that the only reachability analysis developed so far on the Process Hitting networks was implemented in the software Pint, and consists in an approximation: it is possible that it terminates but remains inconclusive (although this is rare). Moreover, it currently does not give us the path to activate the goal.
+\end{itemize}
 
 \subsection{Limitation}
+
+We developped new methods for the dynamic properties, 
+identifying stable states and finding all possible paths to reach states. Comparing with other methods (Rocca's method, \textsc{GINsim} and \textsc{libddd}) is relatively faster and also permit to edit larger networks (about $2^{73}$ states) but we had also some inconclusif cases. In fact the program is inconclusif if the state is not reachable and there is some loops in the graph so the program may turn indefinitely in one of these loops since it is not possible to achieve the goals or to stop the calculation. We then proposed in this case to limit the increment to a maximum number that can be reached in the case of an endless loop and which may not be in the case where the targets are verified.
+\begin{tabbing}
+ \texttt{ iClingo find\_path.lp <network\_name>.lp --imax=n}
+\end{tabbing}
+Should be given some interesting values for this integer $ n $, which sets the maximum number of steps. For example, the total number of states is a maximum (it will never be exceeded by a minimum path). However, it can reduce the number of sorts if it is assumed that one type will be changed by step (which is often the case of Boolean networks) or the number of shares with the same assumption.
+Note that if in a way the goal is reached after a time $n$, the calculation stops and displays this path as solution. 
