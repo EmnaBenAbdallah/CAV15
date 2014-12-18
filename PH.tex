@@ -15,14 +15,14 @@ The concurrent interactions between processes are defined by a set of \emph{acti
 Actions describe the replacement of a process by another of the same sort
 conditioned by the presence of at most one other process in the current state.
 An action is denoted by $\PHfrappe{a_i}{b_j}{b_k}$, which is read as
-``$a_i$ \emph{hits} $b_j$ to make it bounce to $b_k$'',
+``$a_i$ \emph{hits} $b_j$ to make it \emph{bounce} to $b_k$'',
 where $a_i,b_j,b_k$ are processes of sorts $a$ and $b$,
 called respectively \emph{hitter}, \emph{target} and
 \emph{bounce} of the action.
 We also call a \emph{self-hit} any action whose hitter and target sorts are the same,
 that is, of the form: $\PHfrappe{a_i}{a_i}{a_k}$.
 
-\begin{definition}[Process Hitting]\label{def:PH}
+\begin{definition}[Process Hitting]\label{def:PH} \\
   A \emph{Process Hitting} is a triple $(\PHs,\PHl,\PHa)$:
   \begin{itemize}
     \item[--]  $\PHs = \{a,b,\dots\}$ is the finite set of \emph{sorts};
@@ -36,12 +36,12 @@ that is, of the form: $\PHfrappe{a_i}{a_i}{a_k}$.
   \end{itemize}
 \end{definition}
 
-\begin{definition}[Action]
-\label{def:PhAction}
-An action is noted $\PHfrappe{a_i}{b_j}{b_k}$ where $a_i$ is a process
-of sort $a$ and $b_j$, $b_k$ two processes of sort $b$. When $a_i = b_j$ , such an action is refered as a self-action and $a_i$
-is called a self-hitting process.
-\end{definition}
+%\begin{definition}[Action]
+%\label{def:PhAction}
+%An action is noted $\PHfrappe{a_i}{b_j}{b_k}$ where $a_i$ is a process
+%of sort $a$ and $b_j$, $b_k$ two processes of sort $b$. When $a_i = b_j$ , such an action is refered as a self-action and $a_i$
+%is called a self-hitting process.
+%\end{definition}
 
 \begin{example*}
 \pref{fig:ph} represents a PH $(\PHs,\PHl,\PHa)$ with three sorts
@@ -79,29 +79,48 @@ $\PHl_c = \{c_0, c_1\}$.
 \TState{a_0,b_0,z_1}
 \end{tikzpicture}
 \caption{\label{fig:ph} 
-A PH model example with three sorts: $a$, $b$ and $z$($a$ is either at level 0 or 1, $b$ at either level 0 or 1 and $z$ at either level 0, 1 or 2).
-Circles represent the processes, boxes represent the sorts, and the actions are drawn by pairs of arrows in solid and dotted lines.The grayed processes stand for a possible initial state.
+A PH model example with three sorts: $a$, $b$ and $z$ ($a$ is either at level 0 or 1, $b$ at either level 0 or 1 and $z$ at either level 0, 1 or 2). Boxes represent the \emph{sorts} (network components), circles represent the \emph{processes} (component levels), and the 4 \emph{actions} that assure the dynamic behavior are drawn by pairs of arrows in solid and dotted lines. The grayed processes stand for a possible initial state.
 }
 \end{figure}
-
 \end{example*}
+A network state is a set of active processes and there is a single process for each kind. In a state $ s \in \PHl$, we say that a process $ a_i \in s$ with $ a $ the name of the sort and $ i $ the level of this sort at this state, and we denote by $s[a]= a_i$.
+
+\begin{definition} [Playable action]
+\label{def:playableAction}\\
+Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and $s \in \PHl$ a state of $PH$. We say that the action $h = \PHfrappe{a_i}{b_j}{b_k} \in \PHa$ is playable at the state $s$ if and only if $hitter(h)=a_i ~ \in s$ and $target(h)=b_j \in s$ (i.e $s[a]=a_i$ et $s[b]=b_j$ ) \\
+
+\end{definition}
+
+The resulting state after playing an action $h$ at an initial state $s$ is denoted by $(s \play h)$ or $(s \play h)[b]=b_k$ and $\forall c \in \PHs, ~ c \neq b, (s \play h)[c]=s[c].$
+
+\subsection*{Dynamic properties}
+
+The study of the dynamics of biological networks was the focus of many researchers, justifying the diversity of network modelisations and the different methods developed in order to verify the dynamic properties. In this paper we present 2 properties: the stable state and the reachability. We develop in this section these properties and how they could be verified in PH network. 
+
+The dynamic of a network or its evolution is realised through its actions. In fact when an action $h = \PHfrappe{a_i}{b_j}{b_k}$ is played at a state $s$, the network evolves to the next state results $s'$. We found so in the state $s'$ all processes of $s$ with the replacement of process $b_j=cible(h)$ by $b_k=bond(h)$.
 
 \begin{definition}[Next state]
-\label{def:NextState}
+\label{def:NextState} \\
 Let $(\PHs,\PHl,\PHa)$ be a Process Hitting and $s \in \PHl$ be
 one of its states. The set of the next possible states for $s$ are computed as follows:
 \begin{center}
 $next(s) = {s[b_k /b_j ]| \exists (a i , b j ) \in s^2 , \exists b_k \in \PHl_b , \PHfrappe{a_i}{b_j}{b_k} \in \PHa}$
 \end{center}
-
 \end{definition}
 
-\begin{definition}[Stable state or fixed point]
+We call the set of succession of actions ($h_0 \play h_1 \play h_2...$) from a state $ s_0 $ a \emph{scenario} noted $\Sce(s_0)$ corresponding to the succession of states ($s_0 \mapsto s_1 \mapsto s_2 ...$).
+
+\begin{definition}[Stable state or fixed point] \\
 \label{def:FixPoint1}
 Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
-$s \in \PHl$ be a state, $s$ is a stable state for $PH$ if and only if $next(s) = \emptyset $.
+$ \{s_0,..., s_n\} \in \PHl$ be state, $s_n$ is a stable state for $PH$ if and only if $next(s_n) = \emptyset $.
+\begin{center}
+$s_0 \mapsto s_1 ... \mapsto s_n \mapsto \emptyset $
+\end{center}
 \end{definition}
-\begin{definition}[Lemme: Stable state or fixed point]
+
+\begin{definition}
+[Lemme: Stable state or fixed point]
 \label{def:FixPoint2}
 Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
 $s \in \PHl$ be a state, $s$ is a stable state for $PH$ there is no playable action at the state $s$: 
@@ -113,16 +132,12 @@ $\forall h \in \PHa$, $frappeur(h) ~ \notin s ~ \vee ~ cible(h) \notin s$)
 \begin{definition}[Reachability question]
 \label{def:reachability}
 
- If $\ctx \in \PHl$ is a state and $A \in \Proc$ a set of processes, we note $\mathcal{P}(\ctx, A)$ pour \emph{la question d'accessibilité}:
+ If $s \in \PHl$ is a state and $A \in \Proc$ a set of processes, we note $\mathcal{P}(s, A)$ for the \emph{the reachability question}:
  \begin{center}
-  $\exists? \delta \in \Sce(\ctx), A \subseteq \PHget(\ctx \play \delta) $ (i.e $\forall a_i \in A, \PHget{(\ctx \play \delta)}{a}=a_i$).
+  $\exists? \delta \in \Sce(s), A \subseteq \PHget(s \play \delta) $ (i.e $\forall a_i \in A, \PHget{(s \play \delta)}{a}=a_i$).
  \end{center}
-With $\Sce(\ctx)$ 
-is the set of successively playable actions from the state $\ctx$. 
+with $\Sce(s)$ 
+is the set of successively playable actions from the state $s$. 
 \end{definition}
 
-\begin{definition} [Playable action]
-\label{def:playableAction}
-Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and $s \in \PHl$ a state of $PH$. We say that the action $h = \PHfrappe{a_i}{b_j}{b_k} \in \PHa$ is playable at the state $s$ if and only if $hitter(h)=a_i ~ \in s$ and $target(h)=b_j \in s$ (i.e $s[a]=a_i$ et $s[b]=b_j$ ) \\
-The resulting state after playing the action $h$ at $s$ is denoted by $(s \play h)$ or $(s \play h)[b]=b_k$ and $\forall c \in \PHs, ~ c \neq b, (s \play h)[c]=s[c].$
-\end{definition}
+
