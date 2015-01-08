@@ -15,8 +15,8 @@ The concurrent interactions between processes are defined by a set of \emph{acti
 Actions describe the replacement of a process by another of the same sort
 conditioned by the presence of at most one other process in the current state.
 An action is denoted by $\PHfrappe{a_i}{b_j}{b_k}$, which is read as
-``$a_i$ \emph{hits} $b_j$ to make it \emph{bounce} to $b_k$'',
-where $a_i,b_j,b_k$ are processes of sorts $a$ and $b$,
+"$a_i$ \emph{hits} $b_j$ to make it \emph{bounce} to $b_k$",
+where $a_i$, $b_j$, $b_k$ are processes of sorts $a$ and $b$,
 called respectively \emph{hitter}, \emph{target} and
 \emph{bounce} of the action.
 We also call a \emph{self-hit} any action whose hitter and target sorts are the same,
@@ -110,7 +110,7 @@ $next(s) = {s[b_k /b_j ]| \exists (a i , b j ) \in s^2 , \exists b_k \in \PHl_b 
 
 We call the set of succession of actions ($h_0 \play h_1 \play h_2...$) from a state $ s_0 $ a \emph{scenario} noted $\Sce(s_0)$ corresponding to the succession of states ($s_0 \mapsto s_1 \mapsto s_2 ...$).
 
-\begin{definition}[Stable state or fixed point] \\
+\begin{definition}[Stable state or fix point] \\
 \label{def:FixPoint1}
 Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
 $ \{s_0,..., s_n\} \in \PHl$ be state, $s_n$ is a stable state for $PH$ if and only if $next(s_n) = \emptyset $.
@@ -120,7 +120,7 @@ $s_0 \mapsto s_1 ... \mapsto s_n \mapsto \emptyset $
 \end{definition}
 
 \begin{definition}
-[Lemme: Stable state or fixed point]
+[Lemma: Stable state or fix point] \\
 \label{def:FixPoint2}
 Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
 $s \in \PHl$ be a state, $s$ is a stable state for $PH$ there is no playable action at the state $s$: 

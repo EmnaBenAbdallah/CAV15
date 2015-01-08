@@ -3,15 +3,15 @@
 In this section, we will present firstly how to determine using ASP the possible evolution of a biological network after a finite number of steps. Then we answer to the reachability question; which evolutions that allow the achievement of goals (future active processes) from a known initial state?
 
 \subsection{Future states identification }
-From an initial known state, a PH network can evolve into several new states after a few steps. The predicate $"time (0 .. n)"$ sets the number of steps we want to play. For example if the biologist wants to know which states are reachable after 10 stages, it has only to replace $n$ by 10, and he will have $"time (0 .. 10)"$. To compute the future states it is necessary to define an initial state of the network. So for initializing the active processes we add in the ASP script representing the PH network the following rule for each sort. We note that this rules are generated automatically at the time of translating PH network to ASP and by default the level of all active processes is $0$.\\
+From an initial known state, a PH network can evolve into several new states after a few steps. The predicate \texttt{"time (0 .. n)"} sets the number of steps we want to play. For example if the biologist wants to know which states are reachable after 10 stages, it has only to replace \texttt{"n"} by 10, and he will have \texttt{"time (0 .. 10)"}. To compute the future states it is necessary to define an initial state of the network. So for initializing the active processes we add in the ASP script representing the PH network the following rule for each sort. We note that this rules are generated automatically at the time of translating PH network to ASP and by default the level of all active processes is $0$.\\
 \begin{lstlisting}
 init(activeProcess("a",0)).
 \end{lstlisting}
-with $a$ is the name of the sort and $0$ the index of the active process.\\
-The dynamic of a network is realised thanks to its actions. So to identify the future states we should start by identifying the playable actions for each state. We recall that an action is playable when both precesses: hitter and taget are active (Definition \ref{def:playableAction}). In ASP the predicate $"playableAction(A,I,B,J,K,T)"$ it is true when the processes $(A,I)$ and $(B,J)$ are active at the step $T$.
-Our approch is to study the asynchronous dynamic so only one action is playable at the same step ($T$). That's why between two successive states there will be one change of one sort. We present this by the predicate $"activeFromTo(B,J,K,T)"$. It means that in the sort $B$ the active process change from index $J$ to $K$ at time step $T$.
+with \texttt{"a"} is the name of the sort and\texttt{"0"} the index of the active process.\\
+The dynamic of a network is realised thanks to its actions. So to identify the future states we should start by identifying the playable actions for each state. We recall that an action is playable when both precesses: hitter and taget are active (Definition \ref{def:playableAction}). In ASP the predicate \texttt{"playableAction(A,I,B,J,K,T)"} it is true when the processes \texttt{(A,I)} and \texttt{(B,J)} are active at the step \texttt{T}.
+Our approch is to study the asynchronous dynamic so only one action is playable at the same step ( \texttt{T}). That's why between two successive states there will be one change of one sort. We present this by the predicate  \texttt{"activeFromTo(B,J,K,T)"}. It means that in the sort \texttt{B} the active process change from index \texttt{J} to \texttt{K} at time step \texttt{T}.
 At the same step we can find many possible changes , that's why the rule (line \ref{e2}) offers a set of all these possible changes thanks to braces.
-In fact the rule is encoded with a count atom at its head, which makes it a choice rule. Rule in line \ref{e3} filters any answer with more than 1 change at the same time $T$ to ensure the asynchronous evolution.
+In fact the rule is encoded with a count atom at its head, which makes it a choice rule. Rule in line \ref{e3} filters any answer with more than 1 change at the same time \texttt{T} to ensure the asynchronous evolution.
 \begin{lstlisting}
 {activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T),
           instate(activeProcess(A,I),T), instate(activeProcess(B,J),T),
@@ -19,29 +19,29 @@ In fact the rule is encoded with a count atom at its head, which makes it a choi
 :- 2{ activeFromTo(B,J,K,T)}, time(T). %\label{e3}
 \end{lstlisting}
 
-In order to determinate the next active processes at $T+1$ we use the following rules :
+In order to determinate the next active processes at \texttt{T+1} we use the following rules :
 \begin{lstlisting}
 instate(activeProcess(B,K),T+1) :-  activeFromTo(B,J,K,T), time(T). %\label{e4}
 instate(activeProcess(A,I),T+1) :-  instate(activeProcess(A,I),T),
           activeFromTo(B,J,K,T), A!=B, time(T). %\label{e5}
 \end{lstlisting}
 
-At the next step $T+1$ we find the new active process resulted from the predicate $activeFromTo$ (line \ref{e4}) as well as all the unchanged processes that correspond to the other sorts (line \ref{e5}).\\
+At the next step \texttt{T+1} we find the new active process resulted from the predicate \texttt{activeFromTo} (line \ref{e4}) as well as all the unchanged processes that correspond to the other sorts (line \ref{e5}).\\
 As a result it will be displayed all possible evolutions of the netwoks.
 \subsection{Reachability verification}
-In this section, we focus on the reachability of a process which corresponds to the question \cite{def:reachability} :\\
+In this section, we focus on the reachability of a process which corresponds to the question \ref{def:reachability} :\\
 “Is it possible, starting from a given initial state, to play a number of actions so that a given processes are active in the resulting state?”
 
-\noindent Now we try to adapt the code of network evolution to resolve the reachability problem. First we define a predicate for the objective processes we call it $"goal"$, we add a rule with this predicate to the script defining the PH :
+\noindent Now we try to adapt the code of network evolution to resolve the reachability problem. First we define a predicate for the objective processes we call it \texttt{"goal"}, we add a rule with this predicate to the script defining the PH :
 \begin{lstlisting}
 goal(activeProcess("a",1)). %\label{c1}
 \end{lstlisting}
-The rule line \ref{c1} verifies if after the network evolution, its state satisfies the goals at step $T$. Else the answer will be eliminated.
+The rule line \ref{c1} verifies if after the network evolution, its state satisfies the goals at step \texttt{T}. Else the answer will be eliminated.
 \begin{lstlisting}
 satisfiable(F,T) :-  goal(F), instate(F,T). %\label{c2}
 \end{lstlisting}
 The limitation of this method is that the user has to choose the number of steps of the evolution. It is an disadvantage because a search in N steps will find no solution if the shortest path to solve the rechability requires N+1 steps. The solution is to use the incremental computation mode ( \textsc{iclingo} \cite{gebser2008user}).
-So we have almost the same program expect for incremental step numbers. In each step t, the program computes the playable actions $playableAction(A,I,B,J,K,t)$,the possible change $activeFromTo(B,J,K,t-1)$ and the new active processes for the next step $instate(activeProcess(A,I),t+1)$. Regarding the part of local steps we use a special constraint (rule \textbf{c4}) that means that the program should continue to the next step if it's not satisfiable so that we eliminate responses that do not meet the goals.
+So we have almost the same program expect for incremental step numbers. In each step t, the program computes the playable actions \texttt{playableAction(A,I,B,J,K,t)},the possible change \texttt{activeFromTo(B,J,K,t-1)} and the new active processes for the next step \texttt{instate(activeProcess(A,I),t+1)}. Regarding the part of local steps we use a special constraint (rule \textbf{c4}) that means that the program should continue to the next step if it's not satisfiable so that we eliminate responses that do not meet the goals.
 \begin{lstlisting}
 notSatisfiable(t) :-  goal(F), not instate(F,t). %\label{c3}
 :- notSatisfiable(t). %\label{c4}
