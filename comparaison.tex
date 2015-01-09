@@ -17,13 +17,13 @@ For our comparative study we chose organic network of different sizes. As mentio
   \hline
    Model& \#procs & \#states & target & Rocca & Pint & libddd & GINsim & ASP \\
   \hline
-  tetard \cite{khalis2009smbionet} & 42 & $2^{19}$ & process & 7m17.01s & \todo{XX} & \todo{XX} & \todo{XX} & 0m01.90s \\
+  tetard \cite{khalis2009smbionet} & 42 & $2^{19}$ & state & 7m17.01s & - & \todo{XX} & \todo{XX} & 0m01.90s \\
   \hline
-  ERBB\_G1-S \cite{Samaga2009}  & 152 & $2^{70}$ & state & - & \todo{XX} &1m55.38s & 2m01.64s & 0m11.84s \\
+  ERBB\_G1-S \cite{Samaga2009}  & 152 & $2^{70}$ & state & - & - &1m55.38s & 2m01.64s & 0m11.84s \\
   \hline
-  ERBB\_G1-S & 152 & $2^{70}$ & process & - & 0m0.02s &1m54.96s & - & 0m05.02s \\
+  ERBB\_G1-S & 152 & $2^{70}$ & process & - & 0m0.027s &1m54.96s & - & 0m05.02s \\
   \hline
-  TCRsig40 \cite{Klamt06} & 156 & $2^{73}$ & process & - & \todo{XX} & out & out & 0m05.02s \\
+  TCRsig40 \cite{Klamt06} & 156 & $2^{73}$ & process & - & 0m0.014s & out & - & 0m05.02s \\
   \hline
 \end{tabular}
 \caption{Compared performances of Rocca et al. method, \textsc{libddd}, \textsc{GINsim} and our new method developped in ASP. For each test we find the name of the model, the number of its processes and its states then the target(s). The target can be a network state (set of processes) or one or some processes. "out" marks an execution asking too much time or memory and "-" marks that is not possible to do the test.
@@ -42,7 +42,7 @@ This table shows the effectiveness of our method compared to existing. In fact w
 \item[--] \textbf{\textsc{libddd} :}
 This is a library for model-checking (CTL, LTL and reachability). It returns the answer "True" or "False" after verfying the reachability. However our approach is used to return the activation path of the affected components. In addition it is clear that \textsc{libddd} put much time to respond (23 times slower to example line 3 of the table). That's why for the big examples ($2^{73}$ states) we don't have a response even after 12 minutes but we get it in less than 2 minutes by using the ASP method. Also the \textsc{libddd} do not compute the stable states of a network.
 
-\item[--] \textbf{PINT : }It should be noted that the only reachability analysis developed so far on the Process Hitting networks was implemented in the software Pint, and consists in an approximation: it is possible that it terminates but remains inconclusive (although this is rare). Moreover, it currently does not give us the path to activate the goal.
+\item[--] \textbf{PINT : }It should be noted that the only reachability analysis developed so far on the Process Hitting networks was implemented in the software Pint, and consists in an approximation: it is possible that it terminates but remains inconclusive (although this is rare). Moreover, it currently does not give us the path to activate the goal but only the "True" or "False" of the reachability. In the first example \textsc{PINT} did not give an answer because of the number of goals is greater than 5.
 \end{itemize}
 
 \subsection{Limitation}
