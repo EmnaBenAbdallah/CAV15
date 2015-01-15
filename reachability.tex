@@ -1,23 +1,54 @@
 %Section: Dynamic network evolution
 
-In this section, we will present firstly how to determine using ASP the possible evolution of a biological network after a finite number of steps. Then we answer to the reachability question; which evolutions that allow the achievement of goals (future active processes) from a known initial state?
+In this section, firstly present how to determine the possible evolution of a PH model after a finite number of steps with an ASP program.
+Then we tackle the reachability question: are there scenarios in a given initial state
+that allow to reach a given goal (under the form of a set of processes)?
 
-\subsection{Future states identification }
-From an initial known state, a PH network can evolve into several new states after a few steps. The predicate \texttt{"time (0 .. n)"} sets the number of steps we want to play. For example if the biologist wants to know which states are reachable after 10 stages, it has only to replace \texttt{"n"} by 10, and he will have \texttt{"time (0 .. 10)"}. To compute the future states it is necessary to define an initial state of the network. So for initializing the active processes we add in the ASP script representing the PH network the following rule for each sort. We note that this rules are generated automatically at the time of translating PH network to ASP and by default the level of all active processes is $0$.\\
+\subsection{Future states identification}
+\reformuler{From an initial known state, a PH network can evolve into several new states after a few steps.}
+\modMF{%
+Firstly, we focus on the evolutions of the model in a limited number of steps.
+}%
+The predicate \texttt{time(0..n)} sets the number of steps we want to play.
+\modMF{%
+The value of \texttt{n} can be arbitrarily chosen.
+For example, \texttt{time(0..10)} will be used to compute the 11 first steps,
+including the initial state.
+In order to specify such an initial state, we add several facts of the following form
+to list the processes included in this state:
+}%
 \begin{lstlisting}
 init(activeProcess("a",0)).
 \end{lstlisting}
-with \texttt{"a"} is the name of the sort and\texttt{"0"} the index of the active process.\\
-The dynamic of a network is realised thanks to its actions. So to identify the future states we should start by identifying the playable actions for each state. We recall that an action is playable when both precesses: hitter and taget are active (Definition \ref{def:playableAction}). In ASP the predicate \texttt{"playableAction(A,I,B,J,K,T)"} it is true when the processes \texttt{(A,I)} and \texttt{(B,J)} are active at the step \texttt{T}.
-Our approch is to study the asynchronous dynamic so only one action is playable at the same step ( \texttt{T}). That's why between two successive states there will be one change of one sort. We present this by the predicate  \texttt{"activeFromTo(B,J,K,T)"}. It means that in the sort \texttt{B} the active process change from index \texttt{J} to \texttt{K} at time step \texttt{T}.
-At the same step we can find many possible changes , that's why the rule (line \ref{e2}) offers a set of all these possible changes thanks to braces.
-In fact the rule is encoded with a count atom at its head, which makes it a choice rule. Rule in line \ref{e3} filters any answer with more than 1 change at the same time \texttt{T} to ensure the asynchronous evolution.
+where \texttt{"a"} is the name of the sort and\texttt{"0"} the index of the active process.
+The dynamics of a network is described by its actions,
+identifying the future states requires to first identify the playable actions for each state.
+We recall that an action is playable in a state when both its hitter and target are active in this state (see Definition \ref{def:playableAction}).
+Therefore, we define an ASP predicate \texttt{playableAction(A,I,B,J,K,T)} that is true
+when the processes \texttt{(A,I)} and \texttt{(B,J)} are active at step \texttt{T}.
+\annotMF{Peut-être écrire : $\texttt{A}_\texttt{I}$ et $\texttt{B}_\texttt{J}$}
+It is also needed to enforce the strictly asynchronous dynamic
+which state that exactly one process can change between two steps.
+We thus represent the change of the active process of a sort
+by the predicate \texttt{"activeFromTo(B,J,K,T)"}
+which means that in sort \texttt{B}, the active process changes from index \texttt{J} to \texttt{K} between steps \texttt{T} and \texttt{T+1}.
+\annotMF{Peut-être écrire : $\texttt{B}_\texttt{J}$ et $\texttt{B}_\texttt{K}$}
+\modMF{%
+The cardinality rule of line \ref{e2} then
+created as many answer sets as there are possible evolutions from the current step,
+thus recreating all possible branchings in the possible evolutions of the model.
+This allows to filter all scenarios where two actions have been played between
+two steps, by using the constraint of \ref{e3}.
+Thus, the remaining scenarios of the answer set all strictly follow
+the asynchronous dynamics of the PH.
+}%
 \begin{lstlisting}
 {activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T),
           instate(activeProcess(A,I),T), instate(activeProcess(B,J),T),
           J!=K, time(T). %\label{e2}
 :- 2{ activeFromTo(B,J,K,T)}, time(T). %\label{e3}
 \end{lstlisting}
+\annotMF{N'est-il pas possible de réunir ces deux règles avec des bornes 1--1 de la façon suivante : 1 \{activeFromTo(B,J,K,T)\} 1 $\leftarrow$ ... ?}
 
 In order to determinate the next active processes at \texttt{T+1} we use the following rules :
 \begin{lstlisting}
