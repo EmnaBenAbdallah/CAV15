@@ -52,6 +52,7 @@ keepspaces=true
 \renewcommand{\thelstnumber}{\the\value{lstnumber}}
 %% fin définition
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[#1]}}}
+\newcommand{\annotMF}[1]{\textcolor{blue}{\textbf{[#1]}}}
 
 \usepackage{prettyref}
 \newrefformat{def}{Definition~\ref{#1}}
@@ -360,8 +361,8 @@ font=\footnotesize,inner sep=1pt]
 \mainmatter  % start of an individual contribution
 
 % The title
-\title{Exhaustive dynamic analysis \\ of reachability and stable states
-of biological regulatory networks modeled in Process Hitting \\
+\title{Exhaustive dynamic analysis of reachability and stable states
+of biological regulatory networks modeled in Process Hitting
 using Answer Set Programming}
 
 % a short form should be given in case it is too long for the running head
@@ -402,15 +403,22 @@ using Answer Set Programming}
 
 \begin{abstract}
 The Process Hitting is a recently introduced framework to model concurrent processes.
-It is notably suitable to model biological regulatory networks with partial knowledge of co-
-operations by defining the most permissive dynamics.
-In this paper, we explain the methods we developped with ASP to find the fixed points or states states in which it is not possible any more to have evolutions of the model. We also aim at solving the problem of reachability that consists of deciding if,
-starting from a given initial state, it is possible to reach a given local state. Finally, we illustrate the merits of our methods by applying them to various biological examples ans comparing the results with eexisted aproches. We show that our approach succeeds in processing large models.
+It is notably suitable to model biological regulatory networks with partial knowledge of
+cooperations by defining the most permissive dynamics.
+In this paper, we explain the methods we developed in Answer Set Programming
+to find the fixed points, that is, the states states in which it is not possible
+any more to have evolutions of the model.
+We also aim at solving the problem of reachability that consists of deciding if,
+starting from a given initial state, it is possible to reach a given local state.
+Finally, we illustrate the merits of our methods by applying them to various
+biological examples and comparing the results with existing approaches.
+We show that our approach succeeds in processing large models.
 
 %The abstract should summarize the contents of the paper and should
 %contain at least 70 and at most 150 words. It should be written using the
 %\emph{abstract} environment.
 \keywords{Process Hitting, Answer Set Programming, stable states, fix points, reachability}
+\annotMF{Il faut qu'on se décide sur le terme définitif : “fix point” ou “fixed point”}
 \end{abstract}
 
 
