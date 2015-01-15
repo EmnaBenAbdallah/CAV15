@@ -1,43 +1,54 @@
-In order to develop these methods we have used two main frameworks. The first is a logic programming language: the Answer Set Programming (ASP), precisely it is a logic programming language. The second framework is the Process Hitting (PH) a new formalism for the representation of biological regulatory networks. We will see later in this section more details about these two frameworks.
+In order to develop these methods we have used two main frameworks. The first is both a programming paradigm and a declarative programming language: the Answer Set Programming (ASP).
+The second framework is the Process Hitting (PH) a previously introduced formalism for the representation of biological regulatory networks.
 
 \subsection{Answer Set Programming }
 
-The ASP is a declarative programming paradigm with known semantics as the semantics of answer sets. This paradigm allows the programmer to specify what the problem to be solved and not how to solve it.
-ASP programs are written in AnsProlog* (short for "Answer Set Programming in Logic" with superscript *). These programs are composed of a set of facts and a set of rules from which other facts can be derived. A consistent set of facts that can be derived from a program using the rules is called "answer set" for the program. The sets of possible responses to an AnsProlog* program are calculated with a program called a solver.
+\emph{Answer Set Programming} (ASP) is a declarative programming paradigm with semantics known as the \emph{semantics of answer sets}.
+This paradigm allows the programmer to specify what the problem to be solved is, and not how to solve it.
+ASP programs are written in AnsProlog* (short for "Answer Set Programming in Logic" with superscript:~*).
+These programs are composed of a set of \emph{facts} and a set of \emph{rules}, as defined below, from which other facts can be derived.
+A consistent set of facts that can be derived from a program using the rules is called \emph{answer set} for the program.
+The sets of possible responses to an AnsProlog* program are calculated with a program called a solver.
 
 \subsubsection{Logic program}
-Consider an ASP logic program, as each rule is an ordered pair,\cite{baral2003knowledge} :
-
+An ASP program is composed of rules, each one being an ordered pair~\cite{baral2003knowledge}:
 \begin{equation} \label{eq1ASP}
 head \leftarrow body.
 \end{equation}
-with $Head$ and $Body$ sets of literals. 
+with $head$ and $body$ two sets of literals. 
 
 This simple language has many advantages that make it one of the most effective in terms of knowledge representation, reasoning and declarative problem solving. 
+\annotMF{Source ? Sinon : “one of the most” $\Rightarrow$ “very”}
 
 \subsubsection{The syntax and semantic of ASP}
 \label{sectionSyntaxeASP}
 \begin{enumerate}
 \item \textbf{The alphabet}
 
-\noindent{ According \cite{baral2003knowledge}, the alphabet of the axiom (or just the alphabet) of the framework of the answer set is comprised of seven classes of symbols:
+\noindent{ According to \cite{baral2003knowledge}, the alphabet of the axioms (or simply called the \emph{alphabet}) of ASP is composed of seven classes of symbols:
 \begin{itemize}
 \item Variables,
 \item Constants,
 \item Symbols of functions,
 \item Symbols of predicates,
 \item Connectors,	
-\item Symbols of punctuation, and	
-\item Special symbol $\bot$
+\item Symbols of punctuation,
+\item The special symbol $\bot$
 \end{itemize}
 }
-All these classes vary from one alphabet to another, but the sets of $ 5^{th} $ and $ 6^{th} $ classes (Connectors and symbols of punctuation) are defined as follows:\\
+All these classes vary from one alphabet to another, but the sets of $ 5^{th} $ and $ 6^{th} $ classes (Connectors and symbols of punctuation) are defined as follows:
+\begin{itemize}
+  \item Connectors with \{$\neg$, or, $\leftarrow$, not, ‘,’\}
+  \item Symbols of punctuation with \{‘(’, ‘)’, ‘.’\}
+\end{itemize}
 
-- Connectors with \{$\neg$, or, $\leftarrow$, not, ‘,’\} \\
-- Symbols of punctuation with \{‘(’, ‘)’, ‘.’\} \\
+\annotMF{Il faut absolument décider d'une charte d'écriture pour les programmes ASP dans ce texte, d'autant plus qu'actuellement cette charte change entre la section courant (où le code est écrit en mode \$maths\$) et la suite où il est en mode \texttt{listing}.}
 
-The other classes remain constant as they meet some informal agreement. In general, variables start with a capital letter and contain letters and numbers(X,Y,..). The constants, symbols and predicates follow the same rule, but they begin with a lowercase letter(f,g,a,b...). Sometimes there is the addition of a supplementary agreement which covers the letters used \cite{baral2003knowledge} : \\
+The other classes remain constant as they meet some informal agreement. In general, variables start with a capital letter and contain letters and numbers, but often only one capital letter is used (\eg X, Y, ...).
+The constants, symbols and predicates follow the same rule, but they begin with a lowercase letter (\eg f, g, a, b, ...).
+String surrounded by quotation marks are also considered as constants (\eg "f", "g", "a b c", ...).
 
+\annotMF{Je ne suis pas sûr que l'explication sur les prédicats soit pertinente. Si on la garde, il faudrait la reformuler.}
 What seems a little fuzzy is the concept of predicate. Indeed the word predicate can be an innovation of the new grammar. Let's consider the following sentence: 
 \begin{tabbing}
  \textit{Socrates was an athenian.} 
@@ -48,110 +59,121 @@ What seems a little fuzzy is the concept of predicate. Indeed the word predicate
 \end{tabbing} 
 
 \item \textbf{The rules}
-Comme nous l’avons déjà mentionné, une règle est de la forme:
-
-
-\begin{equation} 
-head ~ \leftarrow ~ body.
-\tag{\eqref{eq1ASP}}
-\end{equation}
+As previously mentioned, a rule has the following form:
+%\begin{equation} 
+%head ~ \leftarrow ~ body.
+%\tag{\eqref{eq1ASP}}
+%\end{equation}
 \begin{equation} \label{eq3ASP}
-A ~ \leftarrow ~ B^+, ~ \textbf{not} ~ B^-.
+A ~ \leftarrow ~ B^+, ~ \ASPnot B^-.
 \end{equation}
-
+where the part on the left of the arrow is called $head$
+and the right part is called $body$.
 This rule is then equivalent to:
-
 \begin{equation} \label{eq2ASP}
-L_{0} \leftarrow L_{1},...,L_{m}, \textbf{not} L_{m+1},..., \textbf{not} L_{n}.
+L_{0} \leftarrow L_{1},...,L_{m}, \ASPnot L_{m+1},..., \ASPnot L_{n}.
 \end{equation}
-
 And this rule states:
-
-$$
+\[
 \left.
     \begin{array}{ll}
-        \text{Si} ~ L_{1},...,L_{m} ~ \text{are ~ \textbf{true}}\\
-        \text{et} ~ L_{m+1},...,L_{n} ~ \text{are~ \textbf{false}}
+        \text{If} ~ L_{1},...,L_{m} ~ \text{are \textbf{true}}\\
+        \text{and} ~ L_{m+1},...,L_{n} ~ \text{are \textbf{false}}
     \end{array}
 \right \} \text{Then} ~ L_{0} ~ \text{is } \textbf{true} 
-$$
-with $L_{i}$ literals and k $\geq$ 0, m $\geq$ k and n $\geq$ m.
+\]
+with $L_{i}$ literals for all $i \in \llbracket 1 ; n \rrbracket$, and $0 \leq m \leq n$.
+Therefore, $head$ is also called the \emph{conclusion} of the rule,
+and $body$ is its \emph{premise}.
 
-\underline{\textbf{Head}} is also called conclusion \\
-\underline{\textbf{Body}} is also called premise 
-
-Special cases rules \cite{Vladimir} and \cite{baral2003knowledge} :\\
-
+There are some special cases of rules \cite{Vladimir,baral2003knowledge}:
 \begin{itemize}
-\item A rule is \textbf{constant} if all litterals are constants (noted with \textbf{ground});
-\item A \textbf{fact} or a \textbf{reality} : it is a rule with an empty body. It can be written even without the arrow $\leftarrow$ :\\
+\item A rule is said \textbf{constant} or \emph{ground} if all of its literals are constants;
+\item A \textbf{fact} or a \textbf{reality} is a rule with an empty body.
+  It can be written without the central arrow ($\leftarrow$) or with a body equal to $\top$:
 \begin{equation} 
-L_{0}. ~~ or ~~ L_{0} ~ \leftarrow ~  \top.
+L_{0} \leftarrow \top. \qquad \text{or} \qquad L_{0}.
  \label{eq5ASP}
 \end{equation}
 
-\item A \textbf{constraint}:
-This false symbol to the head ($head$) is often eliminated and the constraint will be written generally as:
+\item A \textbf{constraint} is a rule where the head equals false ($\bot$).
+  In this case, the head is often not represented and the constraint will be written generally as:
 \begin{equation} 
- ~ \leftarrow ~ L_{1},...,L_{m}, ~ \textbf{not} ~ L_{m+1},..., ~\textbf{not} ~L_{n}.
- \label{eq6ASP}
+  \leftarrow L_{1},...,L_{m}, \ASPnot L_{m+1},..., \ASPnot L_{n}.
+  \label{eq6ASP}
 \end{equation}
 
-We say that a set of literals $X$ violates the constraint (\ref{eq6ASP}) if $\{L_{1},...,L_{m}\} \subseteq X$ and $\{L_{m+1},...,L_{n}\} \nsubseteq X$. If we have a program contain this type of rule \ref{eq6ASP}, then $X$ is an answer set of the program $\pi$ if and only if $X$ is an \textit{answer set} of $\pi \setminus \{r\}$, with $r$ such a constraint \ref{eq6ASP} and $X$ does not violate the constraint \ref{eq6ASP}.
+We say that a set of literals $X$ violates the constraint \eqref{eq6ASP} if $\{L_{1},...,L_{m}\} \subseteq X$ and $\{L_{m+1},...,L_{n}\} \nsubseteq X$.
+If a program $\pi$ contains such a constraint $r$, then $X$ is an answer set of $\pi$ if and only if $X$ is an \textit{answer set} of $\pi \setminus \{r\}$ and $X$ does not violate $r$.
 
-\item Cardinality constraints:\\
-It is literals extended in the following form:
+\item A \emph{cardinality constraint} is a rule of the following form:
 \begin{equation} 
- ~ l ~\{q_{1},~ ... ,~ q_{m}\}~ u.
+ ~ l ~\{q_{1},~ ... ,~ q_{m}\}~ u \leftarrow body.
  \label{eq7ASP}
 \end{equation}
-
-with $m \geq 1$, $l$ an integer and $u$ can be an integer or by default the infinite if it does not exist. $l$ and $u$ are the lower and upper limits of the cardinality of the subsets of $ \{q_{1},~ ... ,~ q_{m}\}$ that satisfy the answer sets.
-These literals are constrained ($q_{i}$) may occur in the head and body of the rule. Cardinality constraint is satisfied in an answer set $ X $, if the number of atoms of $ \{q_{1},~ ... ,~ q_{m}\}$ belonging to $X$ is between $l$ and $u$. In other words:
-
-\begin{tabbing}
- $l~ \leq ~ | \{q_{1},... ,~ q_{m}\} ~ \cap ~ X | ~ \geq ~u$
-\end{tabbing}
-
-with $ \cap $ symbol of intersection and $ | A | $ is the cardinality of the set $ A $.
-
-
+with $m \geq 1$, $l$ an integer and $u$ an integer or the infinity ($\infty$).
+The literals $q_i$ can also appear in the body of the rule or in other rules,
+and $l$ and $u$ are the lower and upper bounds of the number of these literals
+that can appear in the answer sets.
+%cardinality of the subsets of $ \{q_{1}, ... , q_{m}\}$ that satisfy the answer sets.
+Therefore, a cardinality constraint is satisfied in an answer set $X$, if the number of atoms of $\{q_{1}, ... , q_{m}\}$ belonging to $X$ is between $l$ and $u$,
+or, in other words, if:
+\begin{equation}
+  l \leq | \{q_{1},... , q_{m}\} \cap X | \leq u
+\end{equation}
+where $\cap$ is the symbol of the intersection of sets
+and $|A|$ is the cardinality of the set $A$.
+\modMF{%
+In the following, if they are not explicitly given,
+we consider that $l$ defaults to $0$ and $u$ defaults to $\infty$.
+\annotMF{Les cardinalités ne sont pas seulement utilisées de cette manière ! Dans notre code, on les trouve dans la tête et dans le corps des règles.}
+\todo{À compléter : cardinalités dans le corps des règles}
+}%
 \end{itemize}
 
 \end{enumerate}
 
 
 
-\subsubsection{Modelisation of a problem with ASP}
+\subsubsection{Modeling of a problem with ASP}
 
 We can consider that the construction of models is one of the fundamental components of the scientific process. It concerns all systems we seek to control. A model has two main features \cite{Glimpse}:
 \begin{itemize}
-\item it is a simplification of a given system
-\item it allows an action on the system  
+\item it is a simplification of a given system,
+\item it allows an action on the system.
+\annotMF{Quel genre d'action ?}
 \end{itemize}
-
-Models offer the possibility to provide a solution to a problem identified as such. This concept model can address another angle issues related to representation process.
+Models offer the possibility to provide a solution to a problem identified as such.
+\reformuler{This concept model can address another angle issues related to representation process.}
 
 \begin{enumerate}
-\item\textbf{ Modeling steps}
-The modeling process can be regarded as a special form of representation whose operations are detailed in \cite{baral2003knowledge}. Logical ASP programs follow the strategy of "generate and test". This strategy includes four steps:
-
+\item\textbf{Modeling steps}
+The modeling process can be regarded as a special form of representation whose operations are detailed in \cite{baral2003knowledge}.
+Logical ASP programs follow the strategy of “generate and test”.
+This strategy includes four steps:
 \begin{itemize}
 \item Enumerate with facts;
-\item Explain with the rules;
-\item Generate all the possibilities with cardinalities, and finally;
+\item Explain with rules;
+\item Generate all the possibilities with cardinalities; and finally,
 \item Filter with constraints.
 \end{itemize}
 
-\item \textbf{ Resolving an ASP program} \\
-From \cite{Vladimir} and \cite{AnsPrologAPE}, the couple Grounder and Solver usually work together: the grounder used to remove variables in order to achieve a constant program and the solver computes all anwser sets for stabilized programs generated by the grounder.
+\item \textbf{Solving an ASP program}
+\modMF{%
+The solving of ASP programs relies on a \emph{grounder} and a \emph{solver}
+that usually work together:
+}%
+the grounder is used to remove variables in order to achieve an equivalent but constant program,
+and the solver computes all answer sets for a stabilized program generated by the grounder~\cite{Vladimir,AnsPrologAPE}.
+Amongst all available grounders for ASP, we can name
+\texttt{Gringo}, \texttt{DLV} and \texttt{LParse},
+and the solvers include
+\texttt{SModels}, \texttt{DLV}, \texttt{CModels}, \texttt{Clasp}...
 
-Example of Grounder: \texttt{GRINGO}, \texttt{DLV}, \texttt{LPARSE}
-
-Example of ASP Solver : \texttt{SMODELS}, \texttt{DLV}, \texttt{CMODELS}, \texttt{CLASP}...
-
-
-The combined use of the Grouder and the Solver specifies major programs in a compact, using rules with schematic variables and other abbreviations. Both systems employ grounding algorithms that work quickly and simplify the program. In developping these new methods we worked with \texttt{CLINGO} which is a combination of grouder \texttt{GRINGO} and solver \texttt{clasp}.
+\reformuler{
+The combined use of the grounder and the solver specifies major programs in a compact, using rules with schematic variables and other abbreviations. Both systems employ grounding algorithms that work quickly and simplify the program.
+}
+For the work presented in this paper, we worked with \texttt{Clingo} which is a combination of the grounder \texttt{Gringo} and the solver \texttt{Clasp}.
 
 \end{enumerate}
 

@@ -51,8 +51,13 @@ keepspaces=true
 }
 \renewcommand{\thelstnumber}{\the\value{lstnumber}}
 %% fin définition
+
+% Styles ASP inline
+\newcommand{\ASPnot}{\textbf{not}~}
+
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[#1]}}}
 \newcommand{\annotMF}[1]{\textcolor{blue}{\textbf{[MF: #1]}}}
+\newcommand{\reformuler}[1]{\textcolor{magenta}{[\textbf{À reformuler:} #1]}}
 
 \newcommand{\modMF}[1]{\textcolor{teal}{#1}}
 %\renewcommand{\modMF}[1]{#1}
@@ -350,6 +355,7 @@ font=\footnotesize,inner sep=1pt]
 % Id est
 %\newcommand{\ie}{\textit{i.e.} }
 \newcommand{\ie}{i.e.\ }
+\newcommand{\eg}{e.g.,}
 \newcommand{\resp}{resp.\ }
 
 %%%%%%%%%%%%%%%%%%%%% DEBUT ARTICLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
