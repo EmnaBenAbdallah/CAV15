@@ -3,12 +3,25 @@ As regulatory phenomena play a crucial role in biological systems, they need to
 be studied accurately. Biological Regulatory Networks (BRNs) consist in sets
 of either positive or negative mutual effects between the components. With the
 purpose of analyzing these systems, they are often modeled as graphs which make
-it possible to determine the possible evolutions of all the interacting components of the system. Indeed, in order to address the formal checking of dynamical properties within very large BRNs, we recently use a new formalism, named the “Process Hitting” (PH) \cite{pauleve2011modelisation}, to model concurrent systems having components with a few qualitative levels. A PH describes, in an atomic manner, the possible evolutions of a “process” (representing one component at one level) triggered by the hit of at most one other “process” in the system. This particular structure makes the formal analysis of BRNs with hundreds of components tractable. PH is suitable, according to the precision of this information, to model BRNs with different levels of abstraction by capturing the most general dynamics.
-The objectives of the work presented in this paper are the following. 
+it possible to determine the possible evolutions of all the interacting components of the system. Indeed, in order to address the formal checking of dynamical properties within very large BRNs, we recently introduced a new formalism, named the “Process Hitting” (PH) \cite{pauleve2011modelisation}, to model concurrent systems having components with a few qualitative levels. A PH describes, in an atomic manner, the possible evolutions of a “process” (representing one component at one level) triggered by the hit of at most one other “process” in the system. This particular structure makes the formal analysis of BRNs with hundreds of components tractable \modMF{by using approached methods computing approximations of the dynamics~\cite{PMR12-MSCS}}. Furthermore, PH is suitable, according to the precision of the available information, to model BRNs with different levels of abstraction by capturing the most general dynamics.
 
-Firstly, we show that starting from one PH model, it is possible to find all possible stable states (fixed points \cite{wuensche1998genomic}).
-We perform an exhaustive search of the possible states, combination processes, one process from each sort and then check if it is a fixed point.
-
-The second phase of our work consists in computing the dynamics. It consists in determining from a known initial state the possible next states of the PH model. Finally we verify if we can reach a specific state of one or several component (gene or protein). The results are ensured to respect the PH dynamics.
+The objectives of the work presented in this paper are the following.
+Firstly, we show that starting from one PH model, it is possible to find all possible stable states (fixed points \cite{wuensche1998genomic} \annotMF{Est-ce que cette ref est pertinente ? Elle me semble plutôt axée sur la notion d'attracteur}).
+For this, we perform an exhaustive search of the possible states, that is, combinations of processes with one process from each sort, and then check which ones are fixed points.
+The second phase of our work consists in computing the dynamics. It consists in determining from a known initial state the possible next states of the PH model. Then we verify if we can reach a specific state for one or several component (genes or proteins). The results are ensured to respect strictly the PH dynamics.
 
 Our contribution is from the results that allowed to determine the stable states, we propose to evaluate the benefits of the Answer Set Programming (ASP) \cite{baral2003knowledge} to compute them. ASP has been proven efficient to tackle models with a large number of components and parameters. Our aim here is to assess its potential w.r.t. the computation of some dynamical properties of the PH model. In this paper, we show that ASP turns out to be effective for these enumerative searches which justifies its use. The benefit of our approach is that it makes possible to get the minimal paths to reach our goal(s) also we can verify if it is possible after a given number of steps. %Furthermore, we claim that we are able to deal with large biological networks (42 sorts).
+
+\annotMF{Je pense que dans toute l'intro, il faut remettre ASP au centre car c'est bien lui qui rend notre contribution particulière. Il ne faudrait pas séparer Objectifs/Contributions car les deux se recoupent, ou trouver un moyen de parler d'ASP avant de présenter le travail sur les points fixes et la dynamique.}
+
+\modMF{%
+Section \ref{defs} defines the paradigm of Answer Set Programming,
+and the Process Hitting framework.
+We then use ASP in section \ref{fixpoint} to tackle the enumeration
+of all fixed points in a model,
+and in section \ref{dynamics} in order to compute the dynamics of a model
+and check reachability properties.
+Finally, a comparison of the methods developed in this paper is
+proposed in section \ref{comparison},
+and in section \ref{ccl} we conclude and talk about future work.
+}%
