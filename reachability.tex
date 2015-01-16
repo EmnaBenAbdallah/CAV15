@@ -38,7 +38,7 @@ The cardinality rule of line \ref{e2} then
 created as many answer sets as there are possible evolutions from the current step,
 thus recreating all possible branchings in the possible evolutions of the model.
 This allows to filter all scenarios where two actions have been played between
-two steps, by using the constraint of \ref{e3}.
+two steps, by using the constraint of line \ref{e3}.
 Thus, the remaining scenarios of the answer set all strictly follow
 the asynchronous dynamics of the PH.
 }%
@@ -48,31 +48,73 @@ the asynchronous dynamics of the PH.
           J!=K, time(T). %\label{e2}
 :- 2{ activeFromTo(B,J,K,T)}, time(T). %\label{e3}
 \end{lstlisting}
-\annotMF{N'est-il pas possible de réunir ces deux règles avec des bornes 1--1 de la façon suivante : 1 \{activeFromTo(B,J,K,T)\} 1 $\leftarrow$ ... ?}
+\annotMF{N'est-il pas possible de réunir ces deux règles avec des bornes 1--1 de la façon suivante : 1 \{activeFromTo(B,J,K,T)\} 1 $\leftarrow$ ... ? Sinon, voir à peut-être enlever la cardinalité pour une règle plus simple à comprendre.}
 
-In order to determinate the next active processes at \texttt{T+1} we use the following rules :
+Finally, the active processes at step \texttt{T+1},
+that represent the next state depending on the chosen bounce,
+can be computed by the following rules:
 \begin{lstlisting}
 instate(activeProcess(B,K),T+1) :-  activeFromTo(B,J,K,T), time(T). %\label{e4}
 instate(activeProcess(A,I),T+1) :-  instate(activeProcess(A,I),T),
           activeFromTo(B,J,K,T), A!=B, time(T). %\label{e5}
 \end{lstlisting}
+In other words, the state of step \texttt{T+1} contains one new active process
+resulting from the predicate \texttt{activeFromTo} (line \ref{e4})
+as well as all the unchanged processes that correspond to the other sorts (line \ref{e5}).
 
-At the next step \texttt{T+1} we find the new active process resulted from the predicate \texttt{activeFromTo} (line \ref{e4}) as well as all the unchanged processes that correspond to the other sorts (line \ref{e5}).\\
-As a result it will be displayed all possible evolutions of the netwoks.
+\modMF{%
+The overall result of the pieces of program presented in this subsection
+is an answer set containing one answer for each
+possible evolution in \texttt{n} time steps,
+and starting from a given initial state.
+}%
+
 \subsection{Reachability verification}
-In this section, we focus on the reachability of a process which corresponds to the question \ref{def:reachability} :\\
-“Is it possible, starting from a given initial state, to play a number of actions so that a given processes are active in the resulting state?”
+In this section, we focus on the reachability of set of processes which corresponds to the question (see definition \ref{def:reachability}):
+“Is it possible, starting from a given initial state, to play a number of actions so that a set of given processes are active in the resulting state?”
+\annotMF{En fin de rédaction, il faudrait voir à peut-être décaler les définitions de la section “Dynamic properties” afin de faciliter la lecture.}
 
-\noindent Now we try to adapt the code of network evolution to resolve the reachability problem. First we define a predicate for the objective processes we call it \texttt{"goal"}, we add a rule with this predicate to the script defining the PH :
+We now want to adapt the code of the dynamics computation of previous section in order to resolve this reachability problem.
+For this, we first use a predicate to list the processes we want to reach, called \texttt{goal}, and we add as many rules of the following form as there are objective processes:
 \begin{lstlisting}
 goal(activeProcess("a",1)). %\label{c1}
 \end{lstlisting}
-The rule line \ref{c1} verifies if after the network evolution, its state satisfies the goals at step \texttt{T}. Else the answer will be eliminated.
+\modMF{%
+Then, the literal \texttt{satisfiable(F,T)}
+checks if a given process \texttt{F} of the goal
+is contained in the state of step \texttt{T},
+as defined in the rule of line \ref{c1}.
+}%
+Else the answer will be eliminated.
+\todo{Il manque la contrainte qui élimine les mauvais parcours !}
 \begin{lstlisting}
 satisfiable(F,T) :-  goal(F), instate(F,T). %\label{c2}
 \end{lstlisting}
-The limitation of this method is that the user has to choose the number of steps of the evolution. It is an disadvantage because a search in N steps will find no solution if the shortest path to solve the rechability requires N+1 steps. The solution is to use the incremental computation mode ( \textsc{iclingo} \cite{gebser2008user}).
-So we have almost the same program expect for incremental step numbers. In each step t, the program computes the playable actions \texttt{playableAction(A,I,B,J,K,t)},the possible change \texttt{activeFromTo(B,J,K,t-1)} and the new active processes for the next step \texttt{instate(activeProcess(A,I),t+1)}. Regarding the part of local steps we use a special constraint (rule \textbf{c4}) that means that the program should continue to the next step if it's not satisfiable so that we eliminate responses that do not meet the goals.
+
+However, the limitation of the method above is that the user has to decide upstream
+the number of computed steps that should be sufficient.
+It is a main disadvantage because a search in $N$ steps will find no solution
+if the shortest path to the goal requires $N+1$ steps.
+\annotMF{Est-ce que ça ne risque pas aussi de rallonger anormalement la résolution si le plus court chemin est en $n$ étapes avec $n << N$ ?}
+One solution is to use an incremental computation mode,
+which is especially tackled by by the incremental solver \textsc{iclingo}~\cite{gebser2008user}.
+\annotMF{Peut-on citer le manuel d'utilisation de Clingo comme référence ?}
+\todo{Expliquer brièvement en quoi consiste la résolution incrémentale en ASP, notamment les trois parties distinctes : définitions, corps d'itération, fin d'itération.}
+\modMF{%
+Thus, the obtained program is almost identical,
+except that step numbers \texttt{N}
+are replaced by constant placeholders \texttt{t}
+that will be incremented throughout the execution.
+}%
+In each step \texttt{t}, the program computes the playable actions \texttt{playableAction(A,I,B,J,K,t)}, the possible bounces \texttt{activeFromTo(B,J,K,t-1)}
+and the new states \texttt{instate(activeProcess(A,I),t+1)}
+in the same fashion than previously.
+Regarding the part of local steps,
+\todo{Définir “the part of local steps”}
+we use a special constraint (line \textbf{c4})
+which states that the program should continue to the next step
+while it is not satisfiable,
+so that all answers that do not meet the goals are eliminated:
 \begin{lstlisting}
 notSatisfiable(t) :-  goal(F), not instate(F,t). %\label{c3}
 :- notSatisfiable(t). %\label{c4}
