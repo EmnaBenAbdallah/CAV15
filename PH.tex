@@ -107,7 +107,7 @@ Indeed, when an action $h = \PHfrappe{a_i}{b_j}{b_k}$ is played at a state $s$,
 the network evolves to a resulting next state $s'$ where exactly one active process
 is modified, namely: the active process $b_j$ changes into $b_k$.
 
-\todo{Glu pour la définition \ref{def:NextState}}
+\todo{Glu pour la définition \ref{def:NextState}} \repEB{ça veut dire quoi Glu?}
 
 \begin{definition}[Next states]
 \label{def:NextState}
@@ -117,7 +117,7 @@ one of its states. The set of the next possible states for $s$ are computed as f
 $next(s) = \{s[b_k /b_j ]| \exists (a_i , b_j ) \in s^2 , \exists b_k \in \PHl_b , \PHfrappe{a_i}{b_j}{b_k} \in \PHa\}$
 \end{center}
 \todo{Définir la notation $s[b_k /b_j ]$}
-\annotMF{Est-ce que $next(s)$ est vraiment utile ? On ne s'en ressert pas après.}
+\annotMF{Est-ce que $next(s)$ est vraiment utile ? On ne s'en ressert pas après.} \repEB{Je crois que si, pour le définition du point fixe et pour comprendre l'évolution du réseau d'un état à un autre}
 \end{definition}
 
 A sequence of successively playable actions ($h_0 \play h_1 \play h_2...$)
@@ -131,7 +131,7 @@ We note $\Sce(s_0)$ the set of all scenarios in $s_0$.
 Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
 $s \in \PHl$ be state;
 $s$ is a \emph{stable state} for $PH$ if and only if $next(s) = \emptyset $.
-\annotMF{“Stable state” ? “Fix point” ? “Fixed point” ?}
+\annotMF{“Stable state” ? “Fix point” ? “Fixed point” ?} \repEB{Je pense garder fix point}
 \end{definition}
 
 \begin{definition}
@@ -147,16 +147,16 @@ $\forall h \in \PHa$, $frappeur(h) \notin s \vee cible(h) \notin s$
 
 \todo{Glu pour la définition \ref{def:reachability}}
 
-\begin{definition}[Reachability question]
+\begin{definition}[Reachability property]
 \label{def:reachability}
 
- If $s \in \PHl$ is a state and $A \subseteq \Proc$ a set of processes,
- we note $\mathcal{P}(s, A)$ the \emph{the reachability question}:
+ If $s \in \PHl$ is a state and $A \subseteq \Proc$ \repEB{ with $\Proc$ is a set of processes that we find at most one process of each sort $\{a_i, b_j,..., z_k\}$ }
+ we note $\mathcal{P}(s, A)$ the \emph{the reachability property}:
  \begin{center}
   $\exists? \delta \in \Sce(s), \forall a_i \in A, \PHget{(s \play \delta)}{a}=a_i$
  \end{center}
 \todo{Il faut définir $\Proc$}
-\annotMF{Il serait peut-être mieux de parler de “reachability property” plutôt que “question”.}
+\annotMF{Il serait peut-être mieux de parler de “reachability property” plutôt que “question”.}  \repEB{ Je l'ai changé} 
 \end{definition}
 
 

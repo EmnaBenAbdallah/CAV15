@@ -55,12 +55,20 @@ keepspaces=true
 % Styles ASP inline
 \newcommand{\ASPnot}{\textbf{not}~}
 
+%%% Annotation (à enlever)
+\usepackage[usenames,dvipsnames]{xcolor}
+
 \newcommand{\todo}[1]{\textcolor{red}{\textbf{[#1]}}}
 \newcommand{\annotMF}[1]{\textcolor{blue}{\textbf{[MF: #1]}}}
 \newcommand{\reformuler}[1]{\textcolor{magenta}{[\textbf{À reformuler:} #1]}}
 
+\newcommand{\repEB}[1]{\textcolor{OliveGreen}{\textbf{[EB: #1]}}}
+\newcommand{\modifEB}[1]{\textcolor{RedViolet}{#1}}
+
 \newcommand{\modMF}[1]{\textcolor{teal}{#1}}
 %\renewcommand{\modMF}[1]{#1}
+
+%%%%
 
 \usepackage{prettyref}
 \newrefformat{def}{Definition~\ref{#1}}
@@ -415,7 +423,7 @@ The Process Hitting is a recently introduced framework to model concurrent proce
 It is notably suitable to model biological regulatory networks with partial knowledge of
 cooperations by defining the most permissive dynamics.
 In this paper, we explain the methods we developed in Answer Set Programming
-to find the fixed points, that is, the states states in which it is not possible
+to find the fix points, that is, the states states in which it is not possible
 any more to have evolutions of the model.
 We also aim at solving the problem of reachability that consists of deciding if,
 starting from a given initial state, it is possible to reach a given local state.
@@ -428,7 +436,7 @@ We show that our approach succeeds in processing large models.
 %\emph{abstract} environment.
 \keywords{Process Hitting, Answer Set Programming, stable states, fix points, reachability}
 \annotMF{Il faut qu'on se décide sur le terme définitif : “fix point” ou “fixed point”}
-\end{abstract}
+\end{abstract} \modifEB{Je pense choisir fix point}
 
 
 \section{Introduction}

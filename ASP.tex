@@ -17,8 +17,8 @@ head \leftarrow body.
 \end{equation}
 with $head$ and $body$ two sets of literals. 
 
-This simple language has many advantages that make it one of the most effective in terms of knowledge representation, reasoning and declarative problem solving. 
-\annotMF{Source ? Sinon : “one of the most” $\Rightarrow$ “very”}
+This simple language has many advantages that make it very effective in terms of knowledge representation, reasoning and declarative problem solving. 
+\annotMF{Source ? Sinon : “one of the most” $\Rightarrow$ “very”} \repEB{OK}
 
 \subsubsection{The syntax and semantic of ASP}
 \label{sectionSyntaxeASP}
@@ -43,7 +43,7 @@ All these classes vary from one alphabet to another, but the sets of $ 5^{th} $ 
 \end{itemize}
 
 \annotMF{Il faut absolument décider d'une charte d'écriture pour les programmes ASP dans ce texte, d'autant plus qu'actuellement cette charte change entre la section courant (où le code est écrit en mode \$maths\$) et la suite où il est en mode \texttt{listing}.}
-
+\repEB{T’as raison au début j’ai écrit tout le code en mode $math$ et puis j’ai changé juste la partie du code et j’ai oublié de faire la mise à jour de cette partie de définition d’ASP}
 The other classes remain constant as they meet some informal agreement. In general, variables start with a capital letter and contain letters and numbers, but often only one capital letter is used (\eg X, Y, ...).
 The constants, symbols and predicates follow the same rule, but they begin with a lowercase letter (\eg f, g, a, b, ...).
 String surrounded by quotation marks are also considered as constants (\eg "f", "g", "a b c", ...).
@@ -55,55 +55,58 @@ What seems a little fuzzy is the concept of predicate. Indeed the word predicate
 \end{tabbing}
 \textit{Socrate} is the subject and \textit{was an athenian} is the predicat. This sentence can be noted in ASP by :
 \begin{tabbing}
- \textit{athenian(Socrate) }$\leftarrow ~ \top$. \hspace{2cm} with $\top$ is the symbol of True.
+ \texttt{athenian(Socrate) $\leftarrow ~ \top$. }\hspace{2cm} with \texttt{$\top$}  is the symbol of True.
 \end{tabbing} 
 
 \item \textbf{The rules}
 As previously mentioned, a rule has the following form:
-%\begin{equation} 
-%head ~ \leftarrow ~ body.
-%\tag{\eqref{eq1ASP}}
-%\end{equation}
-\begin{equation} \label{eq3ASP}
-A ~ \leftarrow ~ B^+, ~ \ASPnot B^-.
-\end{equation}
-where the part on the left of the arrow is called $head$
+\texttt{
+\begin{equation*} \label{eq3ASP}
+ A ~ \leftarrow ~ B^+, ~ \ASPnot B^-.
+\end{equation*}
+}
+
+where the part on the left of the arrow is called $ head$
 and the right part is called $body$.
 This rule is then equivalent to:
-\begin{equation} \label{eq2ASP}
-L_{0} \leftarrow L_{1},...,L_{m}, \ASPnot L_{m+1},..., \ASPnot L_{n}.
-\end{equation}
+\texttt{
+\begin{equation*} \label{eq2ASP}
+l_{0} \leftarrow l_{1},...,l_{m}, \ASPnot l_{m+1},..., \ASPnot l_{n}.
+\end{equation*}
+}
 And this rule states:
 \[
 \left.
     \begin{array}{ll}
-        \text{If} ~ L_{1},...,L_{m} ~ \text{are \textbf{true}}\\
-        \text{and} ~ L_{m+1},...,L_{n} ~ \text{are \textbf{false}}
+        \text{If} ~ \texttt{$l_{1},...,l_{m}$}  ~ \text{are \textbf{true}}\\
+        \text{and} ~ \texttt{$l_{m+1},...,l_{n}$} ~ \text{are \textbf{false}}
     \end{array}
-\right \} \text{Then} ~ L_{0} ~ \text{is } \textbf{true} 
+\right \} \text{Then} ~ \texttt{$ l_{0} $} ~ \text{is } \textbf{true} 
 \]
-with $L_{i}$ literals for all $i \in \llbracket 1 ; n \rrbracket$, and $0 \leq m \leq n$.
+with \texttt{$l_{i}$} literals for all $i \in \llbracket 1 ; n \rrbracket$, and $0 \leq m \leq n$.
 Therefore, $head$ is also called the \emph{conclusion} of the rule,
-and $body$ is its \emph{premise}.
+and \texttt{body} is its \emph{premise}.
 
 There are some special cases of rules \cite{Vladimir,baral2003knowledge}:
 \begin{itemize}
 \item A rule is said \textbf{constant} or \emph{ground} if all of its literals are constants;
 \item A \textbf{fact} or a \textbf{reality} is a rule with an empty body.
   It can be written without the central arrow ($\leftarrow$) or with a body equal to $\top$:
+  \texttt{
 \begin{equation} 
-L_{0} \leftarrow \top. \qquad \text{or} \qquad L_{0}.
+l_{0} \leftarrow \top. \qquad \text{or} \qquad l_{0}.
  \label{eq5ASP}
 \end{equation}
+}
 
 \item A \textbf{constraint} is a rule where the head equals false ($\bot$).
   In this case, the head is often not represented and the constraint will be written generally as:
 \begin{equation} 
-  \leftarrow L_{1},...,L_{m}, \ASPnot L_{m+1},..., \ASPnot L_{n}.
+  \leftarrow l_{1},...,l_{m}, \ASPnot l_{m+1},..., \ASPnot l_{n}.
   \label{eq6ASP}
 \end{equation}
 
-We say that a set of literals $X$ violates the constraint \eqref{eq6ASP} if $\{L_{1},...,L_{m}\} \subseteq X$ and $\{L_{m+1},...,L_{n}\} \nsubseteq X$.
+We say that a set of literals $X$ violates the constraint \eqref{eq6ASP} if $\{l_{1},...,l_{m}\} \subseteq X$ and $\{l_{m+1},...,l_{n}\} \nsubseteq X$.
 If a program $\pi$ contains such a constraint $r$, then $X$ is an answer set of $\pi$ if and only if $X$ is an \textit{answer set} of $\pi \setminus \{r\}$ and $X$ does not violate $r$.
 
 \item A \emph{cardinality constraint} is a rule of the following form:
@@ -111,8 +114,8 @@ If a program $\pi$ contains such a constraint $r$, then $X$ is an answer set of 
  ~ l ~\{q_{1},~ ... ,~ q_{m}\}~ u \leftarrow body.
  \label{eq7ASP}
 \end{equation}
-with $m \geq 1$, $l$ an integer and $u$ an integer or the infinity ($\infty$).
-The literals $q_i$ can also appear in the body of the rule or in other rules,
+with $m \geq 1$, $l$ an integer and $u$ an integer or the infinity ($\infty$). \repEB{ This form of rule \ref{eq7ASP} is used when the body can lead to several $q_i$ atoms and also when the programmer need to have more than an atom of type $q_i$. But that the number of this atoms $q_i$ should be between $l$ and $m$. That means that it is possible to find the same atom repeated many times at one answer set.}  \\
+In addition the literals $q_i$ can also appear in the body of the rule,
 and $l$ and $u$ are the lower and upper bounds of the number of these literals
 that can appear in the answer sets.
 %cardinality of the subsets of $ \{q_{1}, ... , q_{m}\}$ that satisfy the answer sets.
@@ -140,11 +143,10 @@ we consider that $l$ defaults to $0$ and $u$ defaults to $\infty$.
 We can consider that the construction of models is one of the fundamental components of the scientific process. It concerns all systems we seek to control. A model has two main features \cite{Glimpse}:
 \begin{itemize}
 \item it is a simplification of a given system,
-\item it allows an action on the system.
-\annotMF{Quel genre d'action ?}
+\item it allows an action on the system \repEB{like resolving problems, searching for a path, identifying states ... }
+\annotMF{Quel genre d'action ?} 
 \end{itemize}
-Models offer the possibility to provide a solution to a problem identified as such.
-\reformuler{This concept model can address another angle issues related to representation process.}
+This concept model can address another angle issues related to representation process.
 
 \begin{enumerate}
 \item\textbf{Modeling steps}
@@ -163,8 +165,8 @@ This strategy includes four steps:
 The solving of ASP programs relies on a \emph{grounder} and a \emph{solver}
 that usually work together:
 }%
-the grounder is used to remove variables in order to achieve an equivalent but constant program,
-and the solver computes all answer sets for a stabilized program generated by the grounder~\cite{Vladimir,AnsPrologAPE}.
+first the grounder is used to remove variables in order to achieve an equivalent but constant program,
+then the solver computes all answer sets for a stabilized program generated by the grounder~\cite{Vladimir,AnsPrologAPE}.
 Amongst all available grounders for ASP, we can name
 \texttt{Gringo}, \texttt{DLV} and \texttt{LParse},
 and the solvers include
@@ -173,6 +175,7 @@ and the solvers include
 \reformuler{
 The combined use of the grounder and the solver specifies major programs in a compact, using rules with schematic variables and other abbreviations. Both systems employ grounding algorithms that work quickly and simplify the program.
 }
+\repEB{c'est à ajouter dans le paragraphe ou à reformuler?}
 For the work presented in this paper, we worked with \texttt{Clingo} which is a combination of the grounder \texttt{Gringo} and the solver \texttt{Clasp}.
 
 \end{enumerate}
