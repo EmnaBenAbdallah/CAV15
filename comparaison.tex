@@ -50,13 +50,15 @@ furthermore, it sometimes provides more informations that the other existing one
   \hline
    Model&  \#sorts &\#procs & \#states & target & Rocca & Pint & libddd & GINsim & ASP \\
   \hline
-  TTR & 12 &42 & $2^{19}$ & full state & 7m17.01s & - & \todo{XX} & \todo{XX} & 0m01.90s \\
+  TTR & 12 &42 & $2^{19}$ & full state & 7m17.01s & - & 0m1.151s &  0m1.001s & 0m1.90s \\
   \hline
-  ERBB & 20 &152 & $2^{70}$ & full state & - & - &1m55.38s & 2m01.64s & 0m11.84s \\
+  ERBB & 20 &152 & $2^{70}$ & full state & - & - &1m55.38s & 2m31.64s & 0m11.84s \\
   \hline
-  ERBB & 20 &152 & $2^{70}$ & partial state & - & 0m0.027s &1m54.96s & - & 0m05.02s \\
+  ERBB & 20 &152 & $2^{70}$ & partial state & - & 0m0.027s &1m54.96s & - & 0m5.02s \\
   \hline
-  TCR & 40 &156 & $2^{73}$ & partial state & - & 0m0.014s & out & - & 1m35.080s \\
+  TCR & 40 &156 & $2^{73}$ & full state & - & - & out & $ \lbrack 5mn ; \infty \rbrack$ & 4m27.93s \\
+  \hline
+   TCR & 40 &156 & $2^{73}$ & partial state & - & 0m0.014s & out & - & 1m35.080s \\
   \hline
 \end{tabular}
 \caption{Compared performances of Rocca et al. method, \textsc{Pint}, \textsc{libddd}, \textsc{GINsim} and our new method developped in ASP.
