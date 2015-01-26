@@ -1,7 +1,5 @@
 In this section, we show the effectiveness of our approach on some examples,
-\modMF{%
 and compare it to other existing approaches.
-}%
 All computations were performed on a Pentium~V, 3.2~GHz with 4~GB RAM.
 
 \subsection{Evaluation}
@@ -9,21 +7,19 @@ To evaluate the effectiveness of our new approach,
 we position ourselves with respect to existing methods dealing with different biological models.
 We have chosen the following tools, that are detailed below: 
 \textsc{GINsim} (Gene Interaction Network Simulation)~\cite{gonzalez2006ginsim,naldi2009logical,naldi2007decision},
-\texttt{LIBDDD} (Library of Data Decision Diagrams)~\cite{thierry2009hierarchical,colange2013towards},  PINT \cite{PMR12-MSCS} and the method of Rocca's et al. \cite{roccaasp} which was developed ALSO on ASP.
-\annotMF{Il y a une confusion entre méthodes et outils ici je pense.} \repEB{J'ai modifié}
+\texttt{LIBDDD} (Library of Data Decision Diagrams)~\cite{thierry2009hierarchical,colange2013towards},  PINT \cite{PMR12-MSCS} and the method of Rocca's et al. \cite{roccaasp} which was developed also on ASP.
 \annotMF{Il faut trouver un autre nom pour “Rocca's method”.} \repEB{c'est vrai ; "transition state networks with ASP?}
-Each method use a specific kind of representation:
-logical regulatory network for GINsim,
-Instantiable Transition Systems for LIBDDD,
+Each method use a specific kind of representation\footnote{The transalation from other models to PH is done through the converters availbale on line: \url{https://github.com/pauleve/pint/tree/master/converters}}:
+logical regulatory network for \textsc{GINsim} \footnote{\textsc{GINsim} is a computer tool for the modeling and simulation of genetic regulatory networks \url{http://ginsim.org/} },
+Instantiable Transition Systems for \textsc{libDDD} is a library for symbolic model-checking of CTL \& LTL properties. \footnote{\textsc{libDDD} is \url{http://www.lip6.fr/} },
 state transition network for Rocca's et al. method
-and Process Hitting (PH) for Pint as well as for our method.
+and Process Hitting (PH) for \textsc{PINT} \footnote{\textsc{PINT} is a Process Hitting tool that implements the language, simulation, formal analysis, and translation of PH models. It available online \url{http://loicpauleve.name/pint/} } as well as for our method.
 
-\modMF{%
 For this comparative study, we focus biological network of different sizes:
 a tadpole tail resorption (TTR) model with 12 biological components~\cite{khalis2009smbionet},
 an ERBB receptor-regulated G1/S transition (ERBB) model with 20 components~\cite{Samaga2009}
 and a T-cell receptor (TCR) signaling network of 40 components~\cite{Klamt06}.
-}%
+
 These models were chosen to be of different sizes:
 from small (12 components) to large (40 components).
 We note however that the PH models considered may contain more sorts than
@@ -33,8 +29,7 @@ have a biological meaning.
 The different model representations required have been obtained by translations
 from the PH
 ensuring the conservation of the dynamical properties.
-All these translations are available with \textsc{PINT} \footnote{\textsc{PINT} is a Process Hitting tool that implements the language, simulation, formal analysis, and translation of PH models. It available online \url{http://loicpauleve.name/pint/} }
-\todo{URL vers Pint et les autres outils}
+All these translations are available with \textsc{PINT} 
 All results alongside with more detailed specifications of the models
 are given in table \ref{tab:reachability}.
 The methods and the results provided by each of them are detailed in the following.
@@ -72,8 +67,7 @@ and “-” indicates that is not possible to do the test.
 \end{center}
 \end{figure}
 
-\todo{Rajouter le nombre de sortes dans le tableau ou la description} \repEB{avec ou sans les sortes coopératives? car pour PH y'en a plus de composants que pour les autres modèles}
-\annotMF{Il faut expliciter ce qu'on entend par “state” et “process”. Il fudrait peut-être aussi changer les termes ; je propose : “full state” et “partial state”.} \modifEB{Je préfère ta proposition mais tu vois ça prend plus d'espace et le tableau dépasse les limites }
+\todo{Diviser en 2 tableaux} 
 
 \todo{Il n'y a pas de résultats sur le calcul des poitns fixes dans le tableau} \repEB{En fait pour la méthode de Rocca le script qu'il m'ont envoyé génére quelques erreurs lors de la compilation. pour libddd y'avait pas l'option (--fixpoint) ne génère rien comme résultat et GINsim répond très rapidement mais il faudrait calculer tout le graphe de transition avant. }
 
@@ -81,7 +75,6 @@ and “-” indicates that is not possible to do the test.
 
 \item \textbf{Rocca's method} offers the possibility to model-check CTL properties
 of state-transition networks.
-\modMF{%
 We note that in general, computing such a graph from a network is exponential in the number of components and local states in the model.
 Therefore, using this method first requires an exponential computation to
 express the state-transition graph of the studied model into ASP.
@@ -91,7 +84,6 @@ reported in table~\ref{tab:reachability}.
 Afterwards, this method is able to check any kind of CTL formula
 (and not only the EF form that we focused on in this paper),
 but this checking may be time-consuming.
-}%
 
 \item \textbf{\textsc{GINsim}} is a software for the edition, simulation and analysis
 of gene interaction networks.
@@ -106,27 +98,24 @@ Therefore, it was not possible to perform reachability checks on partial states.
 Small state-transition graphs can also be displayed by this tool.
 
 \item \textbf{\textsc{libddd}}
-\modMF{%
 is a library for symbolic model-checking of CTL \& LTL properties.
 It can thus especially be used to check reachability properties;
 however, as opposed to our method, it does not output an execution path
 solving this reachability.
 In addition, it relies on the construction of the state-transition graph
 which is then stored under the form of a binary decision diagram for a more efficient analysis.
-}%
+
 This computation explains why \textsc{libddd} takes more time to respond,
 and does not answer in less than 12 minutes for the biggest example
 (which contains $2^{73}$ states).
 Finally, \textsc{libddd} is not able to compute the stable states of a network.
 
 \item \textbf{PINT}
-\modMF{%
 is a library gathering tools and translators related to the PH.
 It should be noted that the only reachability analysis developed so far on the Process Hitting
 was implemented in the software Pint, and consists in an approximation:
 by avoiding to compute the state-transition graph, it is ensured to be really efficient,
 at the cost of possibly terminating without being conclusive (although this is rare).
-}%
 Moreover, in the case of a positive answer,
 it currently does not return the execution the path achieving the desired reachability,
 but only outputs its conclusion.
@@ -140,13 +129,11 @@ namely identifying stable states and finding all possible paths to reach a given
 Compared to other methods (Rocca's method, \textsc{GINsim} and \textsc{libddd}),
 our method is relatively faster and also permits to study larger networks
 (up to $2^{73}$ states in our tests) despite some inconclusive cases.
-\modMF{%
 Indeed, our ASP program is non-conclusive in the cases where the given goal is not
 reachable and the model contains loops in its dynamics
 (which happens in almost every biological model).
 In this case, the program will compute all infinite paths in these loops,
 and never reach a goal or a fixed point.
-}%
 It is still possible, however, to limit the number of iterations to an arbitrary
 maximum which will be eventually reached in the case of an endless loop. This is possible with the option \texttt{"--imax=n"}.
 \annotMF{On peut éventuellement citer quelques approximations justifiées de ce maximum.}
@@ -155,7 +142,6 @@ maximum which will be eventually reached in the case of an endless loop. This is
 %iclingo find\_path.lp <network\_name>.lp -- imax=n
 %\end{lstlisting}
 %%
-\annotMF{Cette ligne de commande ne me semble pas nécessaire. Mais si on la garde, il faut en donner un autre exemple plus tôt, sans l'argument -{}-imax=n.} \modifEB{ok t'as raison je l'ai enlevée et remplacée par juste l'option \texttt{"--imax=n"}}
 Some interesting values can be given to this integer \texttt{n},
 which sets the maximum number of steps.
 For example, the total number of states is a maximum which is obvious,
@@ -165,11 +151,9 @@ The total number of sorts can also be an interesting value,
 under the hypothesis that each one will change its active process at most once,
 which is often the case for Boolean networks,
 or, by using the same reasoning, the total number of processes.
-\modMF{%
 In this case, however, a termination with no solution cannot be considered as a formal
 negative answer, unless one can prove that the chosen value \texttt{n}
 is bigger than the longest possible path in the state-transition graph.
 Given our implementation, if the step \texttt{n} is reached,
 the computation stops and displays paths that are not valid executions
 to the goal.
-}%

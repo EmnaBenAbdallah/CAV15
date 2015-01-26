@@ -1,9 +1,7 @@
 
 
 \pref{def:PH} introduces the Process Hitting~(PH)~\cite{PMR10-TCSB}
-which allows to model
-%A Process Hitting (PH) (\pref{def:PH}) gathers 
-a finite number of local levels,
+which allows to model a finite number of local levels,
 called \emph{processes},
 grouped into a finite set of components, called \emph{sorts}.
 A process is noted $a_i$, where $a$ is the sort's name,
@@ -12,7 +10,7 @@ At any time, exactly one process of each sort is \emph{active},
 and the set of active processes is called a \emph{state}.
 
 The concurrent interactions between processes are defined by a set of \emph{actions}.
-Actions describe the replacement of a process by another of the same sort
+Each action is responsible for the replacement of one process by another of the same sort
 conditioned by the presence of at most one other process in the current state.
 An action is denoted by $\PHfrappe{a_i}{b_j}{b_k}$, which is read as
 “$a_i$ \emph{hits} $b_j$ to make it \emph{bounce} to $b_k$”,
@@ -84,11 +82,9 @@ A PH model example with three sorts: $a$, $b$ and $z$ ($a$ is either at level 0 
 \end{figure}
 \end{example*}
 A state of the networks is a set of active processes containing a single process of each sort.
-\modMF{%
 The active process of a given sort $a \in \PHs$ in a state $s \in \PHl$
 is noted $\PHget{s}{a}$.
 For any given process $a_i$ we also note: $a_i \in s$ if and only if $\PHget{s}{a} = a_i$.
-}%
 
 \begin{definition} [Playable action]
 \label{def:playableAction}
@@ -107,7 +103,7 @@ Indeed, when an action $h = \PHfrappe{a_i}{b_j}{b_k}$ is played at a state $s$,
 the network evolves to a resulting next state $s'$ where exactly one active process
 is modified, namely: the active process $b_j$ changes into $b_k$.
 
-\todo{Glu pour la définition \ref{def:NextState}} \repEB{ça veut dire quoi Glu?}
+\todo{Glu pour la définition \ref{def:NextState}}
 
 \begin{definition}[Next states]
 \label{def:NextState}
@@ -126,12 +122,11 @@ We note $\Sce(s_0)$ the set of all scenarios in $s_0$.
 
 \todo{Glu pour la définition \ref{def:FixPoint1} et le lemme \ref{def:FixPoint2}}
 
-\begin{definition}[Stable state or fix point]
+\begin{definition}[Stable state or fixed point]
 \label{def:FixPoint1}
 Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
 $s \in \PHl$ be state;
 $s$ is a \emph{stable state} for $PH$ if and only if $next(s) = \emptyset $.
-\annotMF{“Stable state” ? “Fix point” ? “Fixed point” ?} \repEB{Je pense garder fix point}
 \end{definition}
 
 \begin{definition}
@@ -150,13 +145,12 @@ $\forall h \in \PHa$, $frappeur(h) \notin s \vee cible(h) \notin s$
 \begin{definition}[Reachability property]
 \label{def:reachability}
 
- If $s \in \PHl$ is a state and $A \subseteq \Proc$ \repEB{ with $\Proc$ is a set of processes that we find at most one process of each sort $\{a_i, b_j,..., z_k\}$ }
+ If $s \in \PHl$ is a state and $A \subseteq \Proc$ with $\Proc$ is a set of processes that we find at most one process of each sort $\{a_i, b_j,..., z_k\}$ 
  we note $\mathcal{P}(s, A)$ the \emph{the reachability property}:
  \begin{center}
   $\exists? \delta \in \Sce(s), \forall a_i \in A, \PHget{(s \play \delta)}{a}=a_i$
  \end{center}
 \todo{Il faut définir $\Proc$}
-\annotMF{Il serait peut-être mieux de parler de “reachability property” plutôt que “question”.}  \repEB{ Je l'ai changé} 
 \end{definition}
 
 

@@ -1,29 +1,28 @@
-The study of fix points (and, more generally, basins of attraction) provides an important understanding of the different behaviors of a Biological Regulatory Network BRN~\cite{wuensche1998genomic}.
-\modMF{%
+The study of fixed points (and, more generally, basins of attraction) provides an important understanding of the different behaviors of a Biological Regulatory Network BRN~\cite{wuensche1998genomic}.
 Indeed, a system will always eventually end in a basin of attraction,
 and this may depend on biological switch or other complex phenomena.
-}%
 A fixed point is a state of the BRN in which it is not possible any more to have new changes;
 in other words, it is a basin of attraction that is composed of only one state.
 
 In the following, we consider a Process Hitting $(\Sigma, \PHl, \PHh)$.
-It has been shown that a state $s \in L$ is a fixed point of the Process Hitting if and only if $s$ has no next state~\cite{PMR10-TCSB} \ie if there is no playable action in this state.
-Therefore, a steady state in a Process Hitting network is a state so that
+It has been shown that a state $s \in L$ is a fixed point or a stable state of the Process Hitting if and only if $s$ has no next state~\cite{PMR10-TCSB} \ie if there is no playable action in this state.
+Therefore, a stable state in a Process Hitting network is a state so that
 every process does not hit or is not hit by another process in the same state.
-We note that given this result, processes involved in a self-hit cannot be part of a stable state.
+We note that given this result, processes involved in a self-hit (a process hit its self) cannot be part of a stable state.
 
 \subsection{Process Hitting translation in ASP}
-Before writing any piece of ASP,
-we first need to present the studied PH network in ASP.
+Before writing any piece of scripts on ASP to analyse the dynamic of the network,
+we first need to translat the concerned PH network in ASP  \footnote{You can find our new methods, translation from PH to ASP and the dynamic verification on line: \url{https://github.com/EmnaBenAbdallah/verification-of-dynamical-properties_PH}}.
+
 To do this we use the following self-describing predicates:
-\texttt{'sort'} to define sorts, \texttt{'process'} for the processes and \texttt{action} for the network actions. \repEB{ We will see in example \ref{ex:asp-ph} how to define a PH network with these predicates.}
-\annotMF{Décrire rapidement le sens de ces prédicats ?}
+\texttt{"sort"} to define sorts, \texttt{"process"} for the processes and \texttt{"action"} for the network actions. We will see in example \ref{ex:asp-ph} how a PH network is defined with these predicates. We note that all the ASP scripts are 
+
 
 \begin{example}[Representation of a PH network in ASP]
 \label{ex:asp-ph}
-The representation of the PH network of Figure \ref{fig:ph} in ASP is the following:
+The representation of the PH network of figure \ref{fig:ph} in ASP is the following:
 \begin{lstlisting}
-sort("a"). sort("b"). sort("z"). %\label{ASPsort}
+sort(X) :- process(X,) %\label{ASPsort}
 process("a", 0..1). process("b", 0..1). process("z", 0..2). %\label{ASPprocess}
 action("a",0,"b",1,0). action("a",1,"a",1,0). action("b",1,"z",0,2). %\label{actions1}
 action("b",0,"z",1,2). action("z",0,"a",0,1). %\label{actions2}
@@ -38,14 +37,14 @@ for example, the first predicate \texttt{action("a",0,"b",1,0)} represents the a
 $\PHfrappe{a_1}{b_1}{b_0}$.
 \end{example}
 
-\subsection{Search of fix points}
+\subsection{Search of fixed points}
 \todo{ Parler du point fixe et ses interrêts. \\
 Décrire la nouvelle méthode qui permet de déterminer les états stables d'un réseau }
 
-The enumeration of fix points requires to translate the definition of a stable state
+The enumeration of fixed points requires to translate the definition of a stable state
 in a set of ASP rules.
 The first step consists of eliminating all processes involved in a self-hit;
-the others are recorded by the predicate \texttt{shownProcess}:
+the others are recorded by the predicate \texttt{"shownProcess"}:
 \begin{lstlisting}
 hiddenProcess(A,I) :- action(A,I,B,J,K), A=B, process(A,I),process(B,J),
                       process(B,K). %\label{hiddenProcess}
@@ -57,7 +56,6 @@ that is, all possible combinations of processes by choosing one process from eac
 \begin{lstlisting}
 1 { selectProcess(A,I) : showProcess(A,I) } 1 :- sort(A).
 \end{lstlisting}
-\modMF{%
 The previous line creates an many candidate answer sets as there are possible states
 to take into account.
 The last step consists of filtering each state that is not a fixed points,
@@ -65,7 +63,6 @@ or, in other words, eliminating all candidate answer sets that do not
 represent a fixed point.
 For this, we use a constraint:
 indeed, any solution that satisfy the body of a constraint will be removed from the answer set.
-}%
 Regarding our problem, a state is eliminated if there exists an action linking two processes:
 \begin{lstlisting}
 :- hit(A,I,B,J), selectProcess(A, I), selectProcess(B, J), A != B. %\label{contraintFix}
@@ -75,11 +72,11 @@ Regarding our problem, a state is eliminated if there exists an action linking t
 The PH model of figure \pref{fig:ph} contains 3 sorts:
 $a$ and $b$ have 2 processes and $z$ has 3, therefore, the whole model has $2*2*3 = 12$ states (whether they can be reached or not from a given initial state).
 We can check that this model contains only one fixed point: $\PHstate{b_0, z_2, a_0}$.
-Indeed, there is no action between each two of the processes contained is this state;
-moreover, no other state verifies this property.
+Indeed, there is no action between each two of the processes contained is this state so no evolution is possible from this state. 
+For this example no other state verifies this property.
 
 If we execute the ASP program detailed below,
-alongside with the description of the PS model given in example~\ref{ex:asp-ph},
+alongside with the description of the PH model given in example~\ref{ex:asp-ph},
 we obtain one answer set, which matches the expected result:
 \begin{lstlisting}[numbers=none]
 Answer 1 : fixProcess(a, 0), fixProcess(b, 0), fixProcess(z, 2)

@@ -5,18 +5,14 @@ Then we tackle the reachability question: are there scenarios in a given initial
 that allow to reach a given goal (under the form of a set of processes)?
 
 \subsection{Future states identification}
-\reformuler{From an initial known state, a PH network can evolve into several new states after a few steps.}
-\modMF{%
+Thanks to its actions, a PH network is considered like a dynamic model or a dynamic biological network. In fact starting from an initial state the network can envolve into several new states. Our objectif is to try to predict the next new states as well as to  see if other states are reachable and if it's the case to determine the path to reach them.
 Firstly, we focus on the evolutions of the model in a limited number of steps.
-}%
-The predicate \texttt{time(0..n)} sets the number of steps we want to play.
-\modMF{%
+So we define the predicate \texttt{time(0..n)} which sets the number of steps we want to play.
 The value of \texttt{n} can be arbitrarily chosen.
 For example, \texttt{time(0..10)} will be used to compute the 11 first steps,
 including the initial state.
 In order to specify such an initial state, we add several facts of the following form
 to list the processes included in this state:
-}%
 \begin{lstlisting}
 init(activeProcess("a",0)).
 \end{lstlisting}
@@ -26,14 +22,11 @@ identifying the future states requires to first identify the playable actions fo
 We recall that an action is playable in a state when both its hitter and target are active in this state (see Definition \ref{def:playableAction}).
 Therefore, we define an ASP predicate \texttt{playableAction(A,I,B,J,K,T)} that is true
 when the processes $\texttt{A}_\texttt{I}$ and $\texttt{B}_\texttt{J}$ are active at step \texttt{T}.
-\annotMF{Peut-être écrire : $\texttt{A}_\texttt{I}$ et $\texttt{B}_\texttt{J}$} \repEB{c'est fait}
 It is also needed to enforce the strictly asynchronous dynamic
 which state that exactly one process can change between two steps.
 We thus represent the change of the active process of a sort
 by the predicate \texttt{"activeFromTo(B,J,K,T)"}
 which means that in sort \texttt{B}, the active process changes from index $\texttt{B}_\texttt{J}$ to $\texttt{B}_\texttt{K}$ between steps \texttt{T} and \texttt{T+1}.
-\annotMF{Peut-être écrire : $\texttt{B}_\texttt{J}$ et $\texttt{B}_\texttt{K}$} \repEB{c'est fait}
-\modMF{%
 The cardinality rule of line \ref{e2} then
 created as many answer sets as there are possible evolutions from the current step,
 thus recreating all possible branchings in the possible evolutions of the model.
@@ -41,14 +34,12 @@ This allows to filter all scenarios where two actions have been played between
 two steps, by using the constraint of line \ref{e3}.
 Thus, the remaining scenarios of the answer set all strictly follow
 the asynchronous dynamics of the PH.
-}%
 \begin{lstlisting}
 {activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T),
           instate(activeProcess(A,I),T), instate(activeProcess(B,J),T),
           J!=K, time(T). %\label{e2}
 :- 2{ activeFromTo(B,J,K,T)}, time(T). %\label{e3}
 \end{lstlisting}
-\annotMF{N'est-il pas possible de réunir ces deux règles avec des bornes 1--1 de la façon suivante : 1 \{activeFromTo(B,J,K,T)\} 1 $\leftarrow$ ... ? Sinon, voir à peut-être enlever la cardinalité pour une règle plus simple à comprendre.} \repEB{ En fait non ce n'est pas possible vu que la première est une règle normale et la deuxième est une contrainte.D'ailleurs si je mets comme tu me demande je n'aurai pas le meme résultat. En effet la première règle donne l'ensemble de tous les changements possibles pour un instant T  en plus il faut que ça soit un ensemble pour trouver tous les chemins. Je peux les enlever pour la clarté mais pour le resultat des deux scripts n'est pas le même}
 
 Finally, the active processes at step \texttt{T+1},
 that represent the next state depending on the chosen bounce,
@@ -62,12 +53,10 @@ In other words, the state of step \texttt{T+1} contains one new active process
 resulting from the predicate \texttt{activeFromTo} (line \ref{e4})
 as well as all the unchanged processes that correspond to the other sorts (line \ref{e5} and \ref{e5-a}).
 
-\modMF{%
 The overall result of the pieces of program presented in this subsection
 is an answer set containing one answer for each
 possible evolution in \texttt{n} time steps,
 and starting from a given initial state.
-}%
 
 \subsection{Reachability verification}
 In this section, we focus on the reachability of set of processes which corresponds to the reachability question (see definition \ref{def:reachability}):
@@ -79,14 +68,12 @@ For this, we first use a predicate to list the processes we want to reach, calle
 \begin{lstlisting}
 goal(activeProcess("a",1)). %\label{c1}
 \end{lstlisting}
-\modMF{%
 Then, the literal \texttt{satisfiable(F, T)} 
 checks if a given process \texttt{F} of the goal
 is contained in the state of step \texttt{T},
 as defined in the rule of line \ref{c2}.
-}%
-\modifEB{Else the answer will be eliminated by the constraint \ref{c2-a} which verify if all processes of the goal are satisfied.}
-\todo{Il manque la contrainte qui élimine les mauvais parcours !} \repEB{Je les ai pas mises car ils s'agit de 3 lignes et encore plus d'éxplication et je ne vois pas si c'est important de les mettre car il faudrait les expliquer aussi}
+Else the answer will be eliminated by the constraint \ref{c2-a} which verifies if all processes of the goal are satisfied.
+\todo{Détailler la contraite 21 ou l'enlever} 
 \begin{lstlisting}
 satisfiable(F, T) :-  goal(F), instate(F, T). %\label{c2}
 :- X={ satisfaible(F, T+1) : goal(F) }, getNbreGoals(Y), X=Y, time(T). %\label{c2-a}
@@ -95,14 +82,13 @@ satisfiable(F, T) :-  goal(F), instate(F, T). %\label{c2}
 However, the limitation of the method above is that the user has to decide upstream
 the number of computed steps that should be sufficient.
 It is a main disadvantage because a search in $N$ steps will find no solution
-if the shortest path to the goal requires $K$ steps with $K > N$. \modifEB{It also may lengthen the resolution if the shortest path requires $n$ steps with $n << N$}
-\annotMF{Est-ce que ça ne risque pas aussi de rallonger anormalement la résolution si le plus court chemin est en $n$ étapes avec $n << N$ ?} \repEB{Si ça risque...}
+if the shortest path to the goal requires $K$ steps with $K > N$. It also may lengthen the resolution if the shortest path requires $n$ steps with $n << N$.
 One solution is to use an incremental computation mode,
-which is especially tackled by the incremental solver \textsc{iclingo}~\cite{gebser2008user}. \modifEB{In fact \textsc{iclingo} further includes the following guidelines:}
+which is especially tackled by the incremental solver \textsc{iclingo}~\cite{gebser2008user}. In fact \textsc{iclingo} further includes the following guidelines:
 
 \begin{tabbing}
 \texttt{\#base.}  \\
-... (fix code for definitions) ... \\
+... (static code for definitions) ... \\
 \texttt{\#cumulative constant.}  \\
 ... (code depending on constant: body iteration) ... \\
 \texttt{\#volatile constant.} \\
@@ -111,20 +97,14 @@ which is especially tackled by the incremental solver \textsc{iclingo}~\cite{geb
 
 Via \texttt{"\#base."} the subsequent part of a logic program is declared as static, that is, it is processed only once at the beginning of an incremental computation. In contrast, \texttt{"\#cumulative constant."} and \texttt{"\#volatile constant."}  are used to declare a (symbolic) constant as a placeholder for incremental step numbers.
 In the following our constant is denoted by \texttt{"t"} indicate the number of a step in the evolution of the network.
-
-\annotMF{Peut-on citer le manuel d'utilisation de Clingo comme référence ?} \repEB{Effectivement la réference \cite{gebser2008user} est un manuel d'utilisation pour Clingo ainsi que IClingo}
-\todo{Expliquer brièvement en quoi consiste la résolution incrémentale en ASP, notamment les trois parties distinctes : définitions, corps d'itération, fin d'itération.}
-\modMF{%
 Thus, the obtained program is almost identical,
 except that step numbers \texttt{N}
 are replaced by constant placeholders \texttt{"t"}
 that will be incremented throughout the execution (body iteration).
-}%
 In each step \texttt{t}, the program computes the playable actions \texttt{playableAction(A,I,B,J,K,t)}, the possible bounces \texttt{activeFromTo(B,J,K,t-1)}
 and the new states \texttt{instate(activeProcess(A,I),t+1)}
 in the same way than previously.
-Regarding the part of local steps, \modifEB{that is, all rules, facts, and integrity constraints computed in one step are dismissed before the next incremental step},
-\todo{Définir “the part of local steps”}
+Regarding the part of local steps, that is, all rules, facts, and integrity constraints computed in one step are dismissed before the next incremental step,
 we use a special constraint (line \ref{c4})
 which states that the program should continue to the next step
 while it is not satisfiable,
