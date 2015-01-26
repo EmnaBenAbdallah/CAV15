@@ -20,6 +20,15 @@ called respectively \emph{hitter}, \emph{target} and
 We also call a \emph{self-hit} any action whose hitter and target sorts are the same,
 that is, of the form: $\PHfrappe{a_i}{a_i}{a_k}$.
 
+\modMF{%
+The PH is therefore a restriction of synchronous automata, where each transition
+changes the local state of exactly one automaton,
+and is triggered by the local states of at most two distinct automata.
+This restriction in the form of the actions was chosen to permit
+the development of efficient static analysis methods
+based on abstract interpretation~\cite{PMR12-MSCS}.
+}%
+
 \begin{definition}[Process Hitting]\label{def:PH}
   A \emph{Process Hitting} is a triple $(\PHs,\PHl,\PHa)$ where:
   \begin{itemize}
@@ -88,69 +97,71 @@ For any given process $a_i$ we also note: $a_i \in s$ if and only if $\PHget{s}{
 
 \begin{definition} [Playable action]
 \label{def:playableAction}
-Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and $s \in \PHl$ a state of $PH$. We say that the action $h = \PHfrappe{a_i}{b_j}{b_k} \in \PHa$ is \emph{playable in state $s$} if and only if $a_i \in s$ and $b_j \in s$ (\ie $\PHget{s}{a} = a_i$ and $\PHget{s}{b}=b_j$).
+Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and $s \in \PHl$ a state of $PH$.
+We say that the action $h = \PHfrappe{a_i}{b_j}{b_k} \in \PHa$
+is \emph{playable in state $s$} if and only if
+$a_i \in s$ and $b_j \in s$ (\ie $\PHget{s}{a} = a_i$ and $\PHget{s}{b}=b_j$).
+The resulting state after playing $h$ in $s$
+is called a \emph{successor} of $s$ and
+is denoted by $(s \play h)$,
+where $\PHget{(s \play h)}{b} = b_k$ and
+$\forall c \in \PHs, c \neq b \Rightarrow \PHget{(s \play h)}{c}=\PHget{s}{c}$.
 \end{definition}
-The resulting state after playing an action $h$ in a state $s$ where it is playable is denoted by $(s \play h)$, where $\PHget{(s \play h)}{b} = b_k$ and $\forall c \in \PHs, c \neq b, \PHget{(s \play h)}{c}=\PHget{s}{c}$.
 
-\subsection*{Dynamic properties}
+\subsection*{Dynamical properties}
 
 The study of the dynamics of biological networks was the focus of many works, explaining the diversity of network modelings and the different methods developed in order to check dynamic properties.
-In this paper we focus on 2 main properties: the stable states and the reachability.
-We formally define these properties in the following and explain how they could be verified in a PH network.
+In this paper we focus on 2 main properties: the stable states and the reachability,
+which were already formalized and tackled by other methods in~\cite{PMR10-TCSB,PMR12-MSCS}.
+In the following, we consider a PH model $(\PHs,\PHl,\PHa)$,
+and we formally define these properties
+and explain how they could be verified on such a network.
 
-The dynamics of a network or its evolution is specified by its actions.
-Indeed, when an action $h = \PHfrappe{a_i}{b_j}{b_k}$ is played at a state $s$,
-the network evolves to a resulting next state $s'$ where exactly one active process
-is modified, namely: the active process $b_j$ changes into $b_k$.
+The notion of \emph{fixed point}, also called \emph{stable state},
+is given in definition~\ref{def:fixpoint}.
+A fixed point is a state which has no successor.
+Such states have a particular interest as they denote states in which the model
+stays indefinitely,
+and the existence of several of these states denotes a switch in the dynamics.
 
-\todo{Glu pour la définition \ref{def:NextState}}
-
-\begin{definition}[Next states]
-\label{def:NextState}
-Let $(\PHs,\PHl,\PHa)$ be a Process Hitting and $s \in \PHl$ be
-one of its states. The set of the next possible states for $s$ are computed as follows:
-\begin{center}
-$next(s) = \{s[b_k /b_j ]| \exists (a_i , b_j ) \in s^2 , \exists b_k \in \PHl_b , \PHfrappe{a_i}{b_j}{b_k} \in \PHa\}$
-\end{center}
-\todo{Définir la notation $s[b_k /b_j ]$}
-\annotMF{Est-ce que $next(s)$ est vraiment utile ? On ne s'en ressert pas après.} \repEB{Je crois que si, pour le définition du point fixe et pour comprendre l'évolution du réseau d'un état à un autre}
+\begin{definition}[Fixed point]
+\label{def:fixpoint}
+  A state $s \in \PHl$ is called a \emph{fixed point}
+  (or equivalently \emph{stable state})
+  if and only if is has no successors.
+  In other words, $s$ is a fixed point if an only if no action is playable in this state:
+  \[\forall \PHfrappe{a_i}{b_j}{b_k} \in \PHa, a_i \notin s \vee b_j \notin s \enspace.\]
 \end{definition}
 
-A sequence of successively playable actions ($h_0 \play h_1 \play h_2...$)
-from an initial state $s_0$ is called a \emph{scenario in $s_0$}.
-We note $\Sce(s_0)$ the set of all scenarios in $s_0$.
+A finer and more interesting dynamical property consists in
+the notion of \emph{reachability property}.
+Such a property, defined in definition~\ref{def:reachability},
+states that starting from a given initial state, it is possible
+to reach a given goal, that is, a state that contains a process
+or a set of processes.
+Checking such a dynamical property is considered difficult
+as in usual model-checking techniques,
+it is required to build (a part of) the state graph,
+which has an exponential complexity.
 
-\todo{Glu pour la définition \ref{def:FixPoint1} et le lemme \ref{def:FixPoint2}}
-
-\begin{definition}[Stable state or fixed point]
-\label{def:FixPoint1}
-Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
-$s \in \PHl$ be state;
-$s$ is a \emph{stable state} for $PH$ if and only if $next(s) = \emptyset $.
-\end{definition}
-
-\begin{definition}
-[Lemma: Stable state or fix point]
-\label{def:FixPoint2}
-Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and
-$s \in \PHl$ be a state;
-$s$ is a stable state for $PH$ if and only if there is no playable action in state $s$: 
-\begin{center}
-$\forall h \in \PHa$, $frappeur(h) \notin s \vee cible(h) \notin s$
-\end{center}
-\end{definition}
-
-\todo{Glu pour la définition \ref{def:reachability}}
+In the following, if $s \in \PHl$ is a state,
+we call \emph{scenario in $s$}
+any sequence of actions that are successively playable in $s$.
+We also note $\Sce(s)$ the set of all scenarios in $s$.
+Moreover, we denote by $\Proc = \bigcup_{a \in \PHs} \PHl_a$
+the set of all process in $\PH$.
 
 \begin{definition}[Reachability property]
 \label{def:reachability}
-
- If $s \in \PHl$ is a state and $A \subseteq \Proc$ with $\Proc$ is a set of processes that we find at most one process of each sort $\{a_i, b_j,..., z_k\}$ 
- we note $\mathcal{P}(s, A)$ the \emph{the reachability property}:
- \begin{center}
-  $\exists? \delta \in \Sce(s), \forall a_i \in A, \PHget{(s \play \delta)}{a}=a_i$
- \end{center}
-\todo{Il faut définir $\Proc$}
+  If $s \in \PHl$ is a state and $A \subseteq \Proc$ is a set of processes,
+  we denote by $\mathcal{P}(s, A)$ the following \emph{reachability property}:
+  \[\exists? \delta \in \Sce(s), \forall a_i \in A, \PHget{(s \play \delta)}{a} = a_i
+    \enspace.\]
 \end{definition}
 
-
+The rest of the paper focuses on the resolution of the previous issues
+with the use of ASP.
+The enumeration of all fixed points of a PH model will be tackled in
+section~\ref{fixpoint}
+and the verification of a reachability property will be the subject of
+section~\ref{dynamics}.
