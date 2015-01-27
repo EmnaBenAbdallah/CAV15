@@ -9,6 +9,7 @@ We have chosen the following tools, that are detailed below:
 \textsc{GINsim} (Gene Interaction Network Simulation)~\cite{gonzalez2006ginsim,naldi2009logical,naldi2007decision},
 \texttt{LIBDDD} (Library of Data Decision Diagrams)~\cite{thierry2009hierarchical,colange2013towards},  PINT \cite{PMR12-MSCS} and the method of Rocca's et al. \cite{roccaasp} which was developed also on ASP.
 \annotMF{Il faut trouver un autre nom pour “Rocca's method”.} \repEB{c'est vrai ; "transition state networks with ASP?}
+\annotMF{Je propose plutôt : “ASP for CTL model-checking” qui pourrait se simplifier en “ASP-CTL” dans le tableau.}
 Each method use a specific kind of representation\footnote{The transalation from other models to PH is done through the converters availbale on line: \url{https://github.com/pauleve/pint/tree/master/converters}}:
 logical regulatory network for \textsc{GINsim} \footnote{\textsc{GINsim} is a computer tool for the modeling and simulation of genetic regulatory networks \url{http://ginsim.org/} },
 Instantiable Transition Systems for \textsc{libDDD} is a library for symbolic model-checking of CTL \& LTL properties. \footnote{\textsc{libDDD} is \url{http://www.lip6.fr/} },
@@ -112,19 +113,25 @@ Finally, \textsc{libddd} is not able to compute the stable states of a network.
 
 \item \textbf{PINT}
 is a library gathering tools and translators related to the PH.
-It should be noted that the only reachability analysis developed so far on the Process Hitting
-was implemented in the software Pint, and consists in an approximation:
-by avoiding to compute the state-transition graph, it is ensured to be really efficient,
-at the cost of possibly terminating without being conclusive (although this is rare).
+It should be noted that Pint contains the only reachability analysis
+developed so far natively for the Process Hitting,
+before the method proposed in this paper.
+It consists in an approximation that avoids to compute the state-transition graph;
+It is thus ensured to be really efficient, which explains the fastest results,
+but at the cost of possibly terminating without being conclusive (although this is rare).
+However, it is not designed for goals consisting of a full state, which
+may trigger an exponential process to reach an answer,
+which explains the high computing times for some of them.
+\todo{Ref vers le tableau}
 Moreover, in the case of a positive answer,
 it currently does not return the execution the path achieving the desired reachability,
 but only outputs its conclusion.
-In the first example \textsc{PINT} did not give an answer because of the number of goals is greater than 5.
 \end{itemize}
 
-\subsection{Limitation}
+\subsection{Strengths and limitations of our method}
 
-We developed new methods to check dynamical properties,
+In the previous sections,
+we developed new methods to check dynamical properties,
 namely identifying stable states and finding all possible paths to reach a given goal.
 Compared to other methods (Rocca's method, \textsc{GINsim} and \textsc{libddd}),
 our method is relatively faster and also permits to study larger networks
@@ -135,25 +142,25 @@ reachable and the model contains loops in its dynamics
 In this case, the program will compute all infinite paths in these loops,
 and never reach a goal or a fixed point.
 It is still possible, however, to limit the number of iterations to an arbitrary
-maximum which will be eventually reached in the case of an endless loop. This is possible with the option \texttt{"--imax=n"}.
-\annotMF{On peut éventuellement citer quelques approximations justifiées de ce maximum.}
+maximum which will be eventually reached in the case of an endless loop.
+This is possible with the option \texttt{"-{}-imax=n"} of \textsc{iclingo},
+where \texttt{n} is the maximum number of steps.
 %%
 %\begin{lstlisting}[numbers=none]
 %iclingo find\_path.lp <network\_name>.lp -- imax=n
 %\end{lstlisting}
 %%
-Some interesting values can be given to this integer \texttt{n},
-which sets the maximum number of steps.
-For example, the total number of states is a maximum which is obvious,
+For example, the total number of states is an obvious maximum,
 as it will never be exceeded by a minimum path,
-but too hight to be very interesting.
-The total number of sorts can also be an interesting value,
+but it is too hight to be very interesting.
+The total number of sorts is a more interesting value,
 under the hypothesis that each one will change its active process at most once,
-which is often the case for Boolean networks,
-or, by using the same reasoning, the total number of processes.
+which is often the case for Boolean networks;
+or, with a similar reasoning, the total number of processes can be chosen.
 In this case, however, a termination with no solution cannot be considered as a formal
 negative answer, unless one can prove that the chosen value \texttt{n}
 is bigger than the longest possible path in the state-transition graph.
 Given our implementation, if the step \texttt{n} is reached,
 the computation stops and displays paths that are not valid executions
 to the goal.
+\todo{Y a-t-il moyen de les différencier de chemins corrects?}
