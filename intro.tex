@@ -1,4 +1,17 @@
 \todo{à revoir} \\
+For more than a decade, model-checking and SAT-solvers developments have been strongly connected \cite{biere1999symbolic}. Among different reasons, the main issue is related to the different problems with BDD-based symbolic approaches, which are:
+\begin{itemize}
+\item BDD-based structures require some canonical form to be defined so that a total order can be defined; 
+\item They often become too large;
+\item Variable ordering is crucial to the performances of the approaches.  
+\end{itemize}
+
+Behind the use of SAT (respectively ASP) to perform model-checking, there is the intuitive idea that the existence of a trace satisfying a given property expressed in LTL \cite{biere1999symbolic} or CTL (first reduced to universal properties \cite{penczek2002bounded}, then extended to other properties) can be reduced to the satisfiability of an equivalent logic formula (respectively a logic program). Although there have been some works in the field of unbounded model-checking \cite{mcmillan2002applying}, it generally requires to consider bounded traces, which gave birth to the concept of Bounded Model-Checking (BMC). Its principle is following: given a discrete model $M$ (which, equipped with a semantics, leads to a transition system), a property $\varphi$ and $k \in \mathbb{N}$, does $M$ allow a counterexample to $\varphi$ of $k$ (or fewer) transitions? 
+
+Bounded model-checking has been the subject of numerous researches. On the one hand, it also suffers from some limitations. First, it leads to incomplete analysis: if the SAT solver proves that the problem given as input is unsatisfiable for a length $k$, it only proves there are no counterexamples of length $k$. Finding bounds on the length is difficult and worst case is exponential. On the other hand, SAT is a viable alternative to BDD-based symbolic model-checking. It is also an efficient approach for debugging, i.e., quickly find counterexamples of minimal length. 
+
+Recently, the rise of ASP has also given birth to some innovative approaches, taking profit of the performances of ASP to process efficient model-checking algorithms. In \cite{rocca2013inference}, the authors proposed an approach to perform LTL and CTL model-checking through ASP, with the goal to infer and learn (synchronous) Boolean networks. This method has been refined in the context of (asynchronous) Thomas' biological regulatory networks \cite{roccaasp}. 
+
 As regulatory phenomena play a crucial role in biological systems, they need to
 be studied accurately. Biological Regulatory Networks (BRNs) consist in sets
 of either positive or negative mutual effects between the components. With the
