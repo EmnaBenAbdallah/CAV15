@@ -1,1 +1,38 @@
-\todo{à rédiger}
+In this paper, we gave a new method to compute some dynamical properties
+on Process Hitting models, a subclass of synchronous automata.
+The main interest of our method is the use of Answer Set Programming,
+a declarative programming paradigm which benefits from powerful solvers.
+We first focused on the enumeration of the fixed points of a model,
+which is tackled simply on such models given their particular form.
+We also considered the reachability problem, that is,
+checking if it is possible to reach a state with a given property
+from a given initial state,
+which thus corresponds to an $\mathsf{EF}$ operator in CTL logic.
+Our analysis is thus exhaustive, but can be limited to a number of steps,
+for which the dynamics of the model from the given initial state is computed.
+We gave an implementation of these problems into Answer Set Programming,
+and applied them to several biological examples of various sizes, up to
+40 biological components.
+Our results showed that our implementation is faster and deals with bigger models
+than other approaches, especially \textsc{LibDDD} which is a symbolic model-checker.
+
+Our work could benefit from several extension.
+Of course, the set of applicable models can be extended,
+for example with the addition
+of priorities or neutralizing edges,
+or by considering synchronous dynamics or other representations
+such as Thomas modeling~\cite{BernotSemBRN}.
+However, the range of the analysis can also be extended,
+by searching instead the set of initial states
+allowing to reach a given goal,
+or extending the method to universal properties (like the $\mathsf{AF}$ operator).
+Finally, the research of attractors in a more general fashion
+(such as cyclic or complex attractors)
+would be of major interest to fully understand the behavior of models.
+
+{\small
+\paragraph{Acknowledgement}
+The European Research Council has provided financial support
+under the European Community's Seventh Framework Programme (FP7/2007--2013)~/
+ERC grant agreement no.~259267.
+}
