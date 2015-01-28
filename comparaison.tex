@@ -8,7 +8,7 @@ we position ourselves with respect to existing methods dealing with different bi
 We have chosen the following tools, that are detailed below: 
 \textsc{GINsim} (Gene Interaction Network Simulation)~\cite{gonzalez2006ginsim,naldi2009logical,naldi2007decision},
 \texttt{LIBDDD} (Library of Data Decision Diagrams)~\cite{thierry2009hierarchical,colange2013towards},  PINT \cite{PMR12-MSCS} and the method for CTL model-checking of Rocca's et al. \cite{roccaasp} which was developed also on ASP but for transition states networks.
-Each method use a specific kind of representation\footnote{The transalation from PH to other models is done through the converters availbale on line: \url{https://github.com/pauleve/pint/tree/master/converters}}:
+Each method use a specific kind of representation\footnote{The transalation from PH from or to other models is done through the converters availbale on line: \url{https://github.com/pauleve/pint/tree/master/converters}}:
 logical regulatory network for \textsc{GINsim} \footnote{\textsc{GINsim} is a computer tool for the modeling and simulation of genetic regulatory networks \url{http://ginsim.org/} },
 Instantiable Transition Systems for \textsc{libDDD} is a library for symbolic model-checking of CTL \& LTL properties. \footnote{\textsc{libDDD} is \url{http://www.lip6.fr/} },
 state transitions network for Rocca's et al. method
@@ -44,13 +44,13 @@ furthermore, it sometimes provides more informations that the other existing one
   \hline
    Model&  \#sorts &\#procs & \#states & target & \textsc{ASP-CTL} & \textsc{Pint} & \textsc{libddd} & \textsc{GINsim} & \textsc{ASP-PH} \\
   \hline
-  TTR & 12 &42 & $2^{19}$ & full state & 7m17.01s & - & 0m1.151s &  0m1.001s & 0m1.90s \\
+  TTR & 12 &42 & $2^{19}$ & full state & \todo{XX} & Inconc & 0m1.151s &  0m1.001s & 0m1.90s \\
   \hline
-  ERBB & 20 &152 & $2^{70}$ & full state & - & - &1m55.38s & 2m31.64s & 0m11.84s \\
+  ERBB & 20 &152 & $2^{70}$ & full state & \todo{XX}  & - &1m55.38s & 2m31.64s & 0m11.84s \\
   \hline
-  ERBB & 20 &152 & $2^{70}$ & partial state & - & 0m0.027s &1m54.96s & - & 0m5.02s \\
+  ERBB & 20 &152 & $2^{70}$ & partial state & 0m2.61s & 0m0.027s &1m54.96s & - & 0m5.02s \\
   \hline
-  TCR & 40 &156 & $2^{73}$ & full state & - & - & out & out & 4m27.93s \\
+  TCR & 40 &156 & $2^{73}$ & full state & - & Inconc & out & out & 4m27.93s \\
   \hline
    TCR & 40 &156 & $2^{73}$ & partial state & - & 0m0.014s & out & - & 1m35.080s \\
   \hline
@@ -66,13 +66,11 @@ and “-” indicates that is not possible to do the test.
 \end{center}
 \end{figure}
 
-\todo{Diviser en 2 tableaux} 
-
-\todo{Il n'y a pas de résultats sur le calcul des poitns fixes dans le tableau} \repEB{En fait pour la méthode de Rocca le script qu'il m'ont envoyé génére quelques erreurs lors de la compilation. pour libddd y'avait pas l'option (--fixpoint) ne génère rien comme résultat et GINsim répond très rapidement mais il faudrait calculer tout le graphe de transition avant. }
+\todo{Diviser en 2 tableaux ou c'est bon??} 
 
 \begin{itemize}
 
-\item \textbf{Rocca's method} offers the possibility to model-check CTL properties
+\item \textbf{ASP-CTL} \todo{à revoir} offers the possibility to model-check CTL properties
 of state-transition networks.
 We note that in general, computing such a graph from a network is exponential in the number of components and local states in the model.
 Therefore, using this method first requires an exponential computation to
@@ -156,6 +154,4 @@ In this case, however, a termination with no solution cannot be considered as a 
 negative answer, unless one can prove that the chosen value \texttt{n}
 is bigger than the longest possible path in the state-transition graph.
 Given our implementation, if the step \texttt{n} is reached,
-the computation stops and displays paths that are not valid executions
-to the goal.
-\todo{Y a-t-il moyen de les différencier de chemins corrects?}
+the computation stops and there is no path to be displayed because there is no path verifies the goals after \texttt{n} changes.

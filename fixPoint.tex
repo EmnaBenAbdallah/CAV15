@@ -12,7 +12,7 @@ We note that given this result, processes involved in a self-hit (a process hit 
 
 \subsection{Process Hitting translation in ASP}
 Before writing any piece of scripts on ASP to analyse the dynamic of the network,
-we first need to translat the concerned PH network in ASP  \footnote{You can find our new methods, translation from PH to ASP and the dynamic verification on line: \url{https://github.com/EmnaBenAbdallah/verification-of-dynamical-properties_PH}}.
+we first need to translat the concerned PH network in ASP  \footnote{You can find our new methods for the dynamic verification and also the translation from PH to ASP on line: \url{https://github.com/EmnaBenAbdallah/verification-of-dynamical-properties_PH}}.
 
 To do this we use the following self-describing predicates:
 \texttt{"sort"} to define sorts, \texttt{"process"} for the processes and \texttt{"action"} for the network actions. We will see in example \ref{ex:asp-ph} how a PH network is defined with these predicates. We note that all the ASP scripts are 
@@ -22,7 +22,7 @@ To do this we use the following self-describing predicates:
 \label{ex:asp-ph}
 The representation of the PH network of figure \ref{fig:ph} in ASP is the following:
 \begin{lstlisting}
-sort(X) :- process(X,) %\label{ASPsort}
+sort(X) :- process(X,I) %\label{ASPsort}
 process("a", 0..1). process("b", 0..1). process("z", 0..2). %\label{ASPprocess}
 action("a",0,"b",1,0). action("a",1,"a",1,0). action("b",1,"z",0,2). %\label{actions1}
 action("b",0,"z",1,2). action("z",0,"a",0,1). %\label{actions2}
@@ -38,8 +38,6 @@ $\PHfrappe{a_1}{b_1}{b_0}$.
 \end{example}
 
 \subsection{Search of fixed points}
-\todo{ Parler du point fixe et ses interrêts. \\
-Décrire la nouvelle méthode qui permet de déterminer les états stables d'un réseau }
 
 The enumeration of fixed points requires to translate the definition of a stable state
 in a set of ASP rules.

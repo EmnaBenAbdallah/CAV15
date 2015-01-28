@@ -71,7 +71,7 @@ checks if a given process \texttt{F} of the goal
 is contained in the state of step \texttt{T},
 as defined in the rule of line \ref{c2}.
 Else the answer will be eliminated by the constraint \ref{c2-a} which verifies if all processes of the goal are satisfied.
-\todo{Détailler la contraite 21 ou l'enlever} 
+\todo{Détailler la contraite 21 ou l'enlever??} 
 \begin{lstlisting}
 satisfiable(F, T) :-  goal(F), instate(F, T). %\label{c2}
 :- X={ satisfaible(F, T+1) : goal(F) }, getNbreGoals(Y), X=Y, time(T). %\label{c2-a}

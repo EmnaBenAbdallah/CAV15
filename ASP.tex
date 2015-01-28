@@ -15,12 +15,13 @@ The sets of possible responses to an AnsProlog* program are calculated with a pr
 \begin{enumerate}
 
 \item \textbf{The rules:}
-As previously mentioned, a rule has the following form:
+A rule has the following form:
 \texttt{
 \begin{equation} \label{eq1ASP}
  head \leftarrow body.
 \end{equation}
 }
+with $l_{i}$ literals for all $i \in \llbracket 1 ; n \rrbracket$, and $0 \leq m \leq n$.
 This rule is equivalent to:
 \begin{equation} \label{eq2ASP}
 l_{0} \leftarrow l_{1},...,l_{m}, \ASPnot l_{m+1},..., \ASPnot l_{n}.
@@ -34,7 +35,7 @@ And this rule states:
     \end{array}
 \right \} \text{Then} ~ l_{0} ~ \text{is } \textbf{true} 
 \]
-with $l_{i}$ literals for all $i \in \llbracket 1 ; n \rrbracket$, and $0 \leq m \leq n$.
+
 Therefore, "$head$" is also called the \emph{conclusion} of the rule,
 and "$body$" is its \emph{premise}.
 
