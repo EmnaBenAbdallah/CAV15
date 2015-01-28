@@ -61,8 +61,6 @@ and starting from a given initial state.
 \subsection{Reachability verification}
 In this section, we focus on the reachability of set of processes which corresponds to the reachability question (see definition \ref{def:reachability}):
 “Is it possible, starting from a given initial state, to play a number of actions so that a set of given processes are active in the resulting state?”
-\annotMF{En fin de rédaction, il faudrait voir à peut-être décaler les définitions de la section “Dynamic properties” afin de faciliter la lecture.}
-\repEB{Ok}
 We now want to adapt the code of the dynamics computation of previous section in order to resolve this reachability problem.
 For this, we first use a predicate to list the processes we want to reach, called \texttt{goal}, and we add as many rules of the following form as there are objective processes:
 \begin{lstlisting}

@@ -5,98 +5,49 @@ The second framework is the Process Hitting (PH) a previously introduced formali
 
 \emph{Answer Set Programming} (ASP) is a declarative programming paradigm with semantics known as the \emph{semantics of answer sets}.
 This paradigm allows the programmer to specify what the problem to be solved is, and not how to solve it.
-ASP programs are written in AnsProlog* (short for "Answer Set Programming in Logic" with superscript:~*).
+ASP programs are written in AnsProlog* \cite{sureshkumar2006ansprolog} (short for "Answer Set Programming in Logic" with superscript:~*).
 These programs are composed of a set of \emph{facts} and a set of \emph{rules}, as defined below, from which other facts can be derived.
 A consistent set of facts that can be derived from a program using the rules is called \emph{answer set} for the program.
 The sets of possible responses to an AnsProlog* program are calculated with a program called a solver.
 
-\subsubsection{Logic program}
-An ASP program is composed of rules, each one being an ordered pair~\cite{baral2003knowledge}:
-\begin{equation} \label{eq1ASP}
-head \leftarrow body.
-\end{equation}
-with $head$ and $body$ two sets of literals. 
-
-This simple language has many advantages that make it very effective in terms of knowledge representation, reasoning and declarative problem solving. 
-
 \subsubsection{The syntax and semantic of ASP}
 \label{sectionSyntaxeASP}
 \begin{enumerate}
-\item \textbf{The alphabet}
 
-\noindent{ According to \cite{baral2003knowledge}, the alphabet of the axioms (or simply called the \emph{alphabet}) of ASP is composed of seven classes of symbols:
-\begin{itemize}
-\item Variables,
-\item Constants,
-\item Symbols of functions,
-\item Symbols of predicates,
-\item Connectors,	
-\item Symbols of punctuation,
-\item The special symbol $\bot$
-\end{itemize}
-}
-All these classes vary from one alphabet to another, but the sets of $ 5^{th} $ and $ 6^{th} $ classes (Connectors and symbols of punctuation) are defined as follows:
-\begin{itemize}
-  \item Connectors with \{$\neg$, or, $\leftarrow$, not, ‘,’\}
-  \item Symbols of punctuation with \{‘(’, ‘)’, ‘.’\}
-\end{itemize}
-
-\annotMF{Il faut absolument décider d'une charte d'écriture pour les programmes ASP dans ce texte, d'autant plus qu'actuellement cette charte change entre la section courant (où le code est écrit en mode \$maths\$) et la suite où il est en mode \texttt{listing}.}
-\repEB{à revoir}
-The other classes remain constant as they meet some informal agreement. In general, variables start with a capital letter and contain letters and numbers, but often only one capital letter is used (\eg X, Y, ...).
-The constants, symbols and predicates follow the same rule, but they begin with a lowercase letter (\eg f, g, a, b, ...).
-String surrounded by quotation marks are also considered as constants (\eg "f", "g", "a b c", ...).
-
-\annotMF{Je ne suis pas sûr que l'explication sur les prédicats soit pertinente. Si on la garde, il faudrait la reformuler.}
-What seems a little fuzzy is the concept of predicate. Indeed the word predicate can be an innovation of the new grammar. Let's consider the following sentence: 
-\begin{tabbing}
- \textit{Socrates was an athenian.} 
-\end{tabbing}
-\textit{Socrate} is the subject and \textit{was an athenian} is the predicat. This sentence can be noted in ASP by :
-\begin{tabbing}
- \texttt{athenian(Socrate) $\leftarrow ~ \top$. }\hspace{2cm} with \texttt{$\top$}  is the symbol of True.
-\end{tabbing} 
-
-\item \textbf{The rules}
+\item \textbf{The rules:}
 As previously mentioned, a rule has the following form:
 \texttt{
-\begin{equation*} \label{eq3ASP}
- A ~ \leftarrow ~ B^+, ~ \ASPnot B^-.
-\end{equation*}
+\begin{equation} \label{eq1ASP}
+ head \leftarrow body.
+\end{equation}
 }
-
-where the part on the left of the arrow is called $ head$
-and the right part is called $body$.
-This rule is then equivalent to:
-\texttt{
-\begin{equation*} \label{eq2ASP}
+This rule is equivalent to:
+\begin{equation} \label{eq2ASP}
 l_{0} \leftarrow l_{1},...,l_{m}, \ASPnot l_{m+1},..., \ASPnot l_{n}.
-\end{equation*}
-}
+\end{equation}
 And this rule states:
 \[
 \left.
     \begin{array}{ll}
-        \text{If} ~ \texttt{$l_{1},...,l_{m}$}  ~ \text{are \textbf{true}}\\
-        \text{and} ~ \texttt{$l_{m+1},...,l_{n}$} ~ \text{are \textbf{false}}
+        \text{If} ~ l_{1},...,l_{m}  ~ \text{are \textbf{true}}\\
+        \text{and} ~ l_{m+1},...,l_{n} ~ \text{are \textbf{false}}
     \end{array}
-\right \} \text{Then} ~ \texttt{$ l_{0} $} ~ \text{is } \textbf{true} 
+\right \} \text{Then} ~ l_{0} ~ \text{is } \textbf{true} 
 \]
-with \texttt{$l_{i}$} literals for all $i \in \llbracket 1 ; n \rrbracket$, and $0 \leq m \leq n$.
-Therefore, $head$ is also called the \emph{conclusion} of the rule,
-and \texttt{body} is its \emph{premise}.
+with $l_{i}$ literals for all $i \in \llbracket 1 ; n \rrbracket$, and $0 \leq m \leq n$.
+Therefore, "$head$" is also called the \emph{conclusion} of the rule,
+and "$body$" is its \emph{premise}.
 
 There are some special cases of rules \cite{Vladimir,baral2003knowledge}:
 \begin{itemize}
-\item A rule is said \textbf{constant} or \emph{ground} if all of its literals are constants;
+\item A  \textbf{ground} rule, is a rule  where all its literals are constants;
 \item A \textbf{fact} or a \textbf{reality} is a rule with an empty body.
-  It can be written without the central arrow ($\leftarrow$) or with a body equal to $\top$:
-  \texttt{
+  It can be written without the central arrow ($\leftarrow$) or with a $body$ equals to $\top$, and $\top$  is the symbol of True.
 \begin{equation} 
 l_{0} \leftarrow \top. \qquad \text{or} \qquad l_{0}.
  \label{eq5ASP}
 \end{equation}
-}
+
 
 \item A \textbf{constraint} is a rule where the head equals false ($\bot$).
   In this case, the head is often not represented and the constraint will be written generally as:
@@ -130,33 +81,26 @@ we consider that $l$ defaults to $0$ and $u$ defaults to $\infty$.
 
 \end{itemize}
 
+
+\item \textbf{The alphabet}
+
+According to \cite{baral2003knowledge}, the alphabet of ASP is composed of seven classes of symbols: Variables, start with a capital letter. Constants, symbols of functions, symbols of predicates, these 3 classes follow the same rule but they begin with lowercase letter. Connectors: $\neg$, or, $\leftarrow$, not, ‘,’. Symbols of punctuation :(‘(’, ‘)’, ‘.’) and finally the special symbols : $\bot$ and $\top$.
+
+The word predicate can be an innovation of the new grammar. Let's consider the following sentence to more explain it: 
+\begin{tabbing}
+ \textit{tweety is a bird.} 
+\end{tabbing}
+"\textit{tweety}" is a constant and "\textit{is a bird}" is a predicat. This sentence can be noted in ASP by :
+\begin{tabbing}
+ bird(tweety) $\leftarrow ~ \top$. \hspace{1cm} or \hspace{2cm} $bird(tweety) .$
+\end{tabbing} 
 \end{enumerate}
 
+\subsubsection{Modeling and solving of a problem with ASP: } 
 
+We can consider that the construction of models is one of the fundamental components of the scientific process. It concerns all systems we seek to control. A model has two main features \cite{Glimpse}: In fact it is a simplification of a given system and it allows an action on the system like resolving problems, searching for a path, identifying states and verufying properties... This concept model can address another angle issues related to representation process. Logical ASP programs follow the strategy of “generate and test”. Indeed, the modeling process can be regarded as a special form of representation. First, the system should be presented  with facts. Second it have to be explain with rules. Third, it should be possible to generate all possibilities using cardinalities. Finally, a filter will be done thanking to the constraints and only the sets of predicates satisfying all these conditions will be displayed which are considered "answer sets".
 
-\subsubsection{Modeling of a problem with ASP}
-
-We can consider that the construction of models is one of the fundamental components of the scientific process. It concerns all systems we seek to control. A model has two main features \cite{Glimpse}:
-\begin{itemize}
-\item it is a simplification of a given system,
-\item it allows an action on the system like resolving problems, searching for a path, identifying states and verufying properties... 
-\end{itemize}
-This concept model can address another angle issues related to representation process.
-
-\begin{enumerate}
-\item\textbf{Modeling steps}
-The modeling process can be regarded as a special form of representation whose operations are detailed in \cite{baral2003knowledge}.
-Logical ASP programs follow the strategy of “generate and test”.
-This strategy includes four steps:
-\begin{itemize}
-\item Enumerate with facts;
-\item Explain with rules;
-\item Generate all the possibilities with cardinalities; and finally,
-\item Filter with constraints.
-\end{itemize}
-
-\item \textbf{Solving an ASP program}
-The solving of ASP programs relies on a \emph{grounder} and a \emph{solver}
+We denote that the solving of ASP programs relies on a \emph{grounder} and a \emph{solver}
 that usually work together:
 first the grounder is used to remove variables in order to achieve an equivalent but constant program,
 then the solver computes all answer sets for a stabilized program generated by the grounder~\cite{Vladimir,AnsPrologAPE}.
@@ -165,10 +109,5 @@ Amongst all available grounders for ASP, we can name
 and the solvers include
 \texttt{SModels}, \texttt{DLV}, \texttt{CModels}, \texttt{Clasp}...
 
-\reformuler{
-The combined use of the grounder and the solver specifies major programs in a compact, using rules with schematic variables and other abbreviations. Both systems employ grounding algorithms that work quickly and simplify the program.
-}
-For the work presented in this paper, we worked with \texttt{Clingo} which is a combination of the grounder \texttt{Gringo} and the solver \texttt{Clasp}.
-
-\end{enumerate}
+For the work presented in this paper, we worked with \texttt{Clingo} (verion 3) which is a combination of the grounder \texttt{Gringo} and the solver \texttt{Clasp}.
 

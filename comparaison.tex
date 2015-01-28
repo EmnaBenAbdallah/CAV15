@@ -7,13 +7,11 @@ To evaluate the effectiveness of our new approach,
 we position ourselves with respect to existing methods dealing with different biological models.
 We have chosen the following tools, that are detailed below: 
 \textsc{GINsim} (Gene Interaction Network Simulation)~\cite{gonzalez2006ginsim,naldi2009logical,naldi2007decision},
-\texttt{LIBDDD} (Library of Data Decision Diagrams)~\cite{thierry2009hierarchical,colange2013towards},  PINT \cite{PMR12-MSCS} and the method of Rocca's et al. \cite{roccaasp} which was developed also on ASP.
-\annotMF{Il faut trouver un autre nom pour “Rocca's method”.} \repEB{c'est vrai ; "transition state networks with ASP?}
-\annotMF{Je propose plutôt : “ASP for CTL model-checking” qui pourrait se simplifier en “ASP-CTL” dans le tableau.}
-Each method use a specific kind of representation\footnote{The transalation from other models to PH is done through the converters availbale on line: \url{https://github.com/pauleve/pint/tree/master/converters}}:
+\texttt{LIBDDD} (Library of Data Decision Diagrams)~\cite{thierry2009hierarchical,colange2013towards},  PINT \cite{PMR12-MSCS} and the method for CTL model-checking of Rocca's et al. \cite{roccaasp} which was developed also on ASP but for transition states networks.
+Each method use a specific kind of representation\footnote{The transalation from PH to other models is done through the converters availbale on line: \url{https://github.com/pauleve/pint/tree/master/converters}}:
 logical regulatory network for \textsc{GINsim} \footnote{\textsc{GINsim} is a computer tool for the modeling and simulation of genetic regulatory networks \url{http://ginsim.org/} },
 Instantiable Transition Systems for \textsc{libDDD} is a library for symbolic model-checking of CTL \& LTL properties. \footnote{\textsc{libDDD} is \url{http://www.lip6.fr/} },
-state transition network for Rocca's et al. method
+state transitions network for Rocca's et al. method
 and Process Hitting (PH) for \textsc{PINT} \footnote{\textsc{PINT} is a Process Hitting tool that implements the language, simulation, formal analysis, and translation of PH models. It available online \url{http://loicpauleve.name/pint/} } as well as for our method.
 
 For this comparative study, we focus biological network of different sizes:
@@ -44,7 +42,7 @@ furthermore, it sometimes provides more informations that the other existing one
 \noindent%
 \begin{tabular}{|l|c|c|c|c||c|c|c|c|c|}
   \hline
-   Model&  \#sorts &\#procs & \#states & target & Rocca & Pint & libddd & GINsim & ASP \\
+   Model&  \#sorts &\#procs & \#states & target & \textsc{ASP-CTL} & \textsc{Pint} & \textsc{libddd} & \textsc{GINsim} & \textsc{ASP-PH} \\
   \hline
   TTR & 12 &42 & $2^{19}$ & full state & 7m17.01s & - & 0m1.151s &  0m1.001s & 0m1.90s \\
   \hline
@@ -52,12 +50,12 @@ furthermore, it sometimes provides more informations that the other existing one
   \hline
   ERBB & 20 &152 & $2^{70}$ & partial state & - & 0m0.027s &1m54.96s & - & 0m5.02s \\
   \hline
-  TCR & 40 &156 & $2^{73}$ & full state & - & - & out & $ \lbrack 5mn ; \infty \rbrack$ & 4m27.93s \\
+  TCR & 40 &156 & $2^{73}$ & full state & - & - & out & out & 4m27.93s \\
   \hline
    TCR & 40 &156 & $2^{73}$ & partial state & - & 0m0.014s & out & - & 1m35.080s \\
   \hline
 \end{tabular}
-\caption{Compared performances of Rocca et al. method, \textsc{Pint}, \textsc{libddd}, \textsc{GINsim} and our new method developped in ASP.
+\caption{Compared performances of Rocca et al. method denoted by \textsc{ASP-CTL}, \textsc{Pint}, \textsc{libddd}, \textsc{GINsim} and our new method \textsc{ASP-PH} developped in ASP for Process Hitting networks.
 For each test, this table gives the considered model,
 the number of its processes and its states, the type of goal
 (either a whole state or a sub-state)
@@ -92,9 +90,7 @@ It allows to compute all reachable stable states instantly;
 however, it is not possible to compute all stable states independently from the initial state.
 Regarding the reachability problem, \textsc{GINSim} only allows to check
 full states, because of its approach which consists in computing
-all the state-transition graph
-\todo{Seulement la partie accessible ou l'ensemble du graphe ?} \repEB{Je pense que oui mais je n'arrive pas à le m'assurer car il m'a fallut les états initiaux pour tester l'atteignabilité à ces états stables}
-and then check if there exists a path between two given states.
+all the state-transition graph and then check if there exists a path between two given states.
 Therefore, it was not possible to perform reachability checks on partial states.
 Small state-transition graphs can also be displayed by this tool.
 
@@ -121,8 +117,7 @@ It is thus ensured to be really efficient, which explains the fastest results,
 but at the cost of possibly terminating without being conclusive (although this is rare).
 However, it is not designed for goals consisting of a full state, which
 may trigger an exponential process to reach an answer,
-which explains the high computing times for some of them.
-\todo{Ref vers le tableau}
+which explains the high computing times for some of them \ref{tab:reachability}
 Moreover, in the case of a positive answer,
 it currently does not return the execution the path achieving the desired reachability,
 but only outputs its conclusion.

@@ -20,14 +20,12 @@ called respectively \emph{hitter}, \emph{target} and
 We also call a \emph{self-hit} any action whose hitter and target sorts are the same,
 that is, of the form: $\PHfrappe{a_i}{a_i}{a_k}$.
 
-\modMF{%
 The PH is therefore a restriction of synchronous automata, where each transition
 changes the local state of exactly one automaton,
 and is triggered by the local states of at most two distinct automata.
 This restriction in the form of the actions was chosen to permit
 the development of efficient static analysis methods
 based on abstract interpretation~\cite{PMR12-MSCS}.
-}%
 
 \begin{definition}[Process Hitting]\label{def:PH}
   A \emph{Process Hitting} is a triple $(\PHs,\PHl,\PHa)$ where:
