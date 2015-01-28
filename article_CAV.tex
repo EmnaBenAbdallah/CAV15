@@ -420,21 +420,24 @@ using Answer Set Programming}
 
 \begin{abstract}
 
-The Process Hitting is a recently introduced framework to model concurrent processes.
-It is notably suitable to model biological regulatory networks with partial knowledge of
-cooperations by defining the most permissive dynamics.%
-In this paper, we explain the methods we developed in Answer Set Programming
-to solve the problem of reachability that consists of deciding if,
-starting from a given initial state, it is possible to reach a given full local state or a partial local state. In fact this dynamic property of reachability is considred also a CTL property of model checking EF and AF having a condition on the lenght of the path.%
-Besides we aim at finding the fixed points, that are, the stable states in which it is not possible
-any more to have any evolution of the model.%
-Finally, we illustrate the merits of our methods by applying them to various
-biological examples and comparing the results with existing approaches.
-We show that our approach succeeds in processing large models with a considerable number of components and interactions.
+In this paper, we propose a new tool for the model-checking of
+Process Hitting (PH), a recently introduced framework to model concurrent processes,
+by using the logic programming paradigm called Answer Set Programming (ASP).
+PH is a restriction of synchronous automata which is notably suitable,
+but not limited, to model biological regulatory networks.
+We focus on the problem of reachability that consists of deciding if,
+starting from a given initial state, it is possible to reach a given (partial) state
+in a given number of steps;
+this is thus equivalent to the CTL “$\mathsf{EF}$” operator
+with paths limited to a certain length.
+We also consider the enumeration of fixed points, that is,
+states in which no more evolution is possible.
+The merits of our methods is illustrated by applying them to
+biological examples of various sizes
+and comparing the results with some existing approaches.
+It turns out that our approach succeeds in processing large models
+with a high number of components and interactions.
 
-%The abstract should summarize the contents of the paper and should
-%contain at least 70 and at most 150 words. It should be written using the
-%\emph{abstract} environment.
 \keywords{Process Hitting, Answer Set Programming, stable states, fixed points, reachability}
 
 \end{abstract}
