@@ -42,7 +42,7 @@ furthermore, it sometimes provides more informations that the other existing one
 \noindent%
 \begin{tabular}{|l|c|c|c|c||c|c|c|c|c|}
   \hline
-   Model&  \#sorts &\#procs & \#states & target & \textsc{ASP-CTL} & \textsc{Pint} & \textsc{libddd} & \textsc{GINsim} & \textsc{ASP-PH} \\
+   Model&  \#sorts &\#procs & \#states & target & \textsc{ASP-thomas} & \textsc{Pint} & \textsc{libddd} & \textsc{GINsim} & \textsc{ASP-PH} \\
   \hline
   TTR & 12 &42 & $2^{19}$ & full state & \todo{XX} & 0m.00.97s & 0m1.151s &  0m1.001s & 0m1.90s \\
   \hline
@@ -55,7 +55,7 @@ furthermore, it sometimes provides more informations that the other existing one
    TCR & 40 &156 & $2^{73}$ & partial state & - & 0m0.014s & out & - & 1m35.080s \\
   \hline
 \end{tabular}
-\caption{Compared performances of Rocca et al. method denoted by \textsc{ASP-CTL}, \textsc{Pint}, \textsc{libddd}, \textsc{GINsim} and our new method \textsc{ASP-PH} developped in ASP for Process Hitting networks.
+\caption{Compared performances of Rocca et al. method denoted by \textsc{ASP-thomas}, \textsc{Pint}, \textsc{libddd}, \textsc{GINsim} and our new method \textsc{ASP-PH} developped in ASP for Process Hitting networks.
 For each test, this table gives the considered model,
 the number of its processes and its states, the type of goal
 (either a whole state or a sub-state)
@@ -68,17 +68,11 @@ and “-” indicates that is not possible to do the test.
 
 \begin{itemize}
 
-\item \textbf{ASP-CTL} \todo{à revoir} offers the possibility to model-check CTL properties
-of state-transition networks.
-We note that in general, computing such a graph from a network is exponential in the number of components and local states in the model.
-Therefore, using this method first requires an exponential computation to
-express the state-transition graph of the studied model into ASP.
-Indeed, for the tadpole tail resorption model comprising only 42 processes,
-this computation took 3 minutes, which was not included in the solving time
-reported in table~\ref{tab:reachability}.
+\item \textbf{ASP-THOMAS} offers the possibility to model-check CTL properties
+of Thomas networks.
+We note that in general, presenting such a network needs so much time because there is no converters for thomas networks to ASP. regardless of the complexity of the presentation of the graph it is clear that this approach gives a very quick result when compared with others (for the example TCR we didn't do the test). Indeed it also proves ASP is a good choice to run the graphs and check these properties.
 Afterwards, this method is able to check any kind of CTL formula
-(and not only the EF form that we focused on in this paper),
-but this checking may be time-consuming.
+(and not only the “$\mathsf{EF}$” form that we focused on in this paper) but the inconvinient thet they need to provide a number of steps greater than or equal to the number of steps after which the objectives are achieved. But this number is not always estimable.
 
 \item \textbf{\textsc{GINsim}} is a software for the edition, simulation and analysis
 of gene interaction networks.
