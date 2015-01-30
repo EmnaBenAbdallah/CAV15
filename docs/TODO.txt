@@ -1,0 +1,15 @@
+
+************
+*** TODO ***
+************
+
+- Rajouter les essais de TCS pour ASP-Thomas si disponibles.
+
+- Si les jeux d'essais de ASP-Thomas ont été faits sur une autre machine, il faut le spécifier.
+
+- Il faudrait donner les modèles sur le dépôt.
+
+- Détailler les résultats des tests (out of memory, temps d'exécution trop long, Inconc...)
+
+- Donner les temps des énumérations de points fixes.
+
