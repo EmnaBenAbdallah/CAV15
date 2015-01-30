@@ -20,7 +20,7 @@ According to \cite{baral2003knowledge}, the alphabet of ASP is composed of seven
 \begin{itemize}
   \item \emph{constants}, symbols of \emph{functions} and symbols of \emph{predicates} are composed of letters and start with a lowercase letter,
   \item \emph{variables} follow the same rule but start with a capital letter,
-  \item \emph{connectors} that are “$\neg$”, “$\textbf{or}$”, “$\leftarrow$”, “$\textbf{not}$” and “$,$”,
+  \item \emph{connectors} that are “$\leftarrow$”, “$\textbf{not}$” and “$,$”,
   \item \emph{punctuation} that can be “(”, “)” and “.”,
   \item the special symbols “$\bot$” and “$\top$”.
 \end{itemize}
@@ -45,9 +45,9 @@ where $l_{i}$ are literals for all $i \in \llbracket 1 ; n \rrbracket$, and $0 \
 This rule states:
 \[
 \left.
-    \begin{array}{ll}
-        \text{If} ~ l_{1},...,l_{m}  ~ \text{are \textbf{true}}\\
-        \text{and} ~ l_{m+1},...,l_{n} ~ \text{are \textbf{false}}
+    \begin{array}{rcl}
+        \text{If } & l_{1},...,l_{m}  & \text{ \textbf{can} be proved true}\\
+        \text{and } & l_{m+1},...,l_{n} & \text{ \textbf{cannot} be proved true}
     \end{array}
 \right \} \text{Then} ~ l_{0} ~ \text{is } \textbf{true}.
 \]
