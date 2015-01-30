@@ -57,13 +57,15 @@ furthermore, it sometimes provides more informations that the other existing one
    TCR & 40 &156 & $2^{73}$ & partial state & - & 0m0.014s & out & - & 1m35.080s \\
   \hline
 \end{tabular}
-\caption{Compared performances of Rocca et al. method denoted by \textsc{ASP-thomas}, \textsc{Pint}, \textsc{LibDDD}, \textsc{GINsim} and our new method \textsc{ASP-PH} developped in ASP for Process Hitting networks.
-For each test, this table gives the considered model,
-the number of its processes and its states, the type of goal
+\caption{Compared performances of several methods to compute reachability analyses.
+The method of Rocca \textit{et al.} (denoted by \textsc{ASP-Thomas}), \textsc{Pint}, \textsc{LibDDD}, \textsc{GINsim} and our new method \textsc{ASP-PH} presented in this paper.
+For each test, this table gives the name of the considered model,
+its number of sorts, processes and states, the type of goal
 (either a whole state or a sub-state)
 and the computation time of the different methods used for the tests,
-where “out” marks an execution taking too much time or memory
-and “-” indicates that is not possible to do the test.
+where “out” marks an execution taking too much time or memory,
+“-” indicates that is not possible to do the test,
+and “Inconc” states that the method terminates without a response.
 }
 \end{center}
 \end{figure}
