@@ -1,4 +1,4 @@
-For more than a decade, model-checking and SAT-solvers developments have been strongly connected \cite{biere1999symbolic}. Among different reasons, the main issue is related to the different problems with Binary Decision Diagrams (BDD) -based symbolic approaches, that are:
+For more than a decade, model-checking and SAT-solvers developments have been strongly connected \cite{biere1999symbolic}. Among different reasons, the main ones are related to some of the drawbacks of Binary Decision Diagrams (BDD) -based symbolic approaches, that are:
 \begin{itemize}
 \item BDD-based structures require some canonical form to be given so that a total order can be defined; 
 \item They often become too large;
@@ -9,13 +9,13 @@ Behind the use of SAT (respectively ASP) to perform model-checking, there is the
 
 Bounded model-checking has been the subject of numerous researches. On the one hand, it also suffers from some limitations. First, it leads to incomplete analysis: if the SAT solver proves that the problem given as input is unsatisfiable for a length $k$, it only proves there are no counterexamples of length $k$. Finding bounds on the length is difficult and worst case is exponential. On the other hand, SAT is a viable alternative to BDD-based symbolic model-checking. It is also an efficient approach for debugging, \ie quickly find counterexamples of minimal length. 
 
-Recently, the rise of ASP has also given birth to some innovative approaches, taking profit of the performances of ASP to process efficient model-checking algorithms. In \cite{rocca2013inference}, the authors proposed an approach to perform LTL and CTL model-checking through ASP, with the goal to infer and learn (synchronous) Boolean networks. This method has been refined in the context of (asynchronous) Thomas' biological regulatory networks \cite{roccaasp}. 
+Recently, the rise of ASP has also given birth to some innovative approaches, taking profit of the performances of ASP to process efficient model-checking algorithms. In \cite{rocca2013inference}, the authors proposed an approach to perform LTL and CTL model-checking through ASP, with the goal to infer and learn (synchronous) Boolean networks. This method has been refined in the context of (asynchronous) Thomas' biological regulatory networks in \cite{roccaasp}. 
 
 As regulatory phenomena play a crucial role in biological systems, they need to
 be studied accurately. Biological Regulatory Networks (BRNs) consist in sets
 of either positive or negative mutual effects between the components. With the
-purpose of analyzing these systems, they are often modeled as graphs which make
-it possible to determine the possible evolutions of all the interacting components of the system. Indeed, in order to address the formal checking of dynamical properties within very large BRNs, we recently introduced a new formalism, named the “Process Hitting” (PH) \cite{PMR10-TCSB}, to model concurrent systems having components with a few qualitative levels. A PH describes, in an atomic manner, the possible evolutions of a “process” (representing one component at one level) triggered by the hit of at most one other “process” in the system. This particular structure makes the formal analysis of BRNs with hundreds of components tractable by using approached methods computing approximations of the dynamics~\cite{PMR12-MSCS}. Furthermore, PH is suitable, according to the precision of the available information, to model BRNs with different levels of abstraction by capturing the most general dynamics.
+purpose of analyzing these systems, they are often modeled as graphs which makes
+it possible to determine the possible evolutions of all the interacting components of the system. Thus, in order to address the formal checking of dynamical properties within very large BRNs, we recently introduced a new formalism, named the “Process Hitting” (PH) \cite{PMR10-TCSB}, to model concurrent systems having components with a few qualitative levels. A PH describes, in an atomic manner, the possible evolutions of a “process” (representing one component at one level) triggered by the hit of at most one other “process” in the system. This particular structure makes the formal analysis of BRNs with hundreds of components tractable by using approached methods computing approximations of the dynamics~\cite{PMR12-MSCS}. Furthermore, PH is suitable, according to the precision of the available information, to model BRNs with different levels of abstraction by capturing the most general dynamics.
 
 The objectives of the work presented in this paper are the following.
 Firstly, we show that starting from a PH model, it is possible to find all possible
@@ -26,7 +26,17 @@ The second phase of our work consists in computing the dynamics by determining, 
 This also permits to check if a goal is reachable for a given component or set of components in the system.
 The results are ensured to respect strictly the PH dynamics.
 
-Our contribution is from the results that allowed to determine the stable states, we propose to evaluate the benefits of the Answer Set Programming (ASP) \cite{baral2003knowledge} to compute them. ASP has been proven efficient to tackle models with a large number of components and parameters. Our aim here is to assess its potential w.r.t. the computation of some dynamical properties of the PH model. In this paper, we show that ASP turns out to be effective for these enumerative searches which justifies its use. The benefit of our approach is that it makes possible to get the minimal paths to reach our goal(s) also we can verify if it is possible after a given number of steps. 
+The particularity of our contribution relies in the use of Answer Set Programming
+(ASP)~\cite{baral2003knowledge}
+to compute the result of these searches.
+This declarative programming framework has been proven efficient
+to tackle models with a large number of components and parameters.
+Our aim here is to assess its potential w.r.t.\ the computation
+of some dynamical properties of PH models.
+In this paper, we show that ASP turns out to be effective
+for these enumerative searches, which justifies its use.
+In some cases, the computed dynamics can also be bounded by a give
+number of evolution steps.
 
 Section \ref{defs} defines the paradigm of Answer Set Programming,
 and the Process Hitting framework.
