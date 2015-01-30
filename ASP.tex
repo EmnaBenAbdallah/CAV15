@@ -5,110 +5,131 @@ The second framework is the Process Hitting (PH) a previously introduced formali
 
 \emph{Answer Set Programming} (ASP) is a declarative programming paradigm with semantics known as the \emph{semantics of answer sets}.
 This paradigm allows the programmer to specify what the problem to be solved is, and not how to solve it.
-ASP programs are written in AnsProlog* \cite{sureshkumar2006ansprolog} (short for "Answer Set Programming in Logic" with superscript:~*).
+ASP programs are written in AnsProlog* \cite{sureshkumar2006ansprolog} (short for “Answer Set Programming in Logic”).
 These programs are composed of a set of \emph{facts} and a set of \emph{rules}, as defined below, from which other facts can be derived.
 A consistent set of facts that can be derived from a program using the rules is called \emph{answer set} for the program.
 The sets of possible responses to an AnsProlog* program are calculated with a program called a solver.
 
-\subsubsection{The syntax and semantic of ASP}
+\subsubsection{Syntax and semantics of ASP}
 \label{sectionSyntaxeASP}
 \begin{enumerate}
 
+\item \textbf{The alphabet}
+
+According to \cite{baral2003knowledge}, the alphabet of ASP is composed of seven classes of symbols:
+\begin{itemize}
+  \item \emph{constants}, symbols of \emph{functions} and symbols of \emph{predicates} are composed of letters and start with a lowercase letter,
+  \item \emph{variables} follow the same rule but start with a capital letter,
+  \item \emph{connectors} that are “$\neg$”, “$\textbf{or}$”, “$\leftarrow$”, “$\textbf{not}$” and “$,$”,
+  \item \emph{punctuation} that can be “(”, “)” and “.”,
+  \item the special symbols “$\bot$” and “$\top$”.
+\end{itemize}
+
+The notion of predicate allows to qualify constants in this grammar.
+For example, the property “\textit{Tweety is a bird}”
+can be expressed by the predicate name \textit{bird}
+around the constant \textit{tweety} into the following literal:
+\textit{bird(tweety)}.
+Such literal can them be used as premise or conclusion in a rule as defined below.
+
 \item \textbf{The rules:}
 A rule has the following form:
-\texttt{
 \begin{equation} \label{eq1ASP}
  head \leftarrow body.
 \end{equation}
-}
-with $l_{i}$ literals for all $i \in \llbracket 1 ; n \rrbracket$, and $0 \leq m \leq n$.
-This rule is equivalent to:
+which is equivalent to:
 \begin{equation} \label{eq2ASP}
 l_{0} \leftarrow l_{1},...,l_{m}, \ASPnot l_{m+1},..., \ASPnot l_{n}.
 \end{equation}
-And this rule states:
+where $l_{i}$ are literals for all $i \in \llbracket 1 ; n \rrbracket$, and $0 \leq m \leq n$.
+This rule states:
 \[
 \left.
     \begin{array}{ll}
         \text{If} ~ l_{1},...,l_{m}  ~ \text{are \textbf{true}}\\
         \text{and} ~ l_{m+1},...,l_{n} ~ \text{are \textbf{false}}
     \end{array}
-\right \} \text{Then} ~ l_{0} ~ \text{is } \textbf{true} 
+\right \} \text{Then} ~ l_{0} ~ \text{is } \textbf{true}.
 \]
 
-Therefore, "$head$" is also called the \emph{conclusion} of the rule,
-and "$body$" is its \emph{premise}.
+Therefore, “$head$” is also called the \emph{conclusion} of the rule,
+and “$body$” is its \emph{premise}.
+% An \emph{answer set} of a program (that is, a set of rules)
+% is a minimal set of literals that satisfies all the rules.
 
 There are some special cases of rules \cite{Vladimir,baral2003knowledge}:
 \begin{itemize}
-\item A  \textbf{ground} rule, is a rule  where all its literals are constants;
-\item A \textbf{fact} or a \textbf{reality} is a rule with an empty body.
-  It can be written without the central arrow ($\leftarrow$) or with a $body$ equals to $\top$, and $\top$  is the symbol of True.
+\item A \emph{ground} rule is a rule where all the literals are constants,
+  and thus contains no variables;
+
+\item A \emph{fact}, also called \emph{reality}, is a rule with an empty body.
+  It can be written without the central arrow ($\leftarrow$) or with a $body$ equal to $\top$:
 \begin{equation} 
 l_{0} \leftarrow \top. \qquad \text{or} \qquad l_{0}.
  \label{eq5ASP}
 \end{equation}
 
-
-\item A \textbf{constraint} is a rule where the head equals false ($\bot$).
+\item A \emph{constraint} is a rule where the head equals $\bot$.
   In this case, the head is often not represented and the constraint will be written generally as:
 \begin{equation} 
   \leftarrow l_{1},...,l_{m}, \ASPnot l_{m+1},..., \ASPnot l_{n}.
   \label{eq6ASP}
 \end{equation}
-
-We say that a set of literals $X$ violates the constraint \eqref{eq6ASP} if $\{l_{1},...,l_{m}\} \subseteq X$ and $\{l_{m+1},...,l_{n}\} \nsubseteq X$.
-If a program $\pi$ contains such a constraint $r$, then $X$ is an answer set of $\pi$ if and only if $X$ is an \textit{answer set} of $\pi \setminus \{r\}$ and $X$ does not violate $r$.
+A set of literals $X$ \emph{violates} the constraint \eqref{eq6ASP} if $\{l_{1},...,l_{m}\} \subseteq X$ and $\{l_{m+1},...,l_{n}\} \nsubseteq X$.
+Thus, $X$ cannot be an answer set of any program containing this constraint.
+% If a program $\pi$ contains such a constraint $r$, then $X$ is an answer set of $\pi$ if and only if $X$ is an \textit{answer set} of $\pi \setminus \{r\}$ and $X$ does not violate $r$.
 
 \item A \emph{cardinality constraint} is a rule of the following form:
 \begin{equation} 
  ~ l ~\{q_{1},~ ... ,~ q_{m}\}~ u \leftarrow body.
  \label{eq7ASP}
 \end{equation}
-with $m \geq 1$, $l$ an integer and $u$ an integer or the infinity ($\infty$). This form of rule \ref{eq7ASP} is used when the body can lead to several $q_i$ atoms and also when the programmer need to have more than an atom of type $q_i$. But that the number of this atoms $q_i$ should be between $l$ and $m$. That means that it is possible to find the same atom repeated many times at one answer set.\\
-In addition the literals $q_i$ can also appear in the body of the rule,
-and $l$ and $u$ are the lower and upper bounds of the number of these literals
-that can appear in the answer sets.
-%cardinality of the subsets of $ \{q_{1}, ... , q_{m}\}$ that satisfy the answer sets.
-Therefore, a cardinality constraint is satisfied in an answer set $X$, if the number of atoms of $\{q_{1}, ... , q_{m}\}$ belonging to $X$ is between $l$ and $u$,
-or, in other words, if:
+with $m \geq 1$, $l$ an integer and $u$ an integer or the infinity ($\infty$).
+Such a cardinality means that the answer set $X$ contains
+at least $l$ and at most $u$ atoms in the set $\{q_{1}, ... , q_{m}\}$,
+or, in other words:
 \begin{equation}
   l \leq | \{q_{1},... , q_{m}\} \cap X | \leq u
 \end{equation}
-where $\cap$ is the symbol of the intersection of sets
-and $|A|$ is the cardinality of the set $A$.
+where $\cap$ is the symbol of sets intersection
+and $|A|$ denotes the cardinality of set $A$.
+Thus, if such a cardinality is found in the head of a rule,
+then it directly constrains the resulting answer set.
+If it is found in the body of a rule,
+then it is simply true if the above condition is satisfied.
 In the following, if they are not explicitly given,
 we consider that $l$ defaults to $0$ and $u$ defaults to $\infty$.
 
 \end{itemize}
 
 
-\item \textbf{The alphabet}
-
-According to \cite{baral2003knowledge}, the alphabet of ASP is composed of seven classes of symbols: Variables, start with a capital letter. Constants, symbols of functions, symbols of predicates, these 3 classes follow the same rule but they begin with lowercase letter. Connectors: $\neg$, or, $\leftarrow$, not, ‘,’. Symbols of punctuation :(‘(’, ‘)’, ‘.’) and finally the special symbols : $\bot$ and $\top$.
-
-The word predicate can be an innovation of the new grammar. Let's consider the following sentence to more explain it: 
-\begin{tabbing}
- \textit{tweety is a bird.} 
-\end{tabbing}
-"\textit{tweety}" is a constant and "\textit{is a bird}" is a predicat. This sentence can be noted in ASP by :
-\begin{tabbing}
- bird(tweety) $\leftarrow ~ \top$. \hspace{1cm} or \hspace{2cm} $bird(tweety) .$
-\end{tabbing} 
 \end{enumerate}
 
-\subsubsection{Modeling and solving of a problem with ASP: } 
+\subsubsection{Modeling and solving of a problem with ASP}
 
-We can consider that the construction of models is one of the fundamental components of the scientific process. It concerns all systems we seek to control. A model has two main features \cite{Glimpse}: In fact it is a simplification of a given system and it allows an action on the system like resolving problems, searching for a path, identifying states and verufying properties... This concept model can address another angle issues related to representation process. Logical ASP programs follow the strategy of “generate and test”. Indeed, the modeling process can be regarded as a special form of representation. First, the system should be presented  with facts. Second it have to be explain with rules. Third, it should be possible to generate all possibilities using cardinalities. Finally, a filter will be done thanking to the constraints and only the sets of predicates satisfying all these conditions will be displayed which are considered "answer sets".
+The construction of models is one of the fundamental components of the scientific process.
+It concerns all systems we seek to control.
+A model has two main features \cite{Glimpse}:
+it is a simplification of a given system
+and it allows an action on the system like resolving problems, searching for a path, identifying states and verifying properties...
+This concept of model can address another angle issues related to the representation process.
+the programs written in ASP follow the strategy of “generate and test”.
+Indeed, the modeling process can be regarded as a special form of representation:
+\begin{itemize}
+  \item First, the system should be presented with facts.
+  \item Second, properties of the model can be explained with rules.
+  \item Third, all candidate answers can be generated, usually using cardinalities.
+  \item Finally, constraints allow to filter the answers and only the sets of predicates satisfying all these conditions will be returned which and considered as \emph{answer sets}.
+\end{itemize}
 
-We denote that the solving of ASP programs relies on a \emph{grounder} and a \emph{solver}
+Therefore, in practice, the solving of ASP programs relies on a \emph{grounder} and a \emph{solver}
 that usually work together:
 first the grounder is used to remove variables in order to achieve an equivalent but constant program,
-then the solver computes all answer sets for a stabilized program generated by the grounder~\cite{Vladimir,AnsPrologAPE}.
+then the solver computes all answer sets for this stabilized program~\cite{Vladimir,AnsPrologAPE}.
 Amongst all available grounders for ASP, we can name
 \texttt{Gringo}, \texttt{DLV} and \texttt{LParse},
 and the solvers include
 \texttt{SModels}, \texttt{DLV}, \texttt{CModels}, \texttt{Clasp}...
 
-For the work presented in this paper, we worked with \texttt{Clingo} (verion 3) which is a combination of the grounder \texttt{Gringo} and the solver \texttt{Clasp}.
+For the work presented in this paper, we worked with \texttt{Clingo} (version 3) which is a combination of the grounder \texttt{Gringo} and the solver \texttt{Clasp}.
 

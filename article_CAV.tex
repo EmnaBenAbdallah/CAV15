@@ -362,8 +362,8 @@ font=\footnotesize,inner sep=1pt]
 
 % Id est
 %\newcommand{\ie}{\textit{i.e.} }
-\newcommand{\ie}{i.e.\ }
-\newcommand{\eg}{e.g.,}
+\newcommand{\ie}{i.e.,\ }
+\newcommand{\eg}{e.g.,\ }
 \newcommand{\resp}{resp.\ }
 
 %%%%%%%%%%%%%%%%%%%%% DEBUT ARTICLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -424,7 +424,7 @@ National Institute of Informatics, \\
 \begin{abstract}
 
 In this paper, we propose a new logical approach to perform model-checking on a restriction of synchronous automata networks, namely Process Hitting. The Process Hitting framework is notably suitable, but not limited, to model and analyze efficiently biological regulatory networks. 
-The originality of our model-checking approach relies in the use of Answer Set Programming to consider exhaustive enumeration of all possible solutions of a property with respect to a given execution length.  Our work here focuses on state reachability properties (which are equivalent to the CTL “$\mathsf{EF}$” operator with paths limited to a given length) on the one hand, and on the identification of fixed points on the other hand.
+The originality of our model-checking approach relies in the use of Answer Set Programming (ASP) to consider exhaustive enumeration of all possible solutions of a property with respect to a given execution length.  Our work here focuses on state reachability properties (which are equivalent to the CTL “$\mathsf{EF}$” operator with paths limited to a given length) on the one hand, on the identification of fixed points on the other hand.
 The merits of our methods is illustrated by applying them to
 biological examples of various sizes
 and comparing the results with some existing approaches.
@@ -442,14 +442,14 @@ with a high number of components and interactions.
 \section{Preliminary definitions}
 \label{defs}
 \input{ASP}
-\subsection{Process Hitting }
+\subsection{Process Hitting}
 \input{PH}
 
-\section{Fixed point implementation}
+\section{Fixed point enumeration}
 \label{fixpoint}
 \input{fixPoint}
 
-\section{Dynamic network evolution }
+\section{Dynamical analysis}
 \label{dynamics}
 \input{reachability}
 
