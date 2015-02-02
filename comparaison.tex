@@ -38,33 +38,69 @@ The overall results shows that our method is efficient in computing reachability
 from a given initial state;
 furthermore, it sometimes provides more informations that the other existing ones.
 
-\begin{table}[htp]
+\begin{table}[ht]
 \begin{center}
 \noindent%
-\begin{tabular}{|l|c|c|c|c||c|c|c|c|c|}
-  \hline
-   Model&  \#sorts &\#procs & \#states & target & \textsc{ASP-Thomas} & \textsc{Pint} & \textsc{LibDDD} & \textsc{GINsim} & \textsc{ASP-PH} \\
-  \hline
-  TTR & 12 &42 & $2^{19}$ & full state & 0m7.21s & 0m.00.97s & 0m1.151s &  0m1.001s & 0m1.90s \\
-  \hline
-  ERBB & 20 &152 & $2^{70}$ & full state & 0m2.448s & out &1m55.38s & 2m31.64s & 0m11.84s \\
-  \hline
-  ERBB & 20 &152 & $2^{70}$ & partial state & 0m2.61s & 0m0.027s &1m54.96s & - & 0m5.02s \\
-  \hline
-  TCR & 40 &156 & $2^{73}$ & full state & - & Inconc & out & out & 4m27.93s \\
-  \hline
-   TCR & 40 &156 & $2^{73}$ & partial state & - & 0m0.014s & out & - & 1m35.080s \\
-  \hline
+\begin{tabular}{|l|c||c|c|c||c|c|}
+\hline
+  \multicolumn{2}{|c||}{Models} & \multicolumn{3}{c||}{PH representation} & \multicolumn{2}{c|}{Fixed points enumeration} \\
+\hline
+  Name & Components & Sorts & Processes & States & computation time & Nbr of results \\
+\hline
+\hline
+  TTR  & 8  & 12 & 42  & $2^{19}$ & \todo{FP} & \todo{nbrFP} \\
+\hline
+  ERBB & 20 & 42 & 152 & $2^{70}$ & \todo{FP} & \todo{nbrFP} \\
+\hline
+  TCR  & 40 & 54 & 156 & $2^{73}$ & \todo{FP} & \todo{nbrFP} \\
+\hline
+\end{tabular}
+\caption{\label{tab:models}%
+Description of the models used in our tests and results of our fixed point enumeration.
+Each model is referred to by its short name, where
+TTR stands for the tadpole tail resorption model~\cite{khalis2009smbionet},
+ERBB for the receptor-regulated G1/S transition of the same name~\cite{Samaga2009}
+and TCR for the T-cell receptor signaling network~\cite{Klamt06}.
+For each of them, this table gives the number of biological components
+in the original representation,
+and the number of sorts, the number of processes
+and the number of states in the PH model.
+Finally, the last column gives the computation time for the enumeration of all fixed points
+and the number of results returned.
+}
+\end{center}
+\end{table}
+
+\begin{table}[ht]
+\begin{center}
+\noindent%
+\begin{tabular}{|l|l|c||c|c|c|c|c|}
+\hline
+  \multicolumn{3}{|c||}{Experiments} & \multicolumn{5}{c|}{Results} \\
+\hline
+  & Model & Target & \textsc{ASP-Thomas} & \textsc{Pint} & \textsc{LibDDD} & \textsc{GINsim} & \textsc{ASP-PH} \\
+\hline
+\hline
+  \#1 & TTR & full state & 0m7.21s & 0m.00.97s & 0m1.151s &  0m1.001s & 0m1.90s \\
+\hline
+  \#2 & ERBB & full state & 0m2.448s & out &1m55.38s & 2m31.64s & 0m11.84s \\
+\hline
+  \#3 & ERBB & partial state & 0m2.61s & 0m0.027s &1m54.96s & - & 0m5.02s \\
+\hline
+  \#4 & TCR & full state & - & Inconc & out & out & 4m27.93s \\
+\hline
+  \#5 & TCR & partial state & - & 0m0.014s & out & - & 1m35.080s \\
+\hline
 \end{tabular}
 \caption{\label{tab:reachability}%
 Compared performances of several methods to compute reachability analyses.
-The method of Rocca \textit{et al.} (denoted by \textsc{ASP-Thomas}), \textsc{Pint}, \textsc{LibDDD}, \textsc{GINsim} and our new method \textsc{ASP-PH} presented in this paper.
-For each test, this table gives the name of the considered model,
-its number of sorts, processes and states, the type of goal
-(either a whole state or a sub-state)
+The method of Rocca \textit{et al.} (denoted by \textsc{ASP-Thomas}), \textsc{Pint}, \textsc{LibDDD}, \textsc{GINsim} and our new method presented in this paper, called \textsc{ASP-PH}.
+For each test, this table gives the short name of the considered model,
+as given in table~\ref{tab:models},
+the type of goal (either a whole state or a sub-state)
 and the computation time of the different methods used for the tests,
 where “out” marks an execution taking too much time or memory,
-“-” indicates that is not possible to do the test,
+\mbox{“~-~”} indicates that is not possible to do the test,
 and “Inconc” states that the method terminates without a response.
 }
 \end{center}
