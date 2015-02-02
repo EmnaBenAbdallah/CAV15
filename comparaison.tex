@@ -38,9 +38,8 @@ The overall results shows that our method is efficient in computing reachability
 from a given initial state;
 furthermore, it sometimes provides more informations that the other existing ones.
 
-\begin{figure}[htp]
+\begin{table}[htp]
 \begin{center}
-\label{tab:reachability}
 \noindent%
 \begin{tabular}{|l|c|c|c|c||c|c|c|c|c|}
   \hline
@@ -57,7 +56,8 @@ furthermore, it sometimes provides more informations that the other existing one
    TCR & 40 &156 & $2^{73}$ & partial state & - & 0m0.014s & out & - & 1m35.080s \\
   \hline
 \end{tabular}
-\caption{Compared performances of several methods to compute reachability analyses.
+\caption{\label{tab:reachability}%
+Compared performances of several methods to compute reachability analyses.
 The method of Rocca \textit{et al.} (denoted by \textsc{ASP-Thomas}), \textsc{Pint}, \textsc{LibDDD}, \textsc{GINsim} and our new method \textsc{ASP-PH} presented in this paper.
 For each test, this table gives the name of the considered model,
 its number of sorts, processes and states, the type of goal
@@ -68,7 +68,7 @@ where “out” marks an execution taking too much time or memory,
 and “Inconc” states that the method terminates without a response.
 }
 \end{center}
-\end{figure}
+\end{table}
 
 \begin{itemize}
 
