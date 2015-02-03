@@ -1,6 +1,6 @@
 In this section, we show the effectiveness of our approach on some examples,
 and compare it to other existing approaches.
-All computations were performed on a Pentium~V, 3.2~GHz with 4~GB RAM.
+All computations except one were performed on a Pentium~V, 3.2~GHz with 4~GB RAM.
 
 \subsection{Evaluation}
 To evaluate the effectiveness of our new approach,
@@ -108,11 +108,12 @@ and “Inconc” states that the method terminates without a response.
 
 \begin{itemize}
 
-\item \textbf{ASP-Thomas} offers the possibility to model-check CTL properties
+\item \textbf{ASP-Thomas}\footnote{These tests have been performed on another computer. The authors wish to thank Laurent Trilling for his help.}
+offers the possibility to model-check CTL properties
 of Thomas networks.
 The translations to Thomas modeling in ASP was made by hand.
 It is clear that this approach gives a very quick result when compared with others
-(although we could not perform tests on the TCR example).
+\todo{although we could not perform tests on the TCR example}.
 Indeed it also proves that ASP is a good choice to run the dynamics of a model and check reachability properties.
 Furthermore, this method is able to check any kind of CTL formula
 (and not only the “$\mathsf{EF}$” form that we focused on in this paper)
@@ -125,9 +126,10 @@ of gene interaction networks.
 It allows to compute all reachable stable states from a given initial state instantly;
 however, it is not possible to compute all stable states independently from the initial state.
 Regarding the reachability problem, \textsc{GINsim} only allows to check the reachability of
-full states, because of its approach consists in computing
+full states, because its approach consists in computing
 all the state-transition graph and then search for a path between the two given states.
-Therefore, it was not possible to perform reachability checks on partial states.
+Therefore, it was not possible to perform reachability checks on partial states
+(experiments \#3 \& \#5).
 Small state-transition graphs can also be displayed by this tool.
 
 \item \textbf{\textsc{LibDDD}}
@@ -138,8 +140,9 @@ solving this reachability.
 In addition, it relies on the construction of the state-transition graph
 which is then stored under the form of a binary decision diagram for a more efficient analysis.
 This computation explains why \textsc{LibDDD} takes more time to respond,
-and does not answer in less than 12 minutes for the biggest example
-(which contains $2^{73}$ states).
+and gets out of memory in about 12 minutes for the biggest example
+which contains $2^{73}$ states
+(experiments \#4 \& \#5).
 Finally, \textsc{LibDDD} is not able to compute the stable states of a network.
 
 \item \textbf{\textsc{Pint}}
@@ -148,11 +151,13 @@ It should be noted that \textsc{Pint} contains the only reachability analysis
 developed so far natively for the Process Hitting,
 before the method proposed in this paper.
 It consists in an approximation that avoids to compute the state-transition graph;
-t is thus ensured to be really efficient, which explains the fastest results,
+it is thus ensured to be really efficient, which explains the fastest results,
 but at the cost of possibly terminating without being conclusive.
 However, it is not designed for goals consisting of many processes,
-which are more likely to trigger an inconclusive response,
-or an exponential research for conclusive sub-solutions.
+which are more likely to trigger an inconclusive response
+(such as for experiment \#4),
+or an exponential research in sub-solutions
+(such as for experiment \#2).
 This explains the high computation times for some tests in table \ref{tab:reachability}.
 Moreover, in the case of a positive answer,
 it currently does not return the execution the path achieving the desired reachability,
