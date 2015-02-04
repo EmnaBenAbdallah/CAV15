@@ -3,7 +3,7 @@ and compare it to other existing approaches.
 All computations except one were performed on a Pentium~V, 3.2~GHz with 4~GB RAM.
 
 \subsection{Evaluation}
-To evaluate the effectiveness of our new approach,
+To assess the efficiency of our new approach,
 we position ourselves with respect to existing methods dealing with different biological models.
 We have chosen the following tools, that are detailed below: 
 \textsc{GINsim}\footnote{\textsc{GINsim} is a computer tool for the modeling and simulation of genetic regulatory networks: \url{http://ginsim.org/}} (Gene Interaction Network Simulation)~\cite{gonzalez2006ginsim,naldi2009logical,naldi2007decision},
@@ -24,19 +24,19 @@ an ERBB receptor-regulated G1/S transition (ERBB) model with 20 components~\cite
 and a T-cell receptor (TCR) signaling network of 40 components~\cite{Klamt06}.
 These models were chosen to be of different sizes:
 from small (12 components) to large (40 components).
-We note however that the PH models considered may contain more sorts than
+We note however that the considered PH models may contain more sorts than
 the original number of biological components, due to the use of
 “cooperative sorts”, which allow to model Boolean gates but do not necessarily
 have a biological meaning.
-The different model representations required have been obtained by translations
+The different model representations that are required for performing these benchmarks have been obtained by translations
 from the PH
 ensuring the conservation of the dynamical properties.
 All results alongside with more detailed specifications of the models
 are given in table \ref{tab:reachability}.
 The methods and the results provided by each of them are detailed in the following.
-The overall results shows that our method is efficient in computing reachability
+The overall results show that our method is efficient in computing reachability
 from a given initial state;
-furthermore, it sometimes provides more informations that the other existing ones.
+furthermore, it sometimes provides more information than the other existing ones.
 
 \begin{table}[ht]
 \begin{center}
@@ -48,11 +48,11 @@ furthermore, it sometimes provides more informations that the other existing one
   Name & Components & Sorts & Processes & States & computation time & Nbr of results \\
 \hline
 \hline
-  TTR  & 8  & 12 & 42  & $2^{19}$ & \todo{FP} & \todo{nbrFP} \\
+  TTR  & 8  & 12 & 42  & $2^{19}$ & 0.004s & 0 \\
 \hline
-  ERBB & 20 & 42 & 152 & $2^{70}$ & \todo{FP} & \todo{nbrFP} \\
+  ERBB & 20 & 42 & 152 & $2^{70}$ & 0.017s & 3 \\
 \hline
-  TCR  & 40 & 54 & 156 & $2^{73}$ & \todo{FP} & \todo{nbrFP} \\
+  TCR  & 40 & 54 & 156 & $2^{73}$ & 0.021s & 1 \\
 \hline
 \end{tabular}
 \caption{\label{tab:models}%
@@ -87,13 +87,13 @@ and the number of results returned.
 \hline
   \#3 & ERBB & partial state & 0m2.61s & 0m0.027s &1m54.96s & - & 0m5.02s \\
 \hline
-  \#4 & TCR & full state & - & Inconc & out & out & 4m27.93s \\
+  \#4 & TCR & full state & - & Inconc & out & out & 6m27.93s \\
 \hline
   \#5 & TCR & partial state & - & 0m0.014s & out & - & 1m35.080s \\
 \hline
 \end{tabular}
 \caption{\label{tab:reachability}%
-Compared performances of several methods to compute reachability analyses.
+Compared performances of several methods to compute reachability analyses:
 The method of Rocca \textit{et al.} (denoted by \textsc{ASP-Thomas}), \textsc{Pint}, \textsc{LibDDD}, \textsc{GINsim} and our new method presented in this paper, called \textsc{ASP-PH}.
 For each test, this table gives the short name of the considered model,
 as given in table~\ref{tab:models},
@@ -111,7 +111,7 @@ and “Inconc” states that the method terminates without a response.
 \item \textbf{ASP-Thomas}\footnote{These tests have been performed on another computer. The authors wish to thank Laurent Trilling for his help.}
 offers the possibility to model-check CTL properties
 of Thomas networks.
-The translations to Thomas modeling in ASP was made by hand.
+The translations to Thomas modeling in ASP were made by hand.
 It is clear that this approach gives a very quick result when compared with others
 \todo{although we could not perform tests on the TCR example}.
 Indeed it also proves that ASP is a good choice to run the dynamics of a model and check reachability properties.
@@ -175,7 +175,7 @@ Compared to some other methods describes above
 our method is relatively faster and also permits to study larger networks
 (up to $2^{73}$ states in our tests).
 
-However, our ASP program mays still be non-conclusive
+However, our ASP program may still be non-conclusive
 in the cases where the given goal is not
 reachable and the model contains loops in its dynamics
 (which happens in almost every biological model).
