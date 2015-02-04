@@ -15,7 +15,7 @@ As regulatory phenomena play a crucial role in biological systems, they need to
 be studied accurately. Biological Regulatory Networks (BRNs) consist in sets
 of either positive or negative mutual effects between the components. With the
 purpose of analyzing these systems, they are often modeled as graphs which makes
-it possible to determine the possible evolutions of all the interacting components of the system. Thus, in order to address the formal checking of dynamical properties within very large BRNs, we recently introduced a new formalism, named the “Process Hitting” (PH) \cite{PMR10-TCSB}, to model concurrent systems having components with a few qualitative levels. A PH describes, in an atomic manner, the possible evolutions of a “process” (representing one component at one level) triggered by the hit of at most one other “process” in the system. This particular structure makes the formal analysis of BRNs with hundreds of components tractable by using approached methods computing approximations of the dynamics~\cite{PMR12-MSCS}. Furthermore, PH is suitable, according to the precision of the available information, to model BRNs with different levels of abstraction by capturing the most general dynamics.
+it possible to determine the possible evolutions of all the interacting components of the system. Thus, in order to address the formal checking of dynamical properties within very large BRNs, we recently introduced a new formalism, named the “Process Hitting” (PH) \cite{PMR10-TCSB}, to model concurrent systems having components with a few qualitative levels. A PH describes, in an atomic manner, the possible evolutions of a “process” (representing one component at one level) triggered by the hit of at most one other “process” in the system. This particular structure makes the formal analysis of BRNs with hundreds of components tractable by using abstract methods computing approximations of the dynamics~\cite{PMR12-MSCS}. Furthermore, PH is suitable, according to the precision of the available information, to model BRNs with different levels of abstraction by capturing the most general dynamics.
 
 The objectives of the work presented in this paper are the following.
 Firstly, we show that starting from a PH model, it is possible to find all possible
@@ -40,7 +40,7 @@ number of evolution steps.
 
 Section \ref{defs} defines the paradigm of Answer Set Programming,
 and the Process Hitting framework.
-We then use ASP in section \ref{fixpoint} to tackle the enumeration
+Then we use ASP in section \ref{fixpoint} to tackle the enumeration
 of all fixed points in a model,
 and in section \ref{dynamics} in order to compute the dynamics of a model
 and check reachability properties.

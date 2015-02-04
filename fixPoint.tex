@@ -65,10 +65,10 @@ Regarding our problem, a state is eliminated if there exists an action linking t
 \end{lstlisting}
 
 \begin{example}[Fixed points enumeration]
-The PH model of figure \pref{fig:ph} contains 3 sorts:
+The PH model of \pref{fig:ph} contains 3 sorts:
 $a$ and $b$ have 2 processes and $z$ has 3; therefore, the whole model has $2*2*3 = 12$ states (whether they can be reached or not from a given initial state).
 We can check that this model contains only one fixed point: $\PHstate{b_0, z_2, a_0}$.
-Indeed, there is no action between each two of the processes contained is this state so no evolution is possible from this state. 
+Indeed, there is no action between each two of the processes contained is this state so no execution is possible from this state. 
 In this example, no other state verifies this property.
 
 If we execute the ASP program detailed below,
