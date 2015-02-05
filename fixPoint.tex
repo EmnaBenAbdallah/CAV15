@@ -51,7 +51,7 @@ Then, we have to browse all remaining processes of this graph
 in order to generate all possible states,
 that is, all possible combinations of processes by choosing one process from each sort:
 \begin{lstlisting}
-1 { selectProcess(A,I) : showProcess(A,I) } 1 :- sort(A).
+1 { selecedtProcess(A,I) : showProcess(A,I) } 1 :- sort(A).
 \end{lstlisting}
 The previous line creates an many potential answer sets as there are possible states
 to take into account.
@@ -61,7 +61,7 @@ For this, we use a constraint:
 any solution that satisfy the body of this constraint will be removed from the answer set.
 Regarding our problem, a state is eliminated if there exists an action linking two selected processes:
 \begin{lstlisting}
-:- hit(A,I,B,J), selectProcess(A, I), selectProcess(B, J), A != B. %\label{contraintFix}
+:- hit(A,I,B,J), selectedProcess(A, I), selectedProcess(B, J), A != B. %\label{contraintFix}
 \end{lstlisting}
 
 \begin{example}[Fixed points enumeration]

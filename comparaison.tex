@@ -6,10 +6,10 @@ All computations except one were performed on a Pentium~V, 3.2~GHz with 4~GB RAM
 To assess the efficiency of our new approach,
 we position ourselves with respect to existing methods dealing with different biological models.
 We have chosen the following tools, that are detailed below: 
-\textsc{GINsim}\footnote{\textsc{GINsim} is a computer tool for the modeling and simulation of genetic regulatory networks: \url{http://ginsim.org/}} (Gene Interaction Network Simulation)~\cite{gonzalez2006ginsim,naldi2009logical,naldi2007decision},
-\textsc{LibDDD}\footnote{\textsc{LibDDD} is a library for symbolic model-checking of CTL \& LTL properties: \url{http://www.lip6.fr/}}
+\textsc{GINsim}\footnote{\textsc{GINsim} \url{http://ginsim.org/}} (Gene Interaction Network Simulation)~\cite{gonzalez2006ginsim,naldi2009logical,naldi2007decision},
+\textsc{LibDDD}\footnote{\textsc{LibDDD} \url{http://move.lip6.fr/software/DDD/}}
 (Library of Data Decision Diagrams)~\cite{thierry2009hierarchical,colange2013towards},
-\textsc{Pint}\footnote{\textsc{Pint} is a library that implements tools for the parsing, simulation, formal analysis, and translation of PH models: \url{http://loicpauleve.name/pint/}}~\cite{PMR12-MSCS}
+\textsc{Pint}\footnote{\textsc{Pint} \url{http://loicpauleve.name/pint/}}~\cite{PMR12-MSCS}
 and the method for CTL model-checking proposed by Rocca \textit{et al.} in~\cite{roccaasp},
 which was developed also in ASP but for transition states networks.
 Each method uses a specific kind of representation\footnote{When available, we used the converters included into \textsc{Pint} for these translations.}:
@@ -112,8 +112,7 @@ and “Inconc” states that the method terminates without a response.
 offers the possibility to model-check CTL properties
 of Thomas networks.
 The translations to Thomas modeling in ASP were made by hand.
-It is clear that this approach gives a very quick result when compared with others
-\todo{although we could not perform tests on the TCR example}.
+It is clear that this approach gives a very quick result when compared with others although we could not perform tests on the TCR example.
 Indeed it also proves that ASP is a good choice to run the dynamics of a model and check reachability properties.
 Furthermore, this method is able to check any kind of CTL formula
 (and not only the “$\mathsf{EF}$” form that we focused on in this paper)
@@ -171,7 +170,7 @@ In the previous sections,
 we developed new methods in ASP to check dynamical properties,
 namely identifying stable states and finding all possible paths to reach a given goal.
 Compared to some other methods describes above
-(\textsc{GINsim}, \textsc{LibDDD} and the method proposed by Rocca \textit{et al.}) noted by \textsc{ASP-Thomas} our method is relatively faster and also permits to study larger networks
+(\textsc{GINsim}, \textsc{LibDDD} and the method proposed by Rocca \textit{et al.} noted by \textsc{ASP-Thomas}) our method is relatively faster and also permits to study larger networks
 (up to $2^{73}$ states in our tests).
 
 However, our ASP program may still be non-conclusive
