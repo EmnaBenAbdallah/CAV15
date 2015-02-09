@@ -12,7 +12,7 @@ We note that given this result, processes involved in a self-hit (an action whos
 
 \subsection{Process Hitting translation in ASP}
 Before analyzing the dynamics of the network,
-we first need to translate the concerned PH network in ASP\footnote{All programs, including this translation and the methds describes in the following, are available online at: \url{https://github.com/EmnaBenAbdallah/verification-of-dynamical-properties_PH}}.
+we first need to translate the concerned PH network in ASP\footnote{All programs, including this translation and the methods describes in the following, are available online at: \url{https://github.com/EmnaBenAbdallah/verification-of-dynamical-properties_PH}}.
 
 To do this we use the following self-describing predicates:
 \texttt{"sort"} to define sorts, \texttt{"process"} for the processes and \texttt{"action"} for the network actions. We will see in example \ref{ex:asp-ph} how a PH network is defined with these predicates.
@@ -53,7 +53,7 @@ that is, all possible combinations of processes by choosing one process from eac
 \begin{lstlisting}
 1 { selecedtProcess(A,I) : showProcess(A,I) } 1 :- sort(A).
 \end{lstlisting}
-The previous line creates an many potential answer sets as there are possible states
+The previous line creates as many potential answer sets as there are possible states
 to take into account.
 Finally, the last step consists of filtering any state that is not a fixed point,
 or, in other words, eliminating all candidate answer sets in which an action could be played.

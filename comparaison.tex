@@ -1,6 +1,6 @@
 In this section, we show the effectiveness of our approach on some examples,
 and compare it to other existing approaches.
-All computations except one were performed on a Pentium~V, 3.2~GHz with 4~GB RAM.
+All computations except one ( \textsc{ASP-Thomas} ) were performed on a Pentium~V, 3.2~GHz with 4~GB RAM.
 
 \subsection{Evaluation}
 To assess the efficiency of our new approach,
@@ -11,7 +11,7 @@ We have chosen the following tools, that are detailed below:
 (Library of Data Decision Diagrams)~\cite{thierry2009hierarchical,colange2013towards},
 \textsc{Pint}\footnote{\textsc{Pint} \url{http://loicpauleve.name/pint/}}~\cite{PMR12-MSCS}
 and the method for CTL model-checking proposed by Rocca \textit{et al.} in~\cite{roccaasp},
-which was developed also in ASP but for transition states networks.
+which was developed also in ASP but for states transitions networks.
 Each method uses a specific kind of representation\footnote{When available, we used the converters included into \textsc{Pint} for these translations.}:
 Thomas models (a particular kind of logical regulatory networks) for \textsc{GINsim},
 instantiable transition systems for \textsc{LibDDD},
@@ -81,15 +81,15 @@ and the number of results returned.
   & Model & Target & \textsc{ASP-Thomas} & \textsc{Pint} & \textsc{LibDDD} & \textsc{GINsim} & \textsc{ASP-PH} \\
 \hline
 \hline
-  \#1 & TTR & full state & 0m7.21s & 0m.00.97s & 0m1.151s &  0m1.001s & 0m1.90s \\
+  \#1 & TTR & full state & 0m7.21s & 0m0.97s & 0m1.15s &  0m2.05s & 0m1.90s \\
 \hline
-  \#2 & ERBB & full state & 0m2.448s & out &1m55.38s & 2m31.64s & 0m11.84s \\
+  \#2 & ERBB & full state & 0m2.45s & out &1m55.38s & 2m31.64s & 0m11.84s \\
 \hline
-  \#3 & ERBB & partial state & 0m2.61s & 0m0.027s &1m54.96s & - & 0m5.02s \\
+  \#3 & ERBB & partial state & 0m2.61s & 0m0.03s &1m54.96s & - & 0m5.02s \\
 \hline
-  \#4 & TCR & full state & - & Inconc & out & out & 6m27.93s \\
+  \#4 & TCR & full state & 0m7.61s& Inconc & out & out & 6m27.93s \\
 \hline
-  \#5 & TCR & partial state & - & 0m0.014s & out & - & 1m35.080s \\
+  \#5 & TCR & partial state & 0m2.12s & 0m0.02s & out & - & 1m35.08s \\
 \hline
 \end{tabular}
 \caption{\label{tab:reachability}%
@@ -108,16 +108,15 @@ and “Inconc” states that the method terminates without a response.
 
 \begin{itemize}
 
-\item \textbf{ASP-Thomas}\footnote{These tests have been performed on another computer. The authors wish to thank Laurent Trilling for his help.}
-offers the possibility to model-check CTL properties
-of Thomas networks.
-The translations to Thomas modeling in ASP were made by hand.
-It is clear that this approach gives a very quick result when compared with others although we could not perform tests on the TCR example.
-Indeed it also proves that ASP is a good choice to run the dynamics of a model and check reachability properties.
+\item \textbf{ASP-Thomas}\footnote{These tests have been performed on another computer: dual core , 2.13 GHZ with 1.8 GB RAM. The authors wish to thank Laurent Trilling for his help.}
+offers the possibility to model-check CTL properties of Thomas networks. 
+There is no automatic way that allows the modelisation of thomas networks in ASP. That is why it is necessary to study the entire network than to present it in ASP. But this modelisation takes so much time to be done regarding the complex representation of thomas networks. Comparing with our method, we use the PH model which its actions are more easy to be presented in ASP, one fact per action.
+In addition, the method "ASP-Thomas" requires to provide a maximum number of steps
+for which the dynamics will be computed, which mays be difficult to be predicted.
+However it is clear that this approach gives a very quick result when compared with others.
+Indeed it also show that ASP is a good choice to run the dynamics of a model and check reachability properties. 
 Furthermore, this method is able to check any kind of CTL formula
-(and not only the “$\mathsf{EF}$” form that we focused on in this paper)
-but it is required to provide a maximum number of steps
-for which the dynamics will be computed, which mays be difficult to estimate
+(and not only the “$\mathsf{EF}$” form that we focused on in this paper).
 (see the discussion in section~\ref{limitations}).
 
 \item \textbf{\textsc{GINsim}} is a software for the edition, simulation and analysis
@@ -159,7 +158,7 @@ or an exponential research in sub-solutions
 (such as for experiment \#2).
 This explains the high computation times for some tests in table \ref{tab:reachability}.
 Moreover, in the case of a positive answer,
-it currently does not return the execution the path achieving the desired reachability,
+it currently does not return the execution of the path achieving the desired reachability,
 but only outputs its conclusion.
 \end{itemize}
 
@@ -170,9 +169,8 @@ In the previous sections,
 we developed new methods in ASP to check dynamical properties,
 namely identifying stable states and finding all possible paths to reach a given goal.
 Compared to some other methods describes above
-(\textsc{GINsim}, \textsc{LibDDD} and the method proposed by Rocca \textit{et al.} noted by \textsc{ASP-Thomas}) our method is relatively faster and also permits to study larger networks
-(up to $2^{73}$ states in our tests).
-
+(\textsc{GINsim}, \textsc{LibDDD} and the method \textsc{ASP-Thomas}) our method is relatively faster and also permits to study larger networks
+(up to $2^{73}$ states in our tests). We study the networks which are modeled in Process Hitting. This new fomalisim for network modelisation is a restriction of synchronous automata so it allows to represent any kind of dynamical model. Moreover it is easy to implement the dynamics of the PH into ASP.
 However, our ASP program may still be non-conclusive
 in the cases where the given goal is not
 reachable and the model contains loops in its dynamics
@@ -201,4 +199,4 @@ In these cases, however, a termination with no solution cannot be considered as 
 negative answer, unless one can prove that the chosen value \texttt{n}
 is bigger than the longest possible path in the state-transition graph.
 Given our implementation, if the step \texttt{n} is reached,
-the computation stops and there is no path to be displayed because there is no path verifies the goals after \texttt{n} changes. Indeed this permits to get a final result, which is \texttt{unsatisfable} property after \texttt{n} steps so with this way we eliminate the unlimitaded exection time.
+the computation stops and there is no path to be displayed because there is no path which verifies the goals after \texttt{n} changes. Indeed this permits to get a final result, which is \texttt{unsatisfable} property after \texttt{n} steps so with this way we eliminate the unlimitaded execution time.

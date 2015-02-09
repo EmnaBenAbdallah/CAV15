@@ -8,7 +8,7 @@ that allow to reach a given goal?
 In the previous section, enumerating the fixed points did not require to
 encode the full dynamics of PH, but only a condition.
 In this section, we thus implement the dynamics of the PH into ASP,
-which will then permit to search for the paths allowing to reach
+which will then permit to search for the paths allowing to reach the goals.
 
 Firstly, we focus on the evolutions of models in a limited number of steps.
 We therefore define the predicate \texttt{time(0..n)} which sets the number of steps we want to play.
@@ -95,7 +95,7 @@ The body iteration is written in the
 which are computed at each incremental step,
 the first part comprising rules depending on the time step,
 and the second containing a constraint that stops the iteration when needed.
-The step number is no given by a variable but by a constant placeholder
+The step number is not given by a variable but by a constant placeholder
 called “\texttt{t}” in the following.
 
 When using this new syntax, the obtained program is almost identical
