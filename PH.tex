@@ -49,11 +49,11 @@ based on abstract interpretation~\cite{PMR12-MSCS}.
 %\end{definition}
 
 \begin{example*}
-\pref{fig:ph} represents a PH $(\PHs,\PHl,\PHa)$ with three sorts
+\pref{fig:ph} represents a $\PH$ $(\PHs,\PHl,\PHa)$ with three sorts
 ($\PHs = \{a, b, c\}$) and:
 $\PHl_a = \{a_0, a_1\}$,
-$\PHl_b = \{b_0, b_1, b_2\}$,
-$\PHl_c = \{c_0, c_1\}$.
+$\PHl_b = \{b_0, b_1\}$,
+$\PHl_z = \{z_0, z_1, z_2\}$.
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}%[font=\scriptsize]
@@ -95,7 +95,7 @@ For any given process $a_i$ we also note: $a_i \in s$ if and only if $\PHget{s}{
 
 \begin{definition} [Playable action]
 \label{def:playableAction}
-Let $PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and $s \in \PHl$ a state of $PH$.
+Let $\PH = (\PHs,\PHl,\PHa)$ be a Process Hitting and $s \in \PHl$ a state of $PH$.
 We say that the action $h = \PHfrappe{a_i}{b_j}{b_k} \in \PHa$
 is \emph{playable in state $s$} if and only if
 $a_i \in s$ and $b_j \in s$ (\ie $\PHget{s}{a} = a_i$ and $\PHget{s}{b}=b_j$).

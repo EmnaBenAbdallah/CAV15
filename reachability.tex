@@ -31,15 +31,15 @@ which state that exactly one process can change between two steps.
 We thus represent the change of the active process of a sort
 by the predicate \texttt{activeFromTo(B,J,K,T)}
 which means that in sort \texttt{B}, the active process changes from index $\texttt{B}_\texttt{J}$ to $\texttt{B}_\texttt{K}$ between steps \texttt{T} and \texttt{T+1}.
-The cardinality rule of line \ref{e2} then
-creates as many answer sets as there are possible evolutions from the current step,
-thus recreating all possible branchings in the possible evolutions of the model.
+The cardinality rule of line \ref{e2a} - \ref{e2}
+creates the set of the predicates as many as there are possible evolutions from the current step,
+thus recreating all possible branchings in the possible evolutions of the model so many answer sets.
 This allows to filter all scenarios where two actions have been played between
 two steps, by using the constraint of line \ref{e3}.
 Thus, the remaining scenarios of the answer sets all strictly follow
 the asynchronous dynamics of the PH.
 \begin{lstlisting}
-{activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T),
+{activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T), %\label{e2a}
           instate(activeProcess(A,I),T), instate(activeProcess(B,J),T),
           J!=K, time(T). %\label{e2}
 :- 2 {activeFromTo(B,J,K,T)}, time(T). %\label{e3}
