@@ -1,0 +1,183 @@
+% TLP2esam.tex / sample pages for TLP
+% v2.11, released 6-nov-2002
+
+\documentclass{tlp}
+%\usepackage{aopmath}
+
+% Packages
+\usepackage{latexsym}
+\usepackage{epic,eepic}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{multirow}
+\usepackage[dvips]{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{ulem}
+\usepackage{amssymb}
+
+%Package CAV
+\usepackage[english]{babel}
+\usepackage{stmaryrd} % Maths (crochets doubles)
+\usepackage{url}     % Mise en forme + liens pour URLs
+%\usepackage{array}   % Tableaux évolués
+\usepackage{setspace}
+
+% Tunning
+%------------------
+\usepackage[12pt]{moresize}
+\algtext*{EndIf}% Remove "end if" text
+\algtext*{EndFor}% Remove "end if" text
+%\setlength{\belowcaptionskip}{10.0pt}
+%\setlength{\abovecaptionskip}{10.0pt}
+%\setlength{\textfloatsep}{10.0pt}
+%\setlength{\floatsep}{10.0pt}
+% TUNNING
+\setstretch{0.94}
+%\fontsize{3.85mm}{3.85mm}\selectfont
+
+
+\newcommand{\pf}[1]{\langle#1\rangle}
+\newcommand{\noproof}{\hfill $qed$}
+\newcommand{\ignore}[1]{}
+
+\definecolor{gray50}{gray}{0.15}
+\graphicspath{{pictures/}}
+
+
+
+\newtheorem{definition}{Definition} % [section]
+\newtheorem{example}{Example} % [section]
+\newcommand{\pivot}[1]{\mathbin{\, {#1} \,}}
+\newcommand{\Pivot}[1]{\mathbin{\; {#1} \;}}
+\let\from=\leftarrow
+
+%Commande perso
+\newcommand{\ie}{i.e.,\ }
+\newcommand{\eg}{e.g.,\ }
+\newcommand{\resp}{resp.\ }
+
+\usepackage{listings}
+% Définition du langage ASP
+\lstdefinelanguage{ASP}{%
+literate={:-}{$\leftarrow$}1,
+morekeywords={not},
+numbers=left,
+escapeinside={\%}{\^^M}
+}
+% Définition des styles de tous les listings du document
+\lstset{
+language=ASP,
+basicstyle=\small\ttfamily,
+columns=fullflexible,
+keywordstyle=\bfseries,
+firstnumber=last,
+keepspaces=true
+}
+\renewcommand{\thelstnumber}{\the\value{lstnumber}}
+%% fin définition
+
+% Styles ASP inline
+\newcommand{\ASPnot}{\textbf{not}~}
+
+% les inputs files
+\input{macros/macros}
+\input{macros/macros-ph}
+\input{macros/tikzstyles2.tex}
+%\input{macros/macros-abstr}
+
+\begin{document}
+\bibliographystyle{acmtrans}
+
+\long\def\comment#1{}
+
+
+\title[Exhaustive analysis of biological regulatory networks using ASP]{Exhaustive dynamic analysis of reachability and stable states
+of biological regulatory networks modeled in Process Hitting
+using Answer Set Programming}
+
+
+\author[E. Ben Abdallah, M. Folschette, O. Roux, M. Magnin]
+{Emna Ben Abdallah\\
+$^1$LUNAM Université, \'Ecole Centrale de Nantes, \\
+ IRCCyN UMR CNRS 6597\\ (Institut de Recherche en Communications et Cybern\'etique de Nantes),\\
+  1 rue de la Noë, 44321 Nantes, France.\\
+\email{emna.ben-abdallah@irccyn.ec-nantes.fr},\\
+%E-mail: 
+\and Maxime Folschette$^{1,2}$\\
+$^2$School of Electrical Engineering and Computer Science,\\
+University of Kassel, Germany \\
+\email{maxime.folschette@uni-kassel.de},\\
+\and
+Olivier Roux$^1$ \\
+LUNAM Université, \'Ecole Centrale de Nantes, IRCCyN \\
+\email{olivier.roux@irccyn.ec-nantes.fr},\\
+\and Morgan Magnin$^{1,3}$ \\
+$^3$National Institute of Informatics, \\
+2-1-2, Hitotsubashi, Chiyoda-ku, Tokyo 101-8430, Japan.\\
+\email{morgan.magnin@irccyn.ec-nantes.fr},\\
+}
+\pagerange{\pageref{firstpage}--\pageref{lastpage}}
+\volume{\textbf{10} (3):}
+\jdate{April 2015}
+\setcounter{page}{1}
+\pubyear{2015}
+
+\maketitle
+
+\label{firstpage}
+%
+\begin{abstract}
+In this paper, we propose a new logical approach to perform model-checking on a restriction of synchronous automata networks, namely Process Hitting. The Process Hitting framework is notably suitable, but not limited, to model and analyze efficiently biological regulatory networks. 
+The originality of our model-checking approach relies in the use of Answer Set Programming to consider exhaustive enumeration of all possible solutions of a property with respect to a given execution length.  Our work here focuses on state reachability properties (which are equivalent to the CTL “$\mathsf{EF}$” operator with paths limited to a given length) on the one hand, on the identification of fixed points on the other hand.
+The merits of our methods is illustrated by applying them to
+biological examples of various sizes
+and comparing the results with some existing approaches.
+It turns out that our approach succeeds in processing large models
+with a high number of components and interactions.
+
+	\keywords{Process Hitting, Answer Set Programming, stable states, fixed points, reachability}
+\end{abstract}
+
+\section{Introduction}
+\input{parts/intro}
+
+\section{Preliminary definitions}
+\label{defs}
+%\input{ASP}
+\subsection{Process Hitting}
+\input{parts/PH}
+
+\section{Fixed point enumeration}
+\label{fixpoint}
+\input{parts/fixPoint}
+
+\section{Dynamical analysis}
+\label{dynamics}
+\input{parts/reachability}
+
+\section{Comparative performance analysis}
+\label{comparison}
+\input{parts/comparaison}
+
+%\vspace{-1.0cm}
+
+\section{Conclusion and future directions}
+\label{ccl}
+\input{parts/cc}
+
+
+%\clearpage
+\bibliographystyle{acmtrans}
+\bibliography{biblio}
+
+
+\clearpage
+\appendix
+
+%\ssmall
+\input{parts/ASP}
+
+\end{document}

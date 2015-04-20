@@ -1,0 +1,104 @@
+% TLP2esam.tex / sample pages for TLP
+% v2.11, released 6-nov-2002
+
+\documentclass{tlp}
+%\usepackage{aopmath}
+
+% Packages
+\usepackage{latexsym}
+\usepackage{epic,eepic}
+\usepackage{times}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{multirow}
+\usepackage[dvips]{graphicx}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+\usepackage{ulem}
+\usepackage{amssymb}
+
+% Tunning
+%------------------
+\usepackage[12pt]{moresize}
+\algtext*{EndIf}% Remove "end if" text
+\algtext*{EndFor}% Remove "end if" text
+%\setlength{\belowcaptionskip}{10.0pt}
+%\setlength{\abovecaptionskip}{10.0pt}
+%\setlength{\textfloatsep}{10.0pt}
+%\setlength{\floatsep}{10.0pt}
+
+
+\newcommand{\pf}[1]{\langle#1\rangle}
+\newcommand{\noproof}{\hfill $qed$}
+\newcommand{\ignore}[1]{}
+
+\definecolor{gray50}{gray}{0.15}
+\graphicspath{{pictures/}}
+
+
+
+\newtheorem{definition}{Definition} % [section]
+\newtheorem{example}{Example} % [section]
+\newcommand{\pivot}[1]{\mathbin{\, {#1} \,}}
+\newcommand{\Pivot}[1]{\mathbin{\; {#1} \;}}
+\let\from=\leftarrow
+
+\begin{document}
+\bibliographystyle{acmtrans}
+
+\long\def\comment#1{}
+
+
+\title{Two Results for Prioritized Logic Programming}
+
+\author[D. Martinez, T. Ribeiro, K. Inoue]
+{David Martinez\\
+???\\
+University of ???\\
+Spain    \\
+E-mail: \\
+\and Tony Ribeiro\\
+The Graduate University for Advanced Studies (Sokendai),\\
+2-1-2 Hitotsubashi, Chiyoda-ku, Tokyo 101-8430, Japan \\
+\email{tony\_ribeiro@nii.ac.jp},\\
+\and
+Katsumi Inoue,
+National Institute of Informatics,\\
+2-1-2 Hitotsubashi, Chiyoda-ku, Tokyo 101-8430, Japan\\
+\email{inoue@nii.ac.jp}
+}
+
+\pagerange{\pageref{firstpage}--\pageref{lastpage}}
+\volume{\textbf{10} (3):}
+\jdate{April 2015}
+\setcounter{page}{1}
+\pubyear{2015}
+
+\maketitle
+
+\label{firstpage}
+%
+\begin{abstract}
+
+
+	\keywords{}
+\end{abstract}
+
+\section{Introduction}
+
+
+\section{Conclusion}
+\label{sec:conclusions}
+
+
+%\clearpage
+\bibliographystyle{acmtrans}
+\bibliography{main}
+
+%\clearpage
+\appendix
+%\ssmall
+
+
+\end{document}

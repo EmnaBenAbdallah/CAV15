@@ -38,29 +38,15 @@ The overall results show that our method is efficient in computing reachability
 from a given initial state;
 furthermore, it sometimes provides more information than the other existing ones.
 
-\begin{table}[ht]
-\begin{center}
-\noindent%
-\begin{tabular}{|l|c||c|c|c||c|c|}
-\hline
-  \multicolumn{2}{|c||}{Models} & \multicolumn{3}{c||}{PH representation} & \multicolumn{2}{c|}{Fixed points enumeration} \\
-\hline
-  Name & Components & Sorts & Processes & States & computation time & Nbr of results \\
-\hline
-\hline
-  TTR  & 8  & 12 & 42  & $2^{19}$ & 0.004s & 0 \\
-\hline
-  ERBB & 20 & 42 & 152 & $2^{70}$ & 0.017s & 3 \\
-\hline
-  TCR  & 40 & 54 & 156 & $2^{73}$ & 0.021s & 1 \\
-\hline
-\end{tabular}
+\begin{table}
+
+\includegraphics[width=\textwidth]{images/table1.pdf}
 \caption{\label{tab:models}%
 Description of the models used in our tests and results of our fixed point enumeration.
 Each model is referred to by its short name, where
-TTR stands for the tadpole tail resorption model~\cite{khalis2009smbionet},
-ERBB for the receptor-regulated G1/S transition of the same name~\cite{Samaga2009}
-and TCR for the T-cell receptor signaling network~\cite{Klamt06}.
+TTR stands for the tadpole tail resorption model% ~\cite{khalis2009smbionet},
+ERBB for the receptor-regulated G1/S transition of the same name% ~\cite{Samaga2009}
+and TCR for the T-cell receptor signaling network %\cite{Klamt06}.
 For each of them, this table gives the number of biological components
 in the original representation,
 and the number of sorts, the number of processes
@@ -68,30 +54,10 @@ and the number of states in the PH model.
 Finally, the last column gives the computation time for the enumeration of all fixed points
 and the number of results returned.
 }
-\end{center}
 \end{table}
 
 \begin{table}[ht]
-\begin{center}
-\noindent%
-\begin{tabular}{|l|l|c||c|c|c|c|c|}
-\hline
-  \multicolumn{3}{|c||}{Experiments} & \multicolumn{5}{c|}{Results} \\
-\hline
-  & Model & Target & \textsc{ASP-Thomas} & \textsc{Pint} & \textsc{LibDDD} & \textsc{GINsim} & \textsc{ASP-PH} \\
-\hline
-\hline
-  \#1 & TTR & full state & 0m7.21s & 0m0.97s & 0m1.15s &  0m2.05s & 0m1.90s \\
-\hline
-  \#2 & ERBB & full state & 0m2.45s & out &1m55.38s & 2m31.64s & 0m11.84s \\
-\hline
-  \#3 & ERBB & partial state & 0m2.61s & 0m0.03s &1m54.96s & - & 0m5.02s \\
-\hline
-  \#4 & TCR & full state & 0m7.61s& Inconc & out & out & 6m27.93s \\
-\hline
-  \#5 & TCR & partial state & 0m2.12s & 0m0.02s & out & - & 1m35.08s \\
-\hline
-\end{tabular}
+\includegraphics[width=\textwidth]{images/table2}
 \caption{\label{tab:reachability}%
 Compared performances of several methods to compute reachability analyses:
 The method of Rocca \textit{et al.} (denoted by \textsc{ASP-Thomas}), \textsc{Pint}, \textsc{LibDDD}, \textsc{GINsim} and our new method presented in this paper, called \textsc{ASP-PH}.
@@ -103,7 +69,6 @@ where “out” marks an execution taking too much time or memory,
 \mbox{“~-~”} indicates that is not possible to do the test,
 and “Inconc” states that the method terminates without a response.
 }
-\end{center}
 \end{table}
 
 \begin{itemize}

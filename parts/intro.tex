@@ -15,19 +15,19 @@ As regulatory phenomena play a crucial role in biological systems, they need to
 be studied accurately. Biological Regulatory Networks (BRNs) consist in sets
 of either positive or negative mutual effects between the components. With the
 purpose of analyzing these systems, they are often modeled as graphs which makes
-it possible to determine the possible evolutions of all the interacting components of the system. Thus, in order to address the formal checking of dynamical properties within very large BRNs, we recently introduced a new formalism, named the “Process Hitting” (PH) \cite{PMR10-TCSB}, to model concurrent systems having components with a few qualitative levels. A PH describes, in an atomic manner, the possible evolutions of a “process” (representing one component at one level) triggered by the hit of at most one other “process” in the system. This particular structure makes the formal analysis of BRNs with hundreds of components tractable by using abstract methods computing approximations of the dynamics~\cite{PMR12-MSCS}. Furthermore, PH is suitable, according to the precision of the available information, to model BRNs with different levels of abstraction by capturing the most general dynamics.
+it possible to determine the possible evolutions of all the interacting components of the system. Thus, in order to address the formal checking of dynamical properties within very large BRNs, we recently introduced a new formalism, named the “Process Hitting” (PH) \cite{PMR10-TCSB}, to model concurrent systems having components with a few qualitative levels. A PH describes, in an atomic manner, the possible evolutions of a “process” (representing one component at one level) triggered by the hit of at most one other “process” in the system. This particular structure makes the formal analysis of BRNs with hundreds of components tractable by using abstract methods computing approximations of the dynamics \cite{PMR12-MSCS}. Furthermore, PH is suitable, according to the precision of the available information, to model BRNs with different levels of abstraction by capturing the most general dynamics.
 
 The objectives of the work presented in this paper are the following.
 Firstly, we show that starting from a PH model, it is possible to find all possible
 fixed points (also called stable states)
-which are specific attractors with only one state~\cite{wuensche1998genomic}).
+which are specific attractors with only one state% \cite{wuensche1998genomic}).
 For this, we perform an exhaustive search of the possible states and then check which ones are fixed points.
 The second phase of our work consists in computing the dynamics by determining, from a given initial state, the possible next states of the PH model.
 This also permits to check if a goal is reachable for a given component or set of components in the system.
 The results are ensured to respect strictly the PH dynamics.
 
 The particularity of our contribution relies in the use of Answer Set Programming
-(ASP)~\cite{baral2003knowledge}
+(ASP)% \cite{baral2003knowledge}
 to compute the result of these searches.
 This declarative programming framework has been proven efficient
 to tackle models with a large number of components and parameters.
@@ -38,13 +38,5 @@ for these enumerative searches, which justifies its use.
 In some cases, the computed dynamics can also be bounded by a given
 number of evolution steps.
 
-Section \ref{defs} defines the paradigm of Answer Set Programming,
-and the Process Hitting framework.
-Then we use ASP in section \ref{fixpoint} to tackle the enumeration
-of all fixed points in a model,
-and in section \ref{dynamics} in order to compute the dynamics of a model
-and check reachability properties.
-Finally, a comparison of the methods developed in this paper is
-proposed in section \ref{comparison},
-and in section \ref{ccl} we conclude and talk about future work.
+%Section \ref{defs} defines the paradigm of Answer Set Programming, and the Process Hitting framework. Then we use ASP in section \ref{fixpoint} to tackle the enumeration of all fixed points in a model, and in section \ref{dynamics} in order to compute the dynamics of a model and check reachability properties. Finally, a comparison of the methods developed in this paper is proposed in section \ref{comparison}, and in section \ref{ccl} we conclude and talk about future work.
 

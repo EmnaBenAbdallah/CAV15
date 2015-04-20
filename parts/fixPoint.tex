@@ -12,7 +12,7 @@ We note that given this result, processes involved in a self-hit (an action whos
 
 \subsection{Process Hitting translation in ASP}
 Before analyzing the dynamics of the network,
-we first need to translate the concerned PH network in ASP\footnote{All programs, including this translation and the methods describes in the following, are available online at: \url{https://github.com/EmnaBenAbdallah/verification-of-dynamical-properties_PH}}.
+we first need to translate the concerned PH network in ASP \footnote{All programs, including this translation and the methods describes in the following, are available online at: \url{https://github.com/EmnaBenAbdallah/verification-of-dynamical-properties_PH}}.
 
 To do this we use the following self-describing predicates:
 \texttt{"sort"} to define sorts, \texttt{"process"} for the processes and \texttt{"action"} for the network actions. We will see in example \ref{ex:asp-ph} how a PH network is defined with these predicates.
@@ -65,7 +65,7 @@ Regarding our problem, a state is eliminated if there exists an action linking t
 \end{lstlisting}
 
 \begin{example}[Fixed points enumeration]
-The PH model of \pref{fig:ph} contains 3 sorts:
+The PH model of \ref{fig:ph} contains 3 sorts:
 $a$ and $b$ have 2 processes and $z$ has 3; therefore, the whole model has $2*2*3 = 12$ states (whether they can be reached or not from a given initial state).
 We can check that this model contains only one fixed point: $\PHstate{b_0, z_2, a_0}$.
 Indeed, there is no action between each two of the processes contained is this state so no execution is possible from this state. 
