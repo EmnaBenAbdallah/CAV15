@@ -31,9 +31,9 @@ which state that exactly one process can change between two steps.
 We thus represent the change of the active process of a sort
 by the predicate \texttt{activeFromTo(B,J,K,T)}
 which means that in sort \texttt{B}, the active process changes from index $\texttt{B}_\texttt{J}$ to $\texttt{B}_\texttt{K}$ between steps \texttt{T} and \texttt{T+1}.
-The cardinality rule of line \ref{e2a} - \ref{e2}
-creates the set of the predicates as many as there are possible evolutions from the current step,
-thus recreating all possible branchings in the possible evolutions of the model so many answer sets.
+The cardinality rule of line \ref{e2a} -- \ref{e2}
+creates a set of as many predicates as there are possible evolutions from the current step,
+thus recreating all possible branchings in the possible evolutions of the model into as many potential answer sets.
 This allows to filter all scenarios where two actions have been played between
 two steps, by using the constraint of line \ref{e3}.
 Thus, the remaining scenarios of the answer sets all strictly follow
