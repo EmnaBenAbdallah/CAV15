@@ -54,6 +54,22 @@
 \newcommand{\Pivot}[1]{\mathbin{\; {#1} \;}}
 \let\from=\leftarrow
 
+% Pretty ref
+\usepackage{prettyref}
+\newrefformat{def}{Definition~\ref{#1}}
+\newrefformat{fig}{Figure~\ref{#1}}
+\newrefformat{tab}{Table~\ref{#1}}
+%\newrefformat{pro}{Property~\ref{#1}}
+%\newrefformat{pps}{Proposition~\ref{#1}}
+%\newrefformat{lem}{Lemma~\ref{#1}}
+\newrefformat{th}{Theorem~\ref{#1}}
+\newrefformat{sec}{Section~\ref{#1}}
+%\newrefformat{subsec}{Subsect.~\ref{#1}}
+%\newrefformat{suppl}{Appendix~\ref{#1}}
+\newrefformat{ex}{Example~\ref{#1}}
+%\newrefformat{eq}{Eq.~\eqref{#1}}
+\def\pref{\prettyref}
+
 %Commande perso
 \newcommand{\ie}{i.e.,\ }
 \newcommand{\eg}{e.g.,\ }
@@ -89,7 +105,7 @@ keepspaces=true
 %\input{macros/macros-abstr}
 
 \begin{document}
-\bibliographystyle{acmtrans}
+%\bibliographystyle{acmtrans}
 
 \long\def\comment#1{}
 
@@ -131,7 +147,7 @@ $^3$National Institute of Informatics, \\
 %
 \begin{abstract}
 In this paper, we propose a new logical approach to perform model-checking on a restriction of synchronous automata networks, namely Process Hitting. The Process Hitting framework is notably suitable, but not limited, to model and analyze efficiently biological regulatory networks. 
-The originality of our model-checking approach relies in the use of Answer Set Programming to consider exhaustive enumeration of all possible solutions of a property with respect to a given execution length.  Our work here focuses on state reachability properties (which are equivalent to the CTL “$\mathsf{EF}$” operator with paths limited to a given length) on the one hand, on the identification of fixed points on the other hand.
+The originality of our model-checking approach relies in the use of Answer Set Programming to consider exhaustive enumeration of all possible solutions of a property with respect to a given execution length.  Our work here focuses on state reachability properties (which are equivalent to the CTL ``$\mathsf{EF}$'' operator with paths limited to a given length) on the one hand, on the identification of fixed points on the other hand.
 The merits of our methods is illustrated by applying them to
 biological examples of various sizes
 and comparing the results with some existing approaches.
@@ -145,27 +161,27 @@ with a high number of components and interactions.
 \input{parts/intro}
 
 \section{Preliminary definitions}
-\label{defs}
-%\input{ASP}
+\label{sec:defs}
+%\input{parts/ASP}
 \subsection{Process Hitting}
 \input{parts/PH}
 
 \section{Fixed point enumeration}
-\label{fixpoint}
+\label{sec:fixpoint}
 \input{parts/fixPoint}
 
 \section{Dynamical analysis}
-\label{dynamics}
+\label{sec:dynamics}
 \input{parts/reachability}
 
 \section{Comparative performance analysis}
-\label{comparison}
+\label{sec:comparison}
 \input{parts/comparaison}
 
 %\vspace{-1.0cm}
 
 \section{Conclusion and future directions}
-\label{ccl}
+\label{sec:ccl}
 \input{parts/cc}
 
 

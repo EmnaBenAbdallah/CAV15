@@ -1,16 +1,21 @@
-In order to develop these methods we have used two main frameworks. The first is both a programming paradigm and a declarative programming language: the Answer Set Programming (ASP).
-The second framework is the Process Hitting (PH) a previously introduced formalism for the representation of biological regulatory networks.
 
-\subsection{Answer Set Programming }
+\section*{Answer Set Programming}
 
-\emph{Answer Set Programming} (ASP) is a declarative programming paradigm with semantics known as the \emph{semantics of answer sets}.
+We develop in this appendix the syntax and semantics of \emph{Answer Set Programming} (ASP) that is used in our work to solve declarative programs.
+% 
+% In order to develop these methods we have used two main frameworks. The first is both a programming paradigm and a declarative programming language: the Answer Set Programming (ASP).
+% The second framework is the Process Hitting (PH) a previously introduced formalism for the representation of biological regulatory networks.
+%
+%\subsection{Answer Set Programming }
+%
+ASP is a declarative programming paradigm with semantics known as the \emph{semantics of answer sets}.
 This paradigm allows the programmer to specify what the problem to be solved is, and not how to solve it.
-ASP programs are written in AnsProlog* \cite{sureshkumar2006ansprolog} (short for “Answer Set Programming in Logic”).
+ASP programs are written in AnsProlog* \cite{sureshkumar2006ansprolog} (short for ``Answer Set Programming in Logic'').
 These programs are composed of a set of \emph{facts} and a set of \emph{rules}, as defined below, from which other facts can be derived.
 A consistent set of facts that can be derived from a program using the rules is called \emph{answer set} for the program.
-The sets of possible responses to an AnsProlog* program are calculated with a program called a solver.
+The sets of possible responses to an AnsProlog* program are calculated with a program called \emph{solver}.
 
-\subsubsection{Syntax and semantics of ASP}
+\subsection*{Syntax and semantics of ASP}
 \label{sectionSyntaxeASP}
 \begin{enumerate}
 
@@ -20,19 +25,20 @@ According to \cite{baral2003knowledge}, the alphabet of ASP is composed of seven
 \begin{itemize}
   \item \emph{constants}, symbols of \emph{functions} and symbols of \emph{predicates} are composed of letters and start with a lowercase letter,
   \item \emph{variables} follow the same rule but start with a capital letter,
-  \item \emph{connectors} that are “$\leftarrow$”, “$\textbf{not}$” and “$,$”,
-  \item \emph{punctuation} that can be “(”, “)” and “.”,
-  \item the special symbols “$\bot$” and “$\top$”.
+  \item \emph{connectors} that are ``$\leftarrow$'', ``$\textbf{not}$'' and ``$,$'',
+  \item \emph{punctuation} that can be ``('', ``)'' and ``.'',
+  \item the special symbols ``$\bot$'' and ``$\top$''.
 \end{itemize}
 
 The notion of predicate allows to qualify constants in this grammar.
-For example, the property “\textit{Tweety is a bird}”
+For example, the property ``\textit{Tweety is a bird}''
 can be expressed by the predicate name \textit{bird}
 around the constant \textit{tweety} into the following literal:
 \textit{bird(tweety)}.
 Such literal can then be used as premise or conclusion in a rule as defined below.
 
-\item \textbf{The rules:}
+\item \textbf{The rules}
+
 A rule has the following form:
 \begin{equation} \label{eq1ASP}
  head \leftarrow body.
@@ -46,14 +52,14 @@ This rule states:
 \[
 \left.
     \begin{array}{rcl}
-        \text{If } & l_{1},...,l_{m}  & \text{ \textbf{can} be proved true}\\
-        \text{and } & l_{m+1},...,l_{n} & \text{ \textbf{cannot} be proved true}
+        \text{if } & l_{1},...,l_{m}  & \text{ \textbf{can} be proven true}\\
+        \text{and } & l_{m+1},...,l_{n} & \text{ \textbf{cannot} be proven true}
     \end{array}
-\right \} \text{Then} ~ l_{0} ~ \text{is } \textbf{true}.
+\right \} \text{ then} ~ l_{0} ~ \text{is } \textbf{true}.
 \]
 
-Therefore, “$head$” is also called the \emph{conclusion} of the rule,
-and “$body$” is its \emph{premise}.
+Therefore, ``$head$'' is also called the \emph{conclusion} of the rule,
+and ``$body$'' is its \emph{premise}.
 % An \emph{answer set} of a program (that is, a set of rules)
 % is a minimal set of literals that satisfies all the rules.
 
@@ -75,8 +81,11 @@ l_{0} \leftarrow \top. \qquad \text{or} \qquad l_{0}.
   \leftarrow l_{1},...,l_{m}, \ASPnot l_{m+1},..., \ASPnot l_{n}.
   \label{eq6ASP}
 \end{equation}
-A set of literals $X$ \emph{violates} the constraint \eqref{eq6ASP} if $\{l_{1},...,l_{m}\} \subseteq X$ and $\{l_{m+1},...,l_{n}\} \nsubseteq X$.
-Thus, $X$ cannot be an answer set of any program containing this constraint.
+A set of literals $X$ \emph{violates} a constraint if
+its body is true, and thus cannot be an answer set
+(as $\bot$ cannot be part of an answer set).
+%$\{l_{1},...,l_{m}\} \subseteq X$ and $\{l_{m+1},...,l_{n}\} \nsubseteq X$.
+%Thus, $X$ cannot be an answer set of any program containing this constraint.
 % If a program $\pi$ contains such a constraint $r$, then $X$ is an answer set of $\pi$ if and only if $X$ is an \textit{answer set} of $\pi \setminus \{r\}$ and $X$ does not violate $r$.
 
 \item A \emph{cardinality constraint} is a rule of the following form:
@@ -105,7 +114,7 @@ we consider that $l$ defaults to $0$ and $u$ defaults to $\infty$.
 
 \end{enumerate}
 
-\subsubsection{Modeling and solving of a problem with ASP}
+\subsection*{Modeling and solving of a problem with ASP}
 
 The construction of models is one of the fundamental components of the scientific process.
 It concerns all systems we seek to control.
@@ -113,7 +122,7 @@ A model has two main features \cite{Glimpse}:
 it is a simplification of a given system
 and it allows an action on the system like resolving problems, searching for a path, identifying states and verifying properties...
 This concept of model can address another angle issues related to the representation process.
-the programs written in ASP follow the strategy of “generate and test”.
+The programs written in ASP follow the strategy of ``generate and test''.
 Indeed, the modeling process can be regarded as a special form of representation:
 \begin{itemize}
   \item First, the system should be presented with facts.
@@ -131,5 +140,5 @@ Amongst all available grounders for ASP, we can name
 and the solvers include
 \textsc{SModels}, \textsc{DLV}, \textsc{CModels}, \textsc{Clasp}...
 
-For the work presented in this paper, we worked with \textsc{Clingo} (version 3) which is a combination of the grounder \textsc{Gringo} and the solver \textsc{Clasp}.
+For the work presented in this paper, we have worked with \textsc{Clingo} (version 3) which is a combination of the grounder \textsc{Gringo} and the solver \textsc{Clasp}.
 

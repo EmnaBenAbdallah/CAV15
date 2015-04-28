@@ -1,6 +1,6 @@
 
 
-\ref{def:PH} introduces the Process Hitting~(PH)~\cite{PMR10-TCSB}
+\pref{def:PH} introduces the Process Hitting~(PH)~\cite{PMR10-TCSB}
 which allows to model a finite number of local levels,
 called \emph{processes},
 grouped into a finite set of components, called \emph{sorts}.
@@ -13,7 +13,7 @@ The concurrent interactions between processes are defined by a set of \emph{acti
 Each action is responsible for the replacement of one process by another of the same sort
 conditioned by the presence of at most one other process in the current state.
 An action is denoted by $\PHfrappe{a_i}{b_j}{b_k}$, which is read as
-“$a_i$ \emph{hits} $b_j$ to make it \emph{bounce} to $b_k$”,
+``$a_i$ \emph{hits} $b_j$ to make it \emph{bounce} to $b_k$'',
 where $a_i$, $b_j$, $b_k$ are processes of sorts $a$ and $b$,
 called respectively \emph{hitter}, \emph{target} and
 \emph{bounce} of the action.
@@ -49,7 +49,7 @@ based on abstract interpretation~\cite{PMR12-MSCS}.
 %\end{definition}
 
 \begin{example}
-\ref{fig:ph} represents a $\PH$ $(\PHs,\PHl,\PHa)$ with three sorts
+\pref{fig:ph} represents a PH $(\PHs,\PHl,\PHa)$ with three sorts
 ($\PHs = \{a, b, c\}$) and:
 $\PHl_a = \{a_0, a_1\}$,
 $\PHl_b = \{b_0, b_1\}$,
@@ -84,7 +84,7 @@ $\PHl_z = \{z_0, z_1, z_2\}$.
 \TState{a_0,b_0,z_1}
 \end{tikzpicture}
 \caption{\label{fig:ph} 
-A PH model example with three sorts: $a$, $b$ and $z$ ($a$ is either at level 0 or 1, $b$ at either level 0 or 1 and $z$ at either level 0, 1 or 2). Boxes represent the \emph{sorts} (network components), circles represent the \emph{processes} (component levels), and the 5 \emph{actions} that model the dynamic behavior are depicted by pairs of arrows in solid and dotted lines. The grayed processes stand for the possible initial state: $\PHstate{a_1, b_0, z_1}$.
+A PH model example with three sorts: $a$, $b$ and $z$ ($a$ is either at level 0 or 1, $b$ at either level 0 or 1 and $z$ at either level 0, 1 or 2). Boxes represent the sorts (network components), circles represent the processes (component levels), and the 5 actions that model the dynamic behavior are depicted by pairs of arrows in solid and dotted lines. The grayed processes stand for the possible initial state $\PHstate{a_1, b_0, z_1}$.
 }
 \end{figure}
 \end{example}
@@ -110,11 +110,11 @@ The PH was chosen for several reasons.
 First, it is a general framework that,
 although it was mainly used for biological networks,
 allows to represent any kind of dynamical model,
-and converters to several other representations are available (see section~\ref{comparison}).
+and converters to several other representations are available (see \pref{sec:comparison}).
 Although an efficient dynamical analysis already exists for this framework,
 based on an approximation of the dynamics,
 it is interesting to identify its limits
-and compare them to the approached we present later in this paper.
+and compare them to the approach we present later in this paper.
 Finally, the particular form of the actions in a PH model allow
 to easily represent them in ASP,
 with one fact per action, as described in the next section.
@@ -132,7 +132,7 @@ and we formally define these properties
 and explain how they could be verified on such a network.
 
 The notion of \emph{fixed point}, also called \emph{stable state},
-is given in definition~\ref{def:fixpoint}.
+is given in \pref{def:fixpoint}.
 A fixed point is a state which has no successor.
 Such states have a particular interest as they denote states in which the model
 stays indefinitely,
@@ -148,8 +148,8 @@ and the existence of several of these states denotes a switch in the dynamics~\c
 \end{definition}
 
 A finer and more interesting dynamical property consists in
-the notion of \emph{reachability property}.
-Such a property, defined in definition~\ref{def:reachability},
+the notion of \emph{reachability}.
+Such a property, defined in \pref{def:reachability},
 states that starting from a given initial state, it is possible
 to reach a given goal, that is, a state that contains a process
 or a set of processes.
@@ -169,13 +169,14 @@ the set of all process in $\PH$.
 \label{def:reachability}
   If $s \in \PHl$ is a state and $A \subseteq \Proc$ is a set of processes,
   we denote by $\mathcal{P}(s, A)$ the following \emph{reachability property}:
-  \[\exists? \delta \in \Sce(s), \forall a_i \in A, \PHget{(s \play \delta)}{a} = a_i
+  \[\mathcal{P}(s, A) \equiv \exists \delta \in \Sce(s), \forall a_i \in A, \PHget{(s \play \delta)}{a} = a_i
     \enspace.\]
 \end{definition}
 
 The rest of the paper focuses on the resolution of the previous issues
 with the use of ASP.
 The enumeration of all fixed points of a PH model will be tackled in
-section~\ref{fixpoint}
+\pref{sec:fixpoint}
 and the verification of a reachability property will be the subject of
-section~\ref{dynamics}.
+\pref{sec:dynamics}.
+The semantics of ASP is given in Appendix.

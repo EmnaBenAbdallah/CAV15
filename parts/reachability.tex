@@ -8,40 +8,41 @@ that allow to reach a given goal?
 In the previous section, enumerating the fixed points did not require to
 encode the full dynamics of PH, but only a condition.
 In this section, we thus implement the dynamics of the PH into ASP,
-which will then permit to search for the paths allowing to reach the goals.
+which will then permit to search for the paths allowing to reach some given goals.
 
 Firstly, we focus on the evolutions of models in a limited number of steps.
 We therefore define the predicate \texttt{time(0..n)} which sets the number of steps we want to play.
 The value of \texttt{n} can be arbitrarily chosen;
-for example, \texttt{time(0..10)} will be used to compute the 11 first steps,
+for example, \texttt{time(0..10)} will compute the 11 first steps,
 including the initial state.
-In order to specify such an initial state, we add several facts of the following form
-to list the processes included in this state:
+In order to specify such an initial state, we add several facts
+to make a list of all processes included in this state:
 \begin{lstlisting}
-init(activeProcess("a",0)).
+init(activeProcess("a",0)). init(activeProcess("b",0)).
+init(activeProcess("z",0)).
 \end{lstlisting}
-where \texttt{"a"} is the name of the sort and \texttt{"0"} the index of the active process.
-The dynamics of a network is described by its actions,
-identifying the future states requires to first identify the playable actions for each state.
-We remind that an action is playable in a state when both its hitter and target are active in this state (see Definition \ref{def:playableAction}).
+%where \texttt{"a"} is the name of the sort and \texttt{"0"} the index of the active process.
+The dynamics of a network is described by its actions;
+therefore, identifying the future states requires to first identify the playable actions for each state.
+We remind that an action is playable in a state when both its hitter and target are active in this state (see \pref{def:playableAction}).
 Therefore, we define an ASP predicate \texttt{playableAction(A,I,B,J,K,T)} that is true
 when the processes $\texttt{A}_\texttt{I}$ and $\texttt{B}_\texttt{J}$ are active at step \texttt{T}.
 It is also needed to enforce the strictly asynchronous dynamic
 which state that exactly one process can change between two steps.
 We thus represent the change of the active process of a sort
 by the predicate \texttt{activeFromTo(B,J,K,T)}
-which means that in sort \texttt{B}, the active process changes from index $\texttt{B}_\texttt{J}$ to $\texttt{B}_\texttt{K}$ between steps \texttt{T} and \texttt{T+1}.
-The cardinality rule of line \ref{e2a} -- \ref{e2}
+which means that in sort \texttt{B}, the active process can change from $\texttt{B}_\texttt{J}$ to $\texttt{B}_\texttt{K}$ between steps \texttt{T} and \texttt{T+1}.
+The cardinality rule of lines \ref{e2a} -- \ref{e2}
 creates a set of as many predicates as there are possible evolutions from the current step,
-thus recreating all possible branchings in the possible evolutions of the model into as many potential answer sets.
-This allows to filter all scenarios where two actions have been played between
+thus reproducing all possible branchings in the possible evolutions of the model in the form of as many potential answer sets.
+This allows to remove all scenarios where two or more actions have been played between
 two steps, by using the constraint of line \ref{e3}.
-Thus, the remaining scenarios of the answer sets all strictly follow
+Thus, the remaining scenarios contained in the answer sets all strictly follow
 the asynchronous dynamics of the PH.
 \begin{lstlisting}
-{activeFromTo(B,J,K,T)} :-  playableAction(A,I,B,J,K,T), %\label{e2a}
-          instate(activeProcess(A,I),T), instate(activeProcess(B,J),T),
-          J!=K, time(T). %\label{e2}
+{activeFromTo(B,J,K,T)} :- playableAction(A,I,B,J,K,T), %\label{e2a}
+          instate(activeProcess(A,I),T),
+          instate(activeProcess(B,J),T), J!=K, time(T). %\label{e2}
 :- 2 {activeFromTo(B,J,K,T)}, time(T). %\label{e3}
 \end{lstlisting}
 
@@ -55,18 +56,18 @@ instate(activeProcess(A,I),T+1) :-  instate(activeProcess(A,I),T), %\label{e5}
 \end{lstlisting}
 In other words, the state of step \texttt{T+1} contains one new active process
 resulting from the predicate \texttt{activeFromTo} (line \ref{e4})
-as well as all the unchanged processes that correspond to the other sorts (line \ref{e5} and \ref{e5-a}).
+as well as all the unchanged processes that correspond to the other sorts (lines \ref{e5} and \ref{e5-a}).
 
 The overall result of the pieces of program presented in this subsection
 is an answer set containing one answer for each
 possible evolution in \texttt{n} time steps,
-and starting from a given initial state.
+starting from a given initial state.
 
 \subsection{Reachability verification}
-In this section, we focus on the reachability of a set of processes which corresponds to the reachability property (see definition \ref{def:reachability}):
-“Is it possible, starting from a given initial state, to play a number of actions so that a set of given processes are active in the resulting state?”
-We now want to adapt the code of the dynamics computation of previous section in order to resolve this reachability problem.
-For this, we first use a predicate to list the processes we want to reach, called \texttt{goal}, and we add as many rules of the following form as there are objective processes:
+In this section, we focus on the reachability of a set of processes which corresponds to the reachability property (see \pref{def:reachability}):
+``Is it possible, starting from a given initial state, to play a number of actions so that a set of given processes are active in the resulting state?''
+We now want to use the code of the dynamics computation of the previous section in order to solve this reachability problem.
+For this, we first use a predicate \texttt{goal} to list the processes we want to reach and we add as many rules of the following form as there are objective processes:
 \begin{lstlisting}
 goal(activeProcess("a",1)). %\label{c1}
 \end{lstlisting}
@@ -80,7 +81,8 @@ satisfiable(F, T) :-  goal(F), instate(F, T). %\label{c2}
 \end{lstlisting}
 
 However, the limitation of the method above is that the user has to decide upstream
-the number of computed steps that should be sufficient.
+the number of computed steps.
+%that should be sufficient.
 It is a main disadvantage because a search in $N$ steps will find no solution
 if the shortest path to the goal requires $K$ steps with $K > N$.
 It may also needlessly lengthen the resolution if the shortest path requires $n$ steps with $n << N$.
@@ -90,20 +92,24 @@ The syntax of \textsc{iClingo} separates the program in 3 parts.
 The \texttt{\#base} part contains only non-incremental elements
 and is thus used to declare general rules
 that do not depend on the time step (such as the data related to the model).
-The body iteration is written in the
-\texttt{\#cumulative} and \texttt{\#volatile} parts
-which are computed at each incremental step,
-the first part comprising rules depending on the time step,
-and the second containing a constraint that stops the iteration when needed.
+The body iteration is then written in the
+\texttt{\#cumulative} and \texttt{\#volatile} parts,
+which are computed at each incremental step.
+The first part comprises rules depending on the time step,
+and the second contains a constraint that stops the iteration when needed.
 The step number is not given by a variable but by a constant placeholder
-called “\texttt{t}” in the following.
+called ``\texttt{t}'' in the following.
 
 When using this new syntax, the obtained program is almost identical
 to what was presented before,
 except that step numbers \texttt{T}
 are replaced by the constant placeholder \texttt{t}.
-In each step \texttt{t}, the program computes the playable actions \texttt{playableAction(A,I,B,J,K,t)}, the possible bounces \texttt{activeFromTo(B,J,K,t-1)}
-and the new states \texttt{instate(activeProcess(A,I),t+1)}
+In each step \texttt{t}, the program computes:
+\begin{itemize}
+  \item the playable actions \texttt{playableAction(A,I,B,J,K,t)},
+  \item the possible bounces \texttt{activeFromTo(B,J,K,t-1)}
+  \item the new states \texttt{instate(activeProcess(A,I),t+1)}
+\end{itemize}
 in the \texttt{\#cumulative} part
 the same way than previously, but only for the current step.
 The solver then compares its current answer sets with
@@ -115,6 +121,6 @@ the computation continues in the next iteration in order to reach a valid answer
 As soon as some answer sets meet the constraints,
 they are returned and the computation stops.
 \begin{lstlisting}
-notSatisfiable(t) :-  goal(F), not instate(F,t). %\label{c3}
+notSatisfiable(t) :- goal(F), not instate(F,t). %\label{c3}
 :- notSatisfiable(t). %\label{c4}
 \end{lstlisting}
