@@ -6,10 +6,10 @@ All computations (except the one called \textsc{ASP-Thomas}) were performed on a
 To assess the efficiency of our new approach,
 we position ourselves with respect to existing methods dealing with different biological models.
 We have chosen the following tools, that are detailed below: 
-\textsc{GINsim}\footnote{\textsc{GINsim}: \url{http://ginsim.org/}} (Gene Interaction Network Simulation)~\cite{gonzalez2006ginsim,naldi2009logical,naldi2007decision},
-\textsc{LibDDD}\footnote{\textsc{LibDDD}: \url{http://move.lip6.fr/software/DDD/}}
+\textsc{GINsim}\footnote{\textsc{GINsim} version 2.4 alpha: \url{http://ginsim.org/}} (Gene Interaction Network Simulation)~\cite{gonzalez2006ginsim,naldi2009logical,naldi2007decision},
+\textsc{LibDDD}\footnote{\textsc{LibDDD} version 1.8: \url{http://move.lip6.fr/software/DDD/}}
 (Library of Data Decision Diagrams)~\cite{thierry2009hierarchical,colange2013towards},
-\textsc{Pint}\footnote{\textsc{Pint}: \url{http://loicpauleve.name/pint/}}~\cite{PMR12-MSCS}
+\textsc{Pint}\footnote{\textsc{Pint} version 2015-02-11: \url{http://loicpauleve.name/pint/}}~\cite{PMR12-MSCS}
 and the method for CTL model-checking proposed by Rocca \textit{et al.} in~\cite{roccaasp},
 which was developed also in ASP but for states transitions networks.
 Each method uses a specific kind of representation\footnote{When available, we used the converters included into \textsc{Pint} for these translations.}:
@@ -79,7 +79,7 @@ and ``Inconc'' states that the method terminates without a response.
 
 \item \textbf{\textsc{ASP-Thomas}}\footnote{These tests have been performed on another computer: dual core 2.13GHZ with 1.8GB RAM. The authors wish to thank Laurent Trilling for his help.}
 offers the possibility to model-check CTL properties of Thomas networks. 
-There is no automatic way that allows the modelisation of Thomas networks in ASP. That is why it is necessary to study the entire network than to present it in ASP. But this modelisation takes so much time to be done regarding the complex representation of Thomas networks. Comparing with our method, we use the PH model whose actions are more easy to be represent in ASP, with one fact per action.
+There is however no automatic way that allows the modeling of Thomas networks in ASP, which currently has to be made by hand and requires labeling. As for our method, we use the PH whose actions are easily represented in ASP with one fact per action.
 In addition, the method ``\textsc{ASP-Thomas}'' requires to provide a maximum number of steps
 for which the dynamics will be computed, which may be difficult to be predicted.
 However it is clear that this approach terminates very quickly when compared with others.
