@@ -9,7 +9,7 @@ We have chosen the following tools, that are detailed below:
 \textsc{GINsim}\footnote{\textsc{GINsim} version 2.4 alpha: \url{http://ginsim.org/}} (Gene Interaction Network Simulation)~\cite{gonzalez2006ginsim,naldi2009logical,naldi2007decision},
 \textsc{LibDDD}\footnote{\textsc{LibDDD} version 1.8: \url{http://move.lip6.fr/software/DDD/}}
 (Library of Data Decision Diagrams)~\cite{thierry2009hierarchical,colange2013towards},
-\textsc{Pint}\footnote{\textsc{Pint} version 2015-02-11: \url{http://loicpauleve.name/pint/}}~\cite{PMR12-MSCS}
+\textsc{Pint}\footnote{\textsc{Pint} version 2015-11-14: \url{http://loicpauleve.name/pint/}}~\cite{PMR12-MSCS}
 and the method for CTL model-checking proposed by Rocca \textit{et al.} in~\cite{roccaasp},
 which was developed also in ASP but for states transitions networks.
 Each method uses a specific kind of representation\footnote{When available, we used the converters included into \textsc{Pint} for these translations.}:
@@ -143,13 +143,12 @@ Compared to some other methods describes above
 (up to $2^{73}$ states in our tests). We exclusively study networks modeled in Process Hitting. This new formalism for network modeling is a restriction of synchronous automata and thus allows to represent any kind of dynamical model. Moreover it is easy to implement the dynamics of the PH into ASP.
 However, our ASP program may still be non-conclusive
 in the cases where the given goal is not
-reachable and the model contains loops in its dynamics
-(which happens in almost every biological model).
+reachable and the model contains loops in its dynamics.
 In this case, the program will compute all infinite paths in these loops,
 and never reach a goal or a fixed point.
 It is still possible, however, to limit the number of iterations to an arbitrary
 maximum which will be eventually reached in the case of an endless loop.
-This is possible with the option ``\texttt{-{}-imax=n}'' of \textsc{iClingo},
+This is possible with the option "\texttt{-{}-imax=n}'' of \textsc{iClingo},
 where \texttt{n} is the maximum number of steps.
 %%
 %\begin{lstlisting}[numbers=none]
